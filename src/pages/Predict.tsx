@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft } from 'lucide-react';
+import MonthYearSelector from '@/components/prediction/MonthYearSelector';
 
 const Predict = () => {
   const navigate = useNavigate();
@@ -17,14 +18,22 @@ const Predict = () => {
   const [soil, setSoil] = useState<string>('');
   const [field, setField] = useState<string>('');
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!month || !year || !weather || !temperature || !soil || !field) {
+      setResult("Please fill in all fields to get an accurate prediction.");
+      return;
+    }
+    const prediction = getCropRecommendation();
+    setResult(prediction);
+  };
+
   const getCropRecommendation = () => {
-    // Temperature ranges for different conditions
     const tempNum = Number(temperature);
     let primaryCrop = '';
     let secondaryCrops = [];
     let expectedYield = '';
 
-    // Soil-based initial recommendations
     const soilBasedCrops: Record<string, { crops: string[], yield: string }> = {
       'clay': { 
         crops: ['Wheat', 'Rice', 'Cabbage'],
@@ -68,14 +77,12 @@ const Predict = () => {
       }
     };
 
-    // Get base recommendation from soil type
     if (soil && soilBasedCrops[soil]) {
       primaryCrop = soilBasedCrops[soil].crops[0];
       secondaryCrops = soilBasedCrops[soil].crops.slice(1);
       expectedYield = soilBasedCrops[soil].yield;
     }
 
-    // Adjust based on temperature
     if (tempNum < 10) {
       primaryCrop = 'Winter Wheat';
       secondaryCrops = ['Rye', 'Barley'];
@@ -84,7 +91,6 @@ const Predict = () => {
       secondaryCrops = ['Millet', 'Cotton'];
     }
 
-    // Adjust based on weather
     if (weather === 'rainy' || weather === 'humid') {
       if (!secondaryCrops.includes('Rice')) {
         secondaryCrops.unshift('Rice');
@@ -95,7 +101,6 @@ const Predict = () => {
       }
     }
 
-    // Adjust based on field condition
     if (field === 'waterlogged') {
       primaryCrop = 'Rice';
       secondaryCrops = ['Water Chestnuts', 'Taro'];
@@ -105,16 +110,11 @@ const Predict = () => {
       }
     }
 
+    navigate('/crop-economics', { 
+      state: { cropName: primaryCrop }
+    });
+    
     return `Based on the provided conditions, we recommend planting ${primaryCrop} as your primary crop. Expected yield: ${expectedYield}. Secondary recommendations: ${secondaryCrops.join(' or ')}.`;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!month || !year || !weather || !temperature || !soil || !field) {
-      setResult("Please fill in all fields to get an accurate prediction.");
-      return;
-    }
-    setResult(getCropRecommendation());
   };
 
   return (
@@ -132,42 +132,19 @@ const Predict = () => {
         
         <Card className="p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
+            <MonthYearSelector 
+              onMonthChange={setMonth}
+              onYearChange={setYear}
+            />
+
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="month">Month</Label>
-                <Select onValueChange={setMonth}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select month" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Array.from({ length: 12 }, (_, i) => (
-                      <SelectItem key={i + 1} value={String(i + 1)}>
-                        {new Date(0, i).toLocaleString('default', { month: 'long' })}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="year">Year</Label>
-                <Input 
-                  type="number" 
-                  id="year" 
-                  placeholder="Enter year" 
-                  min="2024" 
-                  max="2100" 
-                  onChange={(e) => setYear(e.target.value)}
-                />
-              </div>
-
               <div className="space-y-2">
                 <Label htmlFor="weather">Weather Condition</Label>
                 <Select onValueChange={setWeather}>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
                     <SelectValue placeholder="Select weather" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border-2 border-primary/20">
                     <SelectItem value="sunny">Sunny (High light intensity)</SelectItem>
                     <SelectItem value="rainy">Rainy (High moisture)</SelectItem>
                     <SelectItem value="cloudy">Cloudy (Limited sunlight)</SelectItem>
@@ -195,10 +172,10 @@ const Predict = () => {
               <div className="space-y-2">
                 <Label htmlFor="soil">Soil Type</Label>
                 <Select onValueChange={setSoil}>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
                     <SelectValue placeholder="Select soil type" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border-2 border-primary/20">
                     <SelectItem value="clay">Clay Soil (High nutrients, poor drainage)</SelectItem>
                     <SelectItem value="sandy">Sandy Soil (Good drainage, low nutrients)</SelectItem>
                     <SelectItem value="loamy">Loamy Soil (Balanced nutrients and drainage)</SelectItem>
@@ -216,10 +193,10 @@ const Predict = () => {
               <div className="space-y-2">
                 <Label htmlFor="field">Field Condition</Label>
                 <Select onValueChange={setField}>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
                     <SelectValue placeholder="Select field condition" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border-2 border-primary/20">
                     <SelectItem value="excellent">Excellent - Well maintained (Optimal growing conditions)</SelectItem>
                     <SelectItem value="good">Good - Minor issues (Slight imperfections)</SelectItem>
                     <SelectItem value="fair">Fair - Some concerns (Needs improvement)</SelectItem>
