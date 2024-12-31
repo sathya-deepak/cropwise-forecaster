@@ -13,8 +13,7 @@ const Predict = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, this would call an API
-    setResult("Based on the provided conditions, we recommend planting Wheat. Expected yield: 3.5 tons/acre");
+    setResult("Based on the provided conditions, we recommend planting Wheat. Expected yield: 3.5 tons/acre. Secondary recommendations: Barley or Oats.");
   };
 
   return (
@@ -28,7 +27,7 @@ const Predict = () => {
       </Button>
 
       <div className="container mx-auto max-w-4xl">
-        <h1 className="text-4xl font-bold text-primary mb-8 text-center">Crop Prediction</h1>
+        <h1 className="text-4xl font-bold text-primary mb-8 text-center">Crop Prediction System</h1>
         
         <Card className="p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -65,6 +64,10 @@ const Predict = () => {
                     <SelectItem value="rainy">Rainy</SelectItem>
                     <SelectItem value="cloudy">Cloudy</SelectItem>
                     <SelectItem value="partially_cloudy">Partially Cloudy</SelectItem>
+                    <SelectItem value="stormy">Stormy</SelectItem>
+                    <SelectItem value="windy">Windy</SelectItem>
+                    <SelectItem value="humid">Humid</SelectItem>
+                    <SelectItem value="foggy">Foggy</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -81,10 +84,16 @@ const Predict = () => {
                     <SelectValue placeholder="Select soil type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="clay">Clay</SelectItem>
-                    <SelectItem value="sandy">Sandy</SelectItem>
-                    <SelectItem value="loamy">Loamy</SelectItem>
-                    <SelectItem value="silt">Silt</SelectItem>
+                    <SelectItem value="clay">Clay Soil</SelectItem>
+                    <SelectItem value="sandy">Sandy Soil</SelectItem>
+                    <SelectItem value="loamy">Loamy Soil</SelectItem>
+                    <SelectItem value="silt">Silt Soil</SelectItem>
+                    <SelectItem value="peat">Peat Soil</SelectItem>
+                    <SelectItem value="chalk">Chalk Soil</SelectItem>
+                    <SelectItem value="alluvial">Alluvial Soil</SelectItem>
+                    <SelectItem value="black">Black Soil</SelectItem>
+                    <SelectItem value="red">Red Soil</SelectItem>
+                    <SelectItem value="laterite">Laterite Soil</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -96,17 +105,23 @@ const Predict = () => {
                     <SelectValue placeholder="Select field condition" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="excellent">Excellent</SelectItem>
-                    <SelectItem value="good">Good</SelectItem>
-                    <SelectItem value="fair">Fair</SelectItem>
-                    <SelectItem value="poor">Poor</SelectItem>
+                    <SelectItem value="excellent">Excellent - Well maintained</SelectItem>
+                    <SelectItem value="good">Good - Minor issues</SelectItem>
+                    <SelectItem value="fair">Fair - Some concerns</SelectItem>
+                    <SelectItem value="poor">Poor - Needs attention</SelectItem>
+                    <SelectItem value="irrigated">Irrigated</SelectItem>
+                    <SelectItem value="non_irrigated">Non-irrigated</SelectItem>
+                    <SelectItem value="terraced">Terraced</SelectItem>
+                    <SelectItem value="sloped">Sloped</SelectItem>
+                    <SelectItem value="leveled">Leveled</SelectItem>
+                    <SelectItem value="waterlogged">Waterlogged</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
             <Button type="submit" className="w-full bg-primary hover:bg-primary-dark text-white">
-              Get Prediction
+              Get Crop Prediction
             </Button>
           </form>
 
