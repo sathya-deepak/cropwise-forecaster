@@ -7,9 +7,11 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft } from 'lucide-react';
 import MonthYearSelector from '@/components/prediction/MonthYearSelector';
+import { useToast } from "@/components/ui/use-toast";
 
 const Predict = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [result, setResult] = useState<string | null>(null);
   const [month, setMonth] = useState<string>('');
   const [year, setYear] = useState<string>('');
@@ -17,20 +19,6 @@ const Predict = () => {
   const [temperature, setTemperature] = useState<string>('');
   const [soil, setSoil] = useState<string>('');
   const [field, setField] = useState<string>('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Quick prediction form submitted with values:', {
-      month, year, weather, temperature, soil, field
-    });
-    
-    if (!month || !year || !weather || !temperature || !soil || !field) {
-      setResult("Please fill in all fields to get an accurate prediction.");
-      return;
-    }
-    const prediction = getCropRecommendation();
-    setResult(prediction);
-  };
 
   const getCropRecommendation = () => {
     console.log('Generating quick prediction');
@@ -78,22 +66,52 @@ const Predict = () => {
       }
     }
 
-    if (field === 'waterlogged') {
-      primaryCrop = 'Rice';
-      secondaryCrops = ['Water Chestnuts', 'Taro'];
-    } else if (field === 'terraced') {
-      if (!secondaryCrops.includes('Tea')) {
-        secondaryCrops.push('Tea');
-      }
-    }
-
     console.log('Generated prediction:', { primaryCrop, secondaryCrops, expectedYield });
-
-    navigate('/crop-economics', { 
-      state: { cropName: primaryCrop }
-    });
     
     return `Based on the provided conditions, we recommend planting ${primaryCrop} as your primary crop. Expected yield: ${expectedYield}. Secondary recommendations: ${secondaryCrops.join(' or ')}.`;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Quick prediction form submitted with values:', {
+      month, year, weather, temperature, soil, field
+    });
+    
+    if (!month || !year || !weather || !temperature || !soil || !field) {
+      toast({
+        title: "Missing Fields",
+        description: "Please fill in all fields to get an accurate prediction.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      const prediction = getCropRecommendation();
+      console.log('Setting prediction result:', prediction);
+      setResult(prediction);
+
+      // Show success toast
+      toast({
+        title: "Prediction Generated",
+        description: "Your crop prediction is ready!",
+      });
+
+      // Wait a moment before navigating
+      setTimeout(() => {
+        const primaryCrop = prediction.split('we recommend planting ')[1].split(' as')[0];
+        navigate('/crop-economics', { 
+          state: { cropName: primaryCrop }
+        });
+      }, 2000);
+    } catch (error) {
+      console.error('Error generating prediction:', error);
+      toast({
+        title: "Error",
+        description: "Failed to generate prediction. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   return (

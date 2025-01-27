@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft } from 'lucide-react';
 import MonthYearSelector from '@/components/prediction/MonthYearSelector';
+import { useToast } from "@/components/ui/use-toast";
 import {
   Table,
   TableBody,
@@ -18,6 +19,7 @@ import {
 
 const DetailedPredict = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [predictions, setPredictions] = useState<Array<{
     crop: string;
     suitability: number;
@@ -110,24 +112,46 @@ const DetailedPredict = () => {
     return predictions;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form submitted with values:', {
       month, year, weather, temperature, soil, field
     });
     
     if (!month || !year || !weather || !temperature || !soil || !field) {
-      console.log('Missing required fields');
+      toast({
+        title: "Missing Fields",
+        description: "Please fill in all fields to get an accurate prediction.",
+        variant: "destructive"
+      });
       return;
     }
     
-    const results = getDetailedPredictions();
-    setPredictions(results);
-    
-    // Navigate to economics page for the top prediction if available
-    if (results && results.length > 0) {
-      navigate('/crop-economics', { 
-        state: { cropName: results[0].crop }
+    try {
+      const results = getDetailedPredictions();
+      console.log('Setting prediction results:', results);
+      setPredictions(results);
+
+      // Show success toast
+      toast({
+        title: "Analysis Complete",
+        description: "Your detailed crop analysis is ready!",
+      });
+
+      // Wait a moment before navigating
+      if (results && results.length > 0) {
+        setTimeout(() => {
+          navigate('/crop-economics', { 
+            state: { cropName: results[0].crop }
+          });
+        }, 3000);
+      }
+    } catch (error) {
+      console.error('Error generating predictions:', error);
+      toast({
+        title: "Error",
+        description: "Failed to generate predictions. Please try again.",
+        variant: "destructive"
       });
     }
   };
