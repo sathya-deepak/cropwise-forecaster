@@ -20,6 +20,10 @@ const Predict = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Quick prediction form submitted with values:', {
+      month, year, weather, temperature, soil, field
+    });
+    
     if (!month || !year || !weather || !temperature || !soil || !field) {
       setResult("Please fill in all fields to get an accurate prediction.");
       return;
@@ -29,6 +33,7 @@ const Predict = () => {
   };
 
   const getCropRecommendation = () => {
+    console.log('Generating quick prediction');
     const tempNum = Number(temperature);
     let primaryCrop = '';
     let secondaryCrops = [];
@@ -46,34 +51,6 @@ const Predict = () => {
       'loamy': {
         crops: ['Corn', 'Soybeans', 'Vegetables'],
         yield: '4.0-4.8 tons/acre'
-      },
-      'silt': {
-        crops: ['Vegetables', 'Berries', 'Tomatoes'],
-        yield: '3.2-4.0 tons/acre'
-      },
-      'peat': {
-        crops: ['Root Vegetables', 'Leafy Greens'],
-        yield: '3.0-3.8 tons/acre'
-      },
-      'chalk': {
-        crops: ['Barley', 'Beans', 'Wheat'],
-        yield: '2.5-3.2 tons/acre'
-      },
-      'alluvial': {
-        crops: ['Rice', 'Sugarcane', 'Jute'],
-        yield: '4.2-5.0 tons/acre'
-      },
-      'black': {
-        crops: ['Cotton', 'Sugarcane', 'Wheat'],
-        yield: '3.8-4.5 tons/acre'
-      },
-      'red': {
-        crops: ['Groundnut', 'Tobacco', 'Millet'],
-        yield: '2.8-3.5 tons/acre'
-      },
-      'laterite': {
-        crops: ['Cashew', 'Tea', 'Coffee'],
-        yield: '2.5-3.0 tons/acre'
       }
     };
 
@@ -110,6 +87,8 @@ const Predict = () => {
       }
     }
 
+    console.log('Generated prediction:', { primaryCrop, secondaryCrops, expectedYield });
+
     navigate('/crop-economics', { 
       state: { cropName: primaryCrop }
     });
@@ -128,7 +107,7 @@ const Predict = () => {
       </Button>
 
       <div className="container mx-auto max-w-4xl">
-        <h1 className="text-4xl font-bold text-primary mb-8 text-center">Crop Prediction System</h1>
+        <h1 className="text-4xl font-bold text-primary mb-8 text-center">Quick Crop Prediction</h1>
         
         <Card className="p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -165,6 +144,7 @@ const Predict = () => {
                   placeholder="Enter temperature" 
                   min="-20" 
                   max="50"
+                  className="bg-white border-2 border-primary/20 shadow-sm"
                   onChange={(e) => setTemperature(e.target.value)}
                 />
               </div>
@@ -179,13 +159,6 @@ const Predict = () => {
                     <SelectItem value="clay">Clay Soil (High nutrients, poor drainage)</SelectItem>
                     <SelectItem value="sandy">Sandy Soil (Good drainage, low nutrients)</SelectItem>
                     <SelectItem value="loamy">Loamy Soil (Balanced nutrients and drainage)</SelectItem>
-                    <SelectItem value="silt">Silt Soil (Fine particles, good water retention)</SelectItem>
-                    <SelectItem value="peat">Peat Soil (High organic matter)</SelectItem>
-                    <SelectItem value="chalk">Chalk Soil (Alkaline, good drainage)</SelectItem>
-                    <SelectItem value="alluvial">Alluvial Soil (River deposits, fertile)</SelectItem>
-                    <SelectItem value="black">Black Soil (Rich in minerals)</SelectItem>
-                    <SelectItem value="red">Red Soil (Iron-rich, acidic)</SelectItem>
-                    <SelectItem value="laterite">Laterite Soil (Poor nutrients, good drainage)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -197,16 +170,12 @@ const Predict = () => {
                     <SelectValue placeholder="Select field condition" />
                   </SelectTrigger>
                   <SelectContent className="bg-white border-2 border-primary/20">
-                    <SelectItem value="excellent">Excellent - Well maintained (Optimal growing conditions)</SelectItem>
-                    <SelectItem value="good">Good - Minor issues (Slight imperfections)</SelectItem>
-                    <SelectItem value="fair">Fair - Some concerns (Needs improvement)</SelectItem>
-                    <SelectItem value="poor">Poor - Needs attention (Significant issues)</SelectItem>
-                    <SelectItem value="irrigated">Irrigated (Controlled water supply)</SelectItem>
-                    <SelectItem value="non_irrigated">Non-irrigated (Dependent on rainfall)</SelectItem>
+                    <SelectItem value="excellent">Excellent - Well maintained</SelectItem>
+                    <SelectItem value="good">Good - Minor issues</SelectItem>
+                    <SelectItem value="fair">Fair - Some concerns</SelectItem>
+                    <SelectItem value="poor">Poor - Needs attention</SelectItem>
+                    <SelectItem value="waterlogged">Waterlogged (Excess water)</SelectItem>
                     <SelectItem value="terraced">Terraced (Stepped landscape)</SelectItem>
-                    <SelectItem value="sloped">Sloped (Angled terrain)</SelectItem>
-                    <SelectItem value="leveled">Leveled (Flat terrain)</SelectItem>
-                    <SelectItem value="waterlogged">Waterlogged (Excess water retention)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

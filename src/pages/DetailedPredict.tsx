@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft } from 'lucide-react';
+import MonthYearSelector from '@/components/prediction/MonthYearSelector';
 import {
   Table,
   TableBody,
@@ -31,10 +32,10 @@ const DetailedPredict = () => {
   const [field, setField] = useState<string>('');
 
   const getDetailedPredictions = () => {
-    const tempNum = Number(temperature);
-    let predictions = [];
+    console.log('Generating detailed predictions with inputs:', {
+      month, year, weather, temperature, soil, field
+    });
 
-    // Base predictions based on soil type
     const soilBasedCrops: Record<string, Array<{ crop: string; baseScore: number; yield: string }>> = {
       'clay': [
         { crop: 'Wheat', baseScore: 85, yield: '3.5-4.2 tons/acre' },
@@ -45,17 +46,17 @@ const DetailedPredict = () => {
       'sandy': [
         { crop: 'Carrots', baseScore: 90, yield: '2.8-3.5 tons/acre' },
         { crop: 'Potatoes', baseScore: 85, yield: '2.5-3.2 tons/acre' },
-        { crop: 'Peanuts', baseScore: 80, yield: '2.2-2.8 tons/acre' },
-        { crop: 'Sweet Potatoes', baseScore: 75, yield: '2.0-2.5 tons/acre' }
+        { crop: 'Peanuts', baseScore: 80, yield: '2.2-2.8 tons/acre' }
       ],
       'loamy': [
         { crop: 'Corn', baseScore: 95, yield: '4.0-4.8 tons/acre' },
         { crop: 'Soybeans', baseScore: 90, yield: '3.8-4.5 tons/acre' },
-        { crop: 'Vegetables', baseScore: 85, yield: '3.5-4.2 tons/acre' },
-        { crop: 'Fruits', baseScore: 80, yield: '3.2-3.8 tons/acre' }
-      ],
-      // ... Add more soil types with their base scores
+        { crop: 'Vegetables', baseScore: 85, yield: '3.5-4.2 tons/acre' }
+      ]
     };
+
+    let predictions = [];
+    const tempNum = Number(temperature);
 
     if (soil && soilBasedCrops[soil]) {
       predictions = soilBasedCrops[soil].map(crop => {
@@ -87,12 +88,11 @@ const DetailedPredict = () => {
         if (field === 'waterlogged' && crop.crop === 'Rice') {
           finalScore += 15;
           conditions.push('Perfect for paddy cultivation');
-        } else if (field === 'terraced' && ['Vegetables', 'Tea'].includes(crop.crop)) {
+        } else if (field === 'terraced' && ['Vegetables'].includes(crop.crop)) {
           finalScore += 12;
           conditions.push('Suitable for terrace farming');
         }
 
-        // Ensure score stays within 0-100 range
         finalScore = Math.max(0, Math.min(100, finalScore));
 
         return {
@@ -103,21 +103,33 @@ const DetailedPredict = () => {
         };
       });
 
-      // Sort by suitability score
       predictions.sort((a, b) => b.suitability - a.suitability);
     }
 
+    console.log('Generated predictions:', predictions);
     return predictions;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Form submitted with values:', {
+      month, year, weather, temperature, soil, field
+    });
+    
     if (!month || !year || !weather || !temperature || !soil || !field) {
-      setPredictions(null);
+      console.log('Missing required fields');
       return;
     }
+    
     const results = getDetailedPredictions();
     setPredictions(results);
+    
+    // Navigate to economics page for the top prediction if available
+    if (results && results.length > 0) {
+      navigate('/crop-economics', { 
+        state: { cropName: results[0].crop }
+      });
+    }
   };
 
   return (
@@ -135,42 +147,19 @@ const DetailedPredict = () => {
         
         <Card className="p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
+            <MonthYearSelector 
+              onMonthChange={setMonth}
+              onYearChange={setYear}
+            />
+
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="month">Month</Label>
-                <Select onValueChange={setMonth}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select month" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Array.from({ length: 12 }, (_, i) => (
-                      <SelectItem key={i + 1} value={String(i + 1)}>
-                        {new Date(0, i).toLocaleString('default', { month: 'long' })}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="year">Year</Label>
-                <Input 
-                  type="number" 
-                  id="year" 
-                  placeholder="Enter year" 
-                  min="2024" 
-                  max="2100" 
-                  onChange={(e) => setYear(e.target.value)}
-                />
-              </div>
-
               <div className="space-y-2">
                 <Label htmlFor="weather">Weather Condition</Label>
                 <Select onValueChange={setWeather}>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
                     <SelectValue placeholder="Select weather" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border-2 border-primary/20">
                     <SelectItem value="sunny">Sunny (High light intensity)</SelectItem>
                     <SelectItem value="rainy">Rainy (High moisture)</SelectItem>
                     <SelectItem value="cloudy">Cloudy (Limited sunlight)</SelectItem>
@@ -191,6 +180,7 @@ const DetailedPredict = () => {
                   placeholder="Enter temperature" 
                   min="-20" 
                   max="50"
+                  className="bg-white border-2 border-primary/20 shadow-sm"
                   onChange={(e) => setTemperature(e.target.value)}
                 />
               </div>
@@ -198,20 +188,13 @@ const DetailedPredict = () => {
               <div className="space-y-2">
                 <Label htmlFor="soil">Soil Type</Label>
                 <Select onValueChange={setSoil}>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
                     <SelectValue placeholder="Select soil type" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border-2 border-primary/20">
                     <SelectItem value="clay">Clay Soil (High nutrients, poor drainage)</SelectItem>
                     <SelectItem value="sandy">Sandy Soil (Good drainage, low nutrients)</SelectItem>
                     <SelectItem value="loamy">Loamy Soil (Balanced nutrients and drainage)</SelectItem>
-                    <SelectItem value="silt">Silt Soil (Fine particles, good water retention)</SelectItem>
-                    <SelectItem value="peat">Peat Soil (High organic matter)</SelectItem>
-                    <SelectItem value="chalk">Chalk Soil (Alkaline, good drainage)</SelectItem>
-                    <SelectItem value="alluvial">Alluvial Soil (River deposits, fertile)</SelectItem>
-                    <SelectItem value="black">Black Soil (Rich in minerals)</SelectItem>
-                    <SelectItem value="red">Red Soil (Iron-rich, acidic)</SelectItem>
-                    <SelectItem value="laterite">Laterite Soil (Poor nutrients, good drainage)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -219,20 +202,16 @@ const DetailedPredict = () => {
               <div className="space-y-2">
                 <Label htmlFor="field">Field Condition</Label>
                 <Select onValueChange={setField}>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
                     <SelectValue placeholder="Select field condition" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="excellent">Excellent - Well maintained (Optimal growing conditions)</SelectItem>
-                    <SelectItem value="good">Good - Minor issues (Slight imperfections)</SelectItem>
-                    <SelectItem value="fair">Fair - Some concerns (Needs improvement)</SelectItem>
-                    <SelectItem value="poor">Poor - Needs attention (Significant issues)</SelectItem>
-                    <SelectItem value="irrigated">Irrigated (Controlled water supply)</SelectItem>
-                    <SelectItem value="non_irrigated">Non-irrigated (Dependent on rainfall)</SelectItem>
+                  <SelectContent className="bg-white border-2 border-primary/20">
+                    <SelectItem value="excellent">Excellent - Well maintained</SelectItem>
+                    <SelectItem value="good">Good - Minor issues</SelectItem>
+                    <SelectItem value="fair">Fair - Some concerns</SelectItem>
+                    <SelectItem value="poor">Poor - Needs attention</SelectItem>
+                    <SelectItem value="waterlogged">Waterlogged (Excess water)</SelectItem>
                     <SelectItem value="terraced">Terraced (Stepped landscape)</SelectItem>
-                    <SelectItem value="sloped">Sloped (Angled terrain)</SelectItem>
-                    <SelectItem value="leveled">Leveled (Flat terrain)</SelectItem>
-                    <SelectItem value="waterlogged">Waterlogged (Excess water retention)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
