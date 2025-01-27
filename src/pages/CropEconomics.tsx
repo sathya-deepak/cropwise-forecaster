@@ -19,54 +19,119 @@ const CropEconomics = () => {
   const navigate = useNavigate();
   const { cropName } = location.state || { cropName: 'Unknown Crop' };
 
+  console.log('Rendering CropEconomics for crop:', cropName);
+
   const getCropEconomics = (crop: string): CropEconomics => {
     const economics: Record<string, CropEconomics> = {
       'Rice': {
         cropName: 'Rice',
-        setupCost: 25000,
-        maintenanceCost: 15000,
-        expectedYield: 4.5,
-        marketPrice: 20000,
+        setupCost: 45000,
+        maintenanceCost: 25000,
+        expectedYield: 5.5,
+        marketPrice: 22000,
         timeToHarvest: 4,
         imageUrl: 'https://images.unsplash.com/photo-1517022812141-23620dba5c23'
       },
       'Wheat': {
         cropName: 'Wheat',
-        setupCost: 20000,
-        maintenanceCost: 12000,
-        expectedYield: 3.8,
-        marketPrice: 22000,
+        setupCost: 35000,
+        maintenanceCost: 18000,
+        expectedYield: 4.2,
+        marketPrice: 25000,
         timeToHarvest: 5,
         imageUrl: 'https://images.unsplash.com/photo-1465379944081-7f47de8d74ac'
       },
       'Cotton': {
         cropName: 'Cotton',
-        setupCost: 35000,
-        maintenanceCost: 18000,
-        expectedYield: 2.5,
-        marketPrice: 45000,
+        setupCost: 55000,
+        maintenanceCost: 28000,
+        expectedYield: 2.8,
+        marketPrice: 65000,
         timeToHarvest: 6,
         imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2'
+      },
+      'Corn': {
+        cropName: 'Corn',
+        setupCost: 42000,
+        maintenanceCost: 22000,
+        expectedYield: 6.5,
+        marketPrice: 20000,
+        timeToHarvest: 4,
+        imageUrl: 'https://images.unsplash.com/photo-1471194402529-8e0f5a675de6'
+      },
+      'Soybeans': {
+        cropName: 'Soybeans',
+        setupCost: 38000,
+        maintenanceCost: 20000,
+        expectedYield: 3.8,
+        marketPrice: 42000,
+        timeToHarvest: 5,
+        imageUrl: 'https://images.unsplash.com/photo-1601459427108-47e20d579a35'
+      },
+      'Vegetables': {
+        cropName: 'Vegetables',
+        setupCost: 52000,
+        maintenanceCost: 30000,
+        expectedYield: 8.2,
+        marketPrice: 35000,
+        timeToHarvest: 3,
+        imageUrl: 'https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c'
+      },
+      'Winter Wheat': {
+        cropName: 'Winter Wheat',
+        setupCost: 38000,
+        maintenanceCost: 20000,
+        expectedYield: 4.5,
+        marketPrice: 26000,
+        timeToHarvest: 7,
+        imageUrl: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b'
+      },
+      'Sorghum': {
+        cropName: 'Sorghum',
+        setupCost: 32000,
+        maintenanceCost: 16000,
+        expectedYield: 4.8,
+        marketPrice: 18000,
+        timeToHarvest: 4,
+        imageUrl: 'https://images.unsplash.com/photo-1591086538595-596f9b0d9b4e'
+      },
+      'Sunflower': {
+        cropName: 'Sunflower',
+        setupCost: 36000,
+        maintenanceCost: 19000,
+        expectedYield: 2.5,
+        marketPrice: 45000,
+        timeToHarvest: 4,
+        imageUrl: 'https://images.unsplash.com/photo-1597848212624-a19eb35e2651'
       },
       // Default case
       'Unknown Crop': {
         cropName: 'Unknown Crop',
-        setupCost: 0,
-        maintenanceCost: 0,
-        expectedYield: 0,
-        marketPrice: 0,
-        timeToHarvest: 0,
+        setupCost: 40000,
+        maintenanceCost: 20000,
+        expectedYield: 4.0,
+        marketPrice: 25000,
+        timeToHarvest: 5,
         imageUrl: 'https://images.unsplash.com/photo-1493962853295-0fd70327578a'
       }
     };
 
-    return economics[crop] || economics['Unknown Crop'];
+    console.log('Getting economics for crop:', crop);
+    const result = economics[crop] || economics['Unknown Crop'];
+    console.log('Economics data:', result);
+    return result;
   };
 
   const economics = getCropEconomics(cropName);
   const totalCost = economics.setupCost + economics.maintenanceCost;
   const expectedRevenue = economics.expectedYield * economics.marketPrice;
   const expectedProfit = expectedRevenue - totalCost;
+
+  console.log('Calculated values:', {
+    totalCost,
+    expectedRevenue,
+    expectedProfit
+  });
 
   return (
     <div className="min-h-screen bg-cream p-6">
@@ -92,7 +157,7 @@ const CropEconomics = () => {
             <div className="space-y-2">
               <p><span className="font-semibold">Time to Harvest:</span> {economics.timeToHarvest} months</p>
               <p><span className="font-semibold">Expected Yield:</span> {economics.expectedYield} tons/acre</p>
-              <p><span className="font-semibold">Market Price:</span> ₹{economics.marketPrice}/ton</p>
+              <p><span className="font-semibold">Market Price:</span> ₹{economics.marketPrice.toLocaleString()}/ton</p>
             </div>
           </Card>
 
@@ -101,15 +166,15 @@ const CropEconomics = () => {
             <div className="space-y-4">
               <div className="p-4 bg-red-50 rounded-lg">
                 <h4 className="font-semibold text-red-700">Costs</h4>
-                <p>Setup Cost: ₹{economics.setupCost}</p>
-                <p>Maintenance: ₹{economics.maintenanceCost}</p>
-                <p className="font-semibold">Total Cost: ₹{totalCost}</p>
+                <p>Setup Cost: ₹{economics.setupCost.toLocaleString()}</p>
+                <p>Maintenance: ₹{economics.maintenanceCost.toLocaleString()}</p>
+                <p className="font-semibold">Total Cost: ₹{totalCost.toLocaleString()}</p>
               </div>
 
               <div className="p-4 bg-green-50 rounded-lg">
                 <h4 className="font-semibold text-green-700">Revenue</h4>
-                <p>Expected Revenue: ₹{expectedRevenue}</p>
-                <p className="font-semibold">Expected Profit: ₹{expectedProfit}</p>
+                <p>Expected Revenue: ₹{expectedRevenue.toLocaleString()}</p>
+                <p className="font-semibold">Expected Profit: ₹{expectedProfit.toLocaleString()}</p>
               </div>
 
               <div className="p-4 bg-blue-50 rounded-lg">
