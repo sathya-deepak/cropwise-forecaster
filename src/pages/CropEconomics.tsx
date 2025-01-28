@@ -22,8 +22,12 @@ const CropEconomics = () => {
   console.log('Rendering CropEconomics for crop:', cropName);
 
   const getCropEconomics = (crop: string): CropEconomics => {
+    // Normalize crop name to handle variations
+    const normalizedCrop = crop.toLowerCase().trim();
+    console.log('Normalized crop name:', normalizedCrop);
+
     const economics: Record<string, CropEconomics> = {
-      'Corn': {
+      'corn': {
         cropName: 'Corn',
         setupCost: 42000,
         maintenanceCost: 22000,
@@ -32,7 +36,7 @@ const CropEconomics = () => {
         timeToHarvest: 4,
         imageUrl: 'https://images.unsplash.com/photo-1471194402529-8e0f5a675de6'
       },
-      'Rice': {
+      'rice': {
         cropName: 'Rice',
         setupCost: 45000,
         maintenanceCost: 25000,
@@ -41,7 +45,7 @@ const CropEconomics = () => {
         timeToHarvest: 4,
         imageUrl: 'https://images.unsplash.com/photo-1517022812141-23620dba5c23'
       },
-      'Wheat': {
+      'wheat': {
         cropName: 'Wheat',
         setupCost: 35000,
         maintenanceCost: 18000,
@@ -50,7 +54,7 @@ const CropEconomics = () => {
         timeToHarvest: 5,
         imageUrl: 'https://images.unsplash.com/photo-1465379944081-7f47de8d74ac'
       },
-      'Cotton': {
+      'cotton': {
         cropName: 'Cotton',
         setupCost: 55000,
         maintenanceCost: 28000,
@@ -59,7 +63,7 @@ const CropEconomics = () => {
         timeToHarvest: 6,
         imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2'
       },
-      'Soybeans': {
+      'soybeans': {
         cropName: 'Soybeans',
         setupCost: 38000,
         maintenanceCost: 20000,
@@ -68,7 +72,7 @@ const CropEconomics = () => {
         timeToHarvest: 5,
         imageUrl: 'https://images.unsplash.com/photo-1601459427108-47e20d579a35'
       },
-      'Vegetables': {
+      'vegetables': {
         cropName: 'Vegetables',
         setupCost: 52000,
         maintenanceCost: 30000,
@@ -77,7 +81,7 @@ const CropEconomics = () => {
         timeToHarvest: 3,
         imageUrl: 'https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c'
       },
-      'Carrots': {
+      'carrots': {
         cropName: 'Carrots',
         setupCost: 38000,
         maintenanceCost: 20000,
@@ -86,7 +90,7 @@ const CropEconomics = () => {
         timeToHarvest: 3,
         imageUrl: 'https://images.unsplash.com/photo-1447175008436-054170c2e979'
       },
-      'Potatoes': {
+      'potatoes': {
         cropName: 'Potatoes',
         setupCost: 32000,
         maintenanceCost: 16000,
@@ -95,7 +99,7 @@ const CropEconomics = () => {
         timeToHarvest: 4,
         imageUrl: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655'
       },
-      'Peanuts': {
+      'peanuts': {
         cropName: 'Peanuts',
         setupCost: 36000,
         maintenanceCost: 19000,
@@ -104,7 +108,7 @@ const CropEconomics = () => {
         timeToHarvest: 4,
         imageUrl: 'https://images.unsplash.com/photo-1567529692333-de9fd6772897'
       },
-      'Cabbage': {
+      'cabbage': {
         cropName: 'Cabbage',
         setupCost: 40000,
         maintenanceCost: 20000,
@@ -113,21 +117,60 @@ const CropEconomics = () => {
         timeToHarvest: 3,
         imageUrl: 'https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f'
       },
-      // Default case
-      'Unknown Crop': {
-        cropName: 'Unknown Crop',
-        setupCost: 40000,
-        maintenanceCost: 20000,
-        expectedYield: 4.0,
-        marketPrice: 25000,
-        timeToHarvest: 5,
-        imageUrl: 'https://images.unsplash.com/photo-1493962853295-0fd70327578a'
+      // Additional crops to reduce "Unknown Crop" results
+      'tomatoes': {
+        cropName: 'Tomatoes',
+        setupCost: 45000,
+        maintenanceCost: 23000,
+        expectedYield: 5.0,
+        marketPrice: 30000,
+        timeToHarvest: 3,
+        imageUrl: 'https://images.unsplash.com/photo-1592841200221-a6898f307baa'
+      },
+      'onions': {
+        cropName: 'Onions',
+        setupCost: 35000,
+        maintenanceCost: 18000,
+        expectedYield: 4.2,
+        marketPrice: 28000,
+        timeToHarvest: 4,
+        imageUrl: 'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb'
+      },
+      'sugarcane': {
+        cropName: 'Sugarcane',
+        setupCost: 60000,
+        maintenanceCost: 32000,
+        expectedYield: 70.0,
+        marketPrice: 3500,
+        timeToHarvest: 12,
+        imageUrl: 'https://images.unsplash.com/photo-1596813362035-3edcff0c2487'
+      },
+      // Default case with similar crop suggestion
+      'unknown crop': {
+        cropName: 'Vegetables (Recommended)',
+        setupCost: 52000,
+        maintenanceCost: 30000,
+        expectedYield: 8.2,
+        marketPrice: 35000,
+        timeToHarvest: 3,
+        imageUrl: 'https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c'
       }
     };
 
-    console.log('Getting economics for crop:', crop);
-    const result = economics[crop] || economics['Unknown Crop'];
-    console.log('Economics data:', result);
+    console.log('Looking up economics for crop:', normalizedCrop);
+    // Try to find exact match first
+    let result = economics[normalizedCrop];
+    
+    // If no exact match, try to find similar crop
+    if (!result) {
+      console.log('No exact match found, looking for similar crops');
+      const similarCrop = Object.keys(economics).find(key => 
+        key.includes(normalizedCrop) || normalizedCrop.includes(key)
+      );
+      result = similarCrop ? economics[similarCrop] : economics['unknown crop'];
+      console.log('Similar crop found:', similarCrop || 'none, using default');
+    }
+
     return result;
   };
 
