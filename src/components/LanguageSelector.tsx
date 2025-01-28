@@ -1,15 +1,14 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-interface LanguageSelectorProps {
-  onLanguageChange: (language: string) => void;
-}
-
-const LanguageSelector = ({ onLanguageChange }: LanguageSelectorProps) => {
-  console.log('Rendering LanguageSelector');
+const LanguageSelector = () => {
+  const { language, setLanguage } = useLanguage();
+  
+  console.log('Rendering LanguageSelector with current language:', language);
   
   return (
     <div className="absolute top-4 right-4">
-      <Select onValueChange={onLanguageChange} defaultValue="en">
+      <Select value={language} onValueChange={setLanguage}>
         <SelectTrigger className="w-[120px] bg-white">
           <SelectValue placeholder="Language" />
         </SelectTrigger>

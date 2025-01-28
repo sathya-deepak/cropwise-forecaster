@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import LanguageSelector from '@/components/LanguageSelector';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Index = () => {
   const navigate = useNavigate();
-  const [currentLanguage, setCurrentLanguage] = useState('en');
+  const { language } = useLanguage();
 
-  console.log('Rendering Index with language:', currentLanguage);
+  console.log('Rendering Index with language:', language);
 
   const translations = {
     en: {
@@ -60,17 +60,16 @@ const Index = () => {
     }
   };
 
-  // Get translation with fallback to English if language not found
   const getTranslation = () => {
-    console.log('Getting translation for language:', currentLanguage);
-    return translations[currentLanguage as keyof typeof translations] || translations.en;
+    console.log('Getting translation for language:', language);
+    return translations[language as keyof typeof translations] || translations.en;
   };
 
   const t = getTranslation();
 
   return (
     <div className="min-h-screen bg-cream relative">
-      <LanguageSelector onLanguageChange={setCurrentLanguage} />
+      <LanguageSelector />
       
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-16">
