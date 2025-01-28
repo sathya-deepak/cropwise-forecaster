@@ -8,10 +8,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft } from 'lucide-react';
 import MonthYearSelector from '@/components/prediction/MonthYearSelector';
 import { useToast } from "@/components/ui/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { getTranslation } from "@/utils/translations";
+import LanguageSelector from '@/components/LanguageSelector';
 
 const Predict = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { language } = useLanguage();
+  const t = getTranslation(language);
+  
   const [result, setResult] = useState<string | null>(null);
   const [month, setMonth] = useState<string>('');
   const [year, setYear] = useState<string>('');
@@ -91,13 +97,11 @@ const Predict = () => {
       console.log('Setting prediction result:', prediction);
       setResult(prediction);
 
-      // Show success toast
       toast({
         title: "Prediction Generated",
         description: "Your crop prediction is ready!",
       });
 
-      // Wait a moment before navigating
       setTimeout(() => {
         const primaryCrop = prediction.split('we recommend planting ')[1].split(' as')[0];
         navigate('/crop-economics', { 
@@ -116,16 +120,17 @@ const Predict = () => {
 
   return (
     <div className="min-h-screen bg-cream p-6">
+      <LanguageSelector />
       <Button 
         variant="ghost" 
         onClick={() => navigate('/')}
         className="mb-6 text-primary hover:text-primary-dark"
       >
-        <ArrowLeft className="w-4 h-4 mr-2" /> Back to Home
+        <ArrowLeft className="w-4 h-4 mr-2" /> {t.backToHome}
       </Button>
 
       <div className="container mx-auto max-w-4xl">
-        <h1 className="text-4xl font-bold text-primary mb-8 text-center">Quick Crop Prediction</h1>
+        <h1 className="text-4xl font-bold text-primary mb-8 text-center">{t.quickPrediction}</h1>
         
         <Card className="p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -136,10 +141,10 @@ const Predict = () => {
 
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="weather">Weather Condition</Label>
+                <Label htmlFor="weather">{t.weatherCondition}</Label>
                 <Select onValueChange={setWeather}>
                   <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
-                    <SelectValue placeholder="Select weather" />
+                    <SelectValue placeholder={t.weatherCondition} />
                   </SelectTrigger>
                   <SelectContent className="bg-white border-2 border-primary/20">
                     <SelectItem value="sunny">Sunny (High light intensity)</SelectItem>
@@ -155,11 +160,11 @@ const Predict = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="temperature">Temperature (°C)</Label>
+                <Label htmlFor="temperature">{t.temperature}</Label>
                 <Input 
                   type="number" 
                   id="temperature" 
-                  placeholder="Enter temperature" 
+                  placeholder={t.temperature}
                   min="-20" 
                   max="50"
                   className="bg-white border-2 border-primary/20 shadow-sm"
@@ -168,10 +173,10 @@ const Predict = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="soil">Soil Type</Label>
+                <Label htmlFor="soil">{t.soilType}</Label>
                 <Select onValueChange={setSoil}>
                   <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
-                    <SelectValue placeholder="Select soil type" />
+                    <SelectValue placeholder={t.soilType} />
                   </SelectTrigger>
                   <SelectContent className="bg-white border-2 border-primary/20">
                     <SelectItem value="clay">Clay Soil (High nutrients, poor drainage)</SelectItem>
@@ -182,10 +187,10 @@ const Predict = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="field">Field Condition</Label>
+                <Label htmlFor="field">{t.fieldCondition}</Label>
                 <Select onValueChange={setField}>
                   <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
-                    <SelectValue placeholder="Select field condition" />
+                    <SelectValue placeholder={t.fieldCondition} />
                   </SelectTrigger>
                   <SelectContent className="bg-white border-2 border-primary/20">
                     <SelectItem value="excellent">Excellent - Well maintained</SelectItem>
@@ -200,13 +205,13 @@ const Predict = () => {
             </div>
 
             <Button type="submit" className="w-full bg-primary hover:bg-primary-dark text-white">
-              Get Crop Prediction
+              {t.getPrediction}
             </Button>
           </form>
 
           {result && (
             <div className="mt-6 p-4 bg-green-50 border border-primary rounded-lg">
-              <h3 className="text-lg font-semibold text-primary mb-2">Prediction Result</h3>
+              <h3 className="text-lg font-semibold text-primary mb-2">{t.predictionResult}</h3>
               <p className="text-gray-700">{result}</p>
             </div>
           )}

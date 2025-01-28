@@ -8,6 +8,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft } from 'lucide-react';
 import MonthYearSelector from '@/components/prediction/MonthYearSelector';
 import { useToast } from "@/components/ui/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { getTranslation } from "@/utils/translations";
+import LanguageSelector from '@/components/LanguageSelector';
 import {
   Table,
   TableBody,
@@ -20,6 +23,9 @@ import {
 const DetailedPredict = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { language } = useLanguage();
+  const t = getTranslation(language);
+  
   const [predictions, setPredictions] = useState<Array<{
     crop: string;
     suitability: number;
@@ -132,13 +138,11 @@ const DetailedPredict = () => {
       console.log('Setting prediction results:', results);
       setPredictions(results);
 
-      // Show success toast
       toast({
         title: "Analysis Complete",
         description: "Your detailed crop analysis is ready!",
       });
 
-      // Wait a moment before navigating
       if (results && results.length > 0) {
         setTimeout(() => {
           navigate('/crop-economics', { 
@@ -158,16 +162,17 @@ const DetailedPredict = () => {
 
   return (
     <div className="min-h-screen bg-cream p-6">
+      <LanguageSelector />
       <Button 
         variant="ghost" 
         onClick={() => navigate('/')}
         className="mb-6 text-primary hover:text-primary-dark"
       >
-        <ArrowLeft className="w-4 h-4 mr-2" /> Back to Home
+        <ArrowLeft className="w-4 h-4 mr-2" /> {t.backToHome}
       </Button>
 
       <div className="container mx-auto max-w-4xl">
-        <h1 className="text-4xl font-bold text-primary mb-8 text-center">Detailed Crop Analysis</h1>
+        <h1 className="text-4xl font-bold text-primary mb-8 text-center">{t.detailedTitle}</h1>
         
         <Card className="p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -178,10 +183,10 @@ const DetailedPredict = () => {
 
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="weather">Weather Condition</Label>
+                <Label htmlFor="weather">{t.weatherCondition}</Label>
                 <Select onValueChange={setWeather}>
                   <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
-                    <SelectValue placeholder="Select weather" />
+                    <SelectValue placeholder={t.weatherCondition} />
                   </SelectTrigger>
                   <SelectContent className="bg-white border-2 border-primary/20">
                     <SelectItem value="sunny">Sunny (High light intensity)</SelectItem>
@@ -197,11 +202,11 @@ const DetailedPredict = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="temperature">Temperature (°C)</Label>
+                <Label htmlFor="temperature">{t.temperature}</Label>
                 <Input 
                   type="number" 
                   id="temperature" 
-                  placeholder="Enter temperature" 
+                  placeholder={t.temperature}
                   min="-20" 
                   max="50"
                   className="bg-white border-2 border-primary/20 shadow-sm"
@@ -210,10 +215,10 @@ const DetailedPredict = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="soil">Soil Type</Label>
+                <Label htmlFor="soil">{t.soilType}</Label>
                 <Select onValueChange={setSoil}>
                   <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
-                    <SelectValue placeholder="Select soil type" />
+                    <SelectValue placeholder={t.soilType} />
                   </SelectTrigger>
                   <SelectContent className="bg-white border-2 border-primary/20">
                     <SelectItem value="clay">Clay Soil (High nutrients, poor drainage)</SelectItem>
@@ -224,10 +229,10 @@ const DetailedPredict = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="field">Field Condition</Label>
+                <Label htmlFor="field">{t.fieldCondition}</Label>
                 <Select onValueChange={setField}>
                   <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
-                    <SelectValue placeholder="Select field condition" />
+                    <SelectValue placeholder={t.fieldCondition} />
                   </SelectTrigger>
                   <SelectContent className="bg-white border-2 border-primary/20">
                     <SelectItem value="excellent">Excellent - Well maintained</SelectItem>
@@ -242,20 +247,20 @@ const DetailedPredict = () => {
             </div>
 
             <Button type="submit" className="w-full bg-primary hover:bg-primary-dark text-white">
-              Analyze Crop Suitability
+              {t.analyzeCrop}
             </Button>
           </form>
 
           {predictions && predictions.length > 0 && (
             <div className="mt-6">
-              <h2 className="text-xl font-semibold text-primary mb-4">Crop Suitability Analysis</h2>
+              <h2 className="text-xl font-semibold text-primary mb-4">{t.detailedTitle}</h2>
               <Table>
                 <TableHeader>
                   <TableRow>
                     <TableHead>Crop</TableHead>
-                    <TableHead>Suitability Score</TableHead>
-                    <TableHead>Expected Yield</TableHead>
-                    <TableHead>Key Conditions</TableHead>
+                    <TableHead>{t.suitabilityScore}</TableHead>
+                    <TableHead>{t.expectedYield}</TableHead>
+                    <TableHead>{t.keyConditions}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
