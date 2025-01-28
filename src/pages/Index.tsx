@@ -22,42 +22,6 @@ const Index = () => {
       easyToUse: "Easy to Use",
       easyToUseDesc: "Simple interface for quick and detailed predictions"
     },
-    es: {
-      title: "Sistema de Predicción de Cultivos",
-      subtitle: "Tome decisiones basadas en datos para sus necesidades agrícolas",
-      quickPrediction: "Predicción Rápida",
-      detailedAnalysis: "Análisis Detallado",
-      dataDriven: "Basado en Datos",
-      dataDrivenDesc: "Tome decisiones informadas basadas en datos y análisis científicos",
-      comprehensive: "Integral",
-      comprehensiveDesc: "Considere múltiples factores que afectan el crecimiento de los cultivos",
-      easyToUse: "Fácil de Usar",
-      easyToUseDesc: "Interfaz simple para predicciones rápidas y detalladas"
-    },
-    fr: {
-      title: "Système de Prédiction des Cultures",
-      subtitle: "Prenez des décisions basées sur les données pour vos besoins agricoles",
-      quickPrediction: "Prédiction Rapide",
-      detailedAnalysis: "Analyse Détaillée",
-      dataDriven: "Basé sur les Données",
-      dataDrivenDesc: "Prenez des décisions éclairées basées sur des données et analyses scientifiques",
-      comprehensive: "Complet",
-      comprehensiveDesc: "Prenez en compte de multiples facteurs affectant la croissance des cultures",
-      easyToUse: "Facile à Utiliser",
-      easyToUseDesc: "Interface simple pour des prédictions rapides et détaillées"
-    },
-    de: {
-      title: "Ernte-Vorhersagesystem",
-      subtitle: "Treffen Sie datengesteuerte Entscheidungen für Ihre landwirtschaftlichen Bedürfnisse",
-      quickPrediction: "Schnelle Vorhersage",
-      detailedAnalysis: "Detaillierte Analyse",
-      dataDriven: "Datengesteuert",
-      dataDrivenDesc: "Treffen Sie fundierte Entscheidungen basierend auf wissenschaftlichen Daten",
-      comprehensive: "Umfassend",
-      comprehensiveDesc: "Berücksichtigen Sie mehrere Faktoren, die das Pflanzenwachstum beeinflussen",
-      easyToUse: "Einfach zu Bedienen",
-      easyToUseDesc: "Einfache Benutzeroberfläche für schnelle und detaillierte Vorhersagen"
-    },
     hi: {
       title: "फसल पूर्वानुमान प्रणाली",
       subtitle: "अपनी कृषि आवश्यकताओं के लिए डेटा-संचालित निर्णय लें",
@@ -69,10 +33,40 @@ const Index = () => {
       comprehensiveDesc: "फसल विकास को प्रभावित करने वाले कई कारकों पर विचार करें",
       easyToUse: "उपयोग में आसान",
       easyToUseDesc: "त्वरित और विस्तृत पूर्वानुमान के लिए सरल इंटरफ़ेस"
+    },
+    te: {
+      title: "పంట అంచనా వ్యవస్థ",
+      subtitle: "మీ వ్యవసాయ అవసరాలకు డేటా ఆధారిత నిర్ణయాలు తీసుకోండి",
+      quickPrediction: "త్వరిత అంచనా",
+      detailedAnalysis: "వివరణాత్మక విశ్లేషణ",
+      dataDriven: "డేటా ఆధారిత",
+      dataDrivenDesc: "శాస్త్రీయ డేటా మరియు విశ్లేషణ ఆధారంగా సమాచార నిర్ణయాలు తీసుకోండి",
+      comprehensive: "సమగ్రమైన",
+      comprehensiveDesc: "పంట పెరుగుదలను ప్రభావితం చేసే అనేక కారకాలను పరిగణించండి",
+      easyToUse: "ఉపయోగించడానికి సులభం",
+      easyToUseDesc: "త్వరిత మరియు వివరణాత్మక అంచనాల కోసం సరళమైన ఇంటర్ఫేస్"
+    },
+    ta: {
+      title: "பயிர் கணிப்பு அமைப்பு",
+      subtitle: "உங்கள் விவசாய தேவைகளுக்கான தரவு சார்ந்த முடிவுகளை எடுக்கவும்",
+      quickPrediction: "விரைவான கணிப்பு",
+      detailedAnalysis: "விரிவான பகுப்பாய்வு",
+      dataDriven: "தரவு சார்ந்த",
+      dataDrivenDesc: "அறிவியல் தரவு மற்றும் பகுப்பாய்வின் அடிப்படையில் தகவலறிந்த முடிவுகளை எடுக்கவும்",
+      comprehensive: "விரிவான",
+      comprehensiveDesc: "பயிர் வளர்ச்சியை பாதிக்கும் பல காரணிகளை கருத்தில் கொள்ளுங்கள்",
+      easyToUse: "பயன்படுத்த எளிதானது",
+      easyToUseDesc: "விரைவான மற்றும் விரிவான கணிப்புகளுக்கான எளிய இடைமுகம்"
     }
   };
 
-  const t = translations[currentLanguage as keyof typeof translations];
+  // Get translation with fallback to English if language not found
+  const getTranslation = () => {
+    console.log('Getting translation for language:', currentLanguage);
+    return translations[currentLanguage as keyof typeof translations] || translations.en;
+  };
+
+  const t = getTranslation();
 
   return (
     <div className="min-h-screen bg-cream relative">
