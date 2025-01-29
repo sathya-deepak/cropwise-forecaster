@@ -46,20 +46,28 @@ const DetailedPredict = () => {
 
     const soilBasedCrops: Record<string, Array<{ crop: string; baseScore: number; yield: string }>> = {
       'clay': [
+        { crop: 'Rice', baseScore: 90, yield: '4.0-4.5 tons/acre' },
         { crop: 'Wheat', baseScore: 85, yield: '3.5-4.2 tons/acre' },
-        { crop: 'Rice', baseScore: 80, yield: '3.2-3.8 tons/acre' },
-        { crop: 'Cabbage', baseScore: 75, yield: '2.8-3.4 tons/acre' },
-        { crop: 'Cotton', baseScore: 70, yield: '2.5-3.0 tons/acre' }
+        { crop: 'Cotton', baseScore: 80, yield: '2.5-3.0 tons/acre' },
+        { crop: 'Pomegranate', baseScore: 75, yield: '15-20 tons/acre' },
+        { crop: 'Guava', baseScore: 70, yield: '12-15 tons/acre' },
+        { crop: 'Soybeans', baseScore: 78, yield: '2.8-3.4 tons/acre' }
       ],
       'sandy': [
-        { crop: 'Carrots', baseScore: 90, yield: '2.8-3.5 tons/acre' },
-        { crop: 'Potatoes', baseScore: 85, yield: '2.5-3.2 tons/acre' },
-        { crop: 'Peanuts', baseScore: 80, yield: '2.2-2.8 tons/acre' }
+        { crop: 'Carrots', baseScore: 88, yield: '20-25 tons/acre' },
+        { crop: 'Watermelon', baseScore: 85, yield: '25-30 tons/acre' },
+        { crop: 'Coconut', baseScore: 82, yield: '10-12 tons/acre' },
+        { crop: 'Dragon Fruit', baseScore: 80, yield: '8-10 tons/acre' },
+        { crop: 'Cashews', baseScore: 75, yield: '0.8-1.2 tons/acre' },
+        { crop: 'Peanuts', baseScore: 78, yield: '2.2-2.8 tons/acre' }
       ],
       'loamy': [
-        { crop: 'Corn', baseScore: 95, yield: '4.0-4.8 tons/acre' },
-        { crop: 'Soybeans', baseScore: 90, yield: '3.8-4.5 tons/acre' },
-        { crop: 'Vegetables', baseScore: 85, yield: '3.5-4.2 tons/acre' }
+        { crop: 'Mango', baseScore: 95, yield: '8-12 tons/acre' },
+        { crop: 'Banana', baseScore: 92, yield: '20-25 tons/acre' },
+        { crop: 'Corn', baseScore: 90, yield: '4.0-4.8 tons/acre' },
+        { crop: 'Grapes', baseScore: 88, yield: '8-10 tons/acre' },
+        { crop: 'Apples', baseScore: 85, yield: '15-20 tons/acre' },
+        { crop: 'Oranges', baseScore: 82, yield: '18-22 tons/acre' }
       ]
     };
 
@@ -71,32 +79,42 @@ const DetailedPredict = () => {
         let finalScore = crop.baseScore;
         let conditions = [];
 
-        // Adjust score based on temperature
+        // Temperature adjustments
         if (tempNum < 10) {
-          finalScore -= 20;
-          conditions.push('Cold temperature reduces yield');
+          if (['Apples', 'Pears'].includes(crop.crop)) {
+            finalScore += 10;
+            conditions.push('Ideal cold weather for fruit development');
+          } else {
+            finalScore -= 20;
+            conditions.push('Cold temperature reduces yield');
+          }
         } else if (tempNum > 30) {
-          finalScore -= 15;
-          conditions.push('High temperature affects growth');
+          if (['Mango', 'Papaya', 'Dragon Fruit'].includes(crop.crop)) {
+            finalScore += 15;
+            conditions.push('Optimal tropical temperature');
+          } else {
+            finalScore -= 15;
+            conditions.push('High temperature affects growth');
+          }
         } else {
           finalScore += 5;
           conditions.push('Optimal temperature range');
         }
 
-        // Adjust score based on weather
-        if (weather === 'rainy' && crop.crop === 'Rice') {
-          finalScore += 10;
+        // Weather adjustments
+        if (weather === 'rainy' && ['Rice', 'Taro'].includes(crop.crop)) {
+          finalScore += 15;
           conditions.push('Ideal rainy conditions');
-        } else if (weather === 'sunny' && ['Wheat', 'Cotton'].includes(crop.crop)) {
-          finalScore += 8;
-          conditions.push('Good sunlight exposure');
+        } else if (weather === 'sunny' && ['Grapes', 'Olives', 'Dates'].includes(crop.crop)) {
+          finalScore += 12;
+          conditions.push('Perfect sunny conditions');
         }
 
-        // Adjust score based on field condition
+        // Field condition adjustments
         if (field === 'waterlogged' && crop.crop === 'Rice') {
           finalScore += 15;
           conditions.push('Perfect for paddy cultivation');
-        } else if (field === 'terraced' && ['Vegetables'].includes(crop.crop)) {
+        } else if (field === 'terraced' && ['Grapes', 'Tea'].includes(crop.crop)) {
           finalScore += 12;
           conditions.push('Suitable for terrace farming');
         }

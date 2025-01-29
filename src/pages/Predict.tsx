@@ -36,15 +36,15 @@ const Predict = () => {
 
     const soilBasedCrops: Record<string, { crops: string[], yield: string }> = {
       'clay': { 
-        crops: ['Wheat', 'Rice', 'Cabbage'],
+        crops: ['Rice', 'Wheat', 'Cotton', 'Soybeans', 'Pomegranate', 'Guava'],
         yield: '3.5-4.2 tons/acre'
       },
       'sandy': {
-        crops: ['Carrots', 'Potatoes', 'Peanuts'],
+        crops: ['Carrots', 'Potatoes', 'Peanuts', 'Watermelon', 'Coconut', 'Cashews', 'Dragon Fruit'],
         yield: '2.8-3.5 tons/acre'
       },
       'loamy': {
-        crops: ['Corn', 'Soybeans', 'Vegetables'],
+        crops: ['Corn', 'Soybeans', 'Vegetables', 'Apples', 'Oranges', 'Grapes', 'Mango', 'Banana'],
         yield: '4.0-4.8 tons/acre'
       }
     };
@@ -55,27 +55,33 @@ const Predict = () => {
       expectedYield = soilBasedCrops[soil].yield;
     }
 
+    // Temperature-based recommendations
     if (tempNum < 10) {
       primaryCrop = 'Winter Wheat';
-      secondaryCrops = ['Rye', 'Barley'];
+      secondaryCrops = ['Rye', 'Barley', 'Apples', 'Pears'];
     } else if (tempNum > 30) {
       primaryCrop = 'Sorghum';
-      secondaryCrops = ['Millet', 'Cotton'];
+      secondaryCrops = ['Millet', 'Cotton', 'Mango', 'Papaya', 'Pineapple'];
+    } else if (tempNum >= 20 && tempNum <= 30) {
+      if (!secondaryCrops.includes('Citrus Fruits')) {
+        secondaryCrops.push('Citrus Fruits', 'Grapes', 'Pomegranate');
+      }
     }
 
+    // Weather-based adjustments
     if (weather === 'rainy' || weather === 'humid') {
       if (!secondaryCrops.includes('Rice')) {
-        secondaryCrops.unshift('Rice');
+        secondaryCrops.unshift('Rice', 'Taro', 'Water Chestnut');
       }
     } else if (weather === 'sunny' || weather === 'partially_cloudy') {
       if (!secondaryCrops.includes('Sunflower')) {
-        secondaryCrops.push('Sunflower');
+        secondaryCrops.push('Sunflower', 'Olives', 'Dates');
       }
     }
 
     console.log('Generated prediction:', { primaryCrop, secondaryCrops, expectedYield });
     
-    return `Based on the provided conditions, we recommend planting ${primaryCrop} as your primary crop. Expected yield: ${expectedYield}. Secondary recommendations: ${secondaryCrops.join(' or ')}.`;
+    return `Based on the provided conditions, we recommend planting ${primaryCrop} as your primary crop. Expected yield: ${expectedYield}. Secondary recommendations: ${secondaryCrops.join(', ')}.`;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
