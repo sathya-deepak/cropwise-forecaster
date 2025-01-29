@@ -46,28 +46,28 @@ const DetailedPredict = () => {
 
     const soilBasedCrops: Record<string, Array<{ crop: string; baseScore: number; yield: string }>> = {
       'clay': [
-        { crop: 'Rice', baseScore: 90, yield: '4.0-4.5 tons/acre' },
-        { crop: 'Wheat', baseScore: 85, yield: '3.5-4.2 tons/acre' },
-        { crop: 'Cotton', baseScore: 80, yield: '2.5-3.0 tons/acre' },
-        { crop: 'Pomegranate', baseScore: 75, yield: '15-20 tons/acre' },
-        { crop: 'Guava', baseScore: 70, yield: '12-15 tons/acre' },
-        { crop: 'Soybeans', baseScore: 78, yield: '2.8-3.4 tons/acre' }
+        { crop: 'Wheat', baseScore: 90, yield: '3.5-4.2 tons/acre' },
+        { crop: 'Rice', baseScore: 88, yield: '4.0-4.5 tons/acre' },
+        { crop: 'Sugarcane', baseScore: 85, yield: '60-80 tons/acre' },
+        { crop: 'Cotton', baseScore: 82, yield: '2.5-3.0 tons/acre' },
+        { crop: 'Jute', baseScore: 80, yield: '2.0-2.5 tons/acre' },
+        { crop: 'Tobacco', baseScore: 75, yield: '1.8-2.2 tons/acre' }
       ],
       'sandy': [
-        { crop: 'Carrots', baseScore: 88, yield: '20-25 tons/acre' },
-        { crop: 'Watermelon', baseScore: 85, yield: '25-30 tons/acre' },
+        { crop: 'Groundnut', baseScore: 88, yield: '2.0-2.5 tons/acre' },
+        { crop: 'Pearl Millet', baseScore: 85, yield: '2.5-3.0 tons/acre' },
         { crop: 'Coconut', baseScore: 82, yield: '10-12 tons/acre' },
-        { crop: 'Dragon Fruit', baseScore: 80, yield: '8-10 tons/acre' },
-        { crop: 'Cashews', baseScore: 75, yield: '0.8-1.2 tons/acre' },
-        { crop: 'Peanuts', baseScore: 78, yield: '2.2-2.8 tons/acre' }
+        { crop: 'Cashew', baseScore: 80, yield: '0.8-1.2 tons/acre' },
+        { crop: 'Sweet Potato', baseScore: 78, yield: '8-10 tons/acre' },
+        { crop: 'Sesame', baseScore: 75, yield: '0.6-0.8 tons/acre' }
       ],
       'loamy': [
-        { crop: 'Mango', baseScore: 95, yield: '8-12 tons/acre' },
-        { crop: 'Banana', baseScore: 92, yield: '20-25 tons/acre' },
-        { crop: 'Corn', baseScore: 90, yield: '4.0-4.8 tons/acre' },
-        { crop: 'Grapes', baseScore: 88, yield: '8-10 tons/acre' },
-        { crop: 'Apples', baseScore: 85, yield: '15-20 tons/acre' },
-        { crop: 'Oranges', baseScore: 82, yield: '18-22 tons/acre' }
+        { crop: 'Maize', baseScore: 95, yield: '4.0-4.8 tons/acre' },
+        { crop: 'Sugarcane', baseScore: 92, yield: '70-90 tons/acre' },
+        { crop: 'Cotton', baseScore: 90, yield: '2.8-3.2 tons/acre' },
+        { crop: 'Soybean', baseScore: 88, yield: '2.5-3.0 tons/acre' },
+        { crop: 'Sorghum', baseScore: 85, yield: '3.0-3.5 tons/acre' },
+        { crop: 'Mustard', baseScore: 82, yield: '1.2-1.5 tons/acre' }
       ]
     };
 

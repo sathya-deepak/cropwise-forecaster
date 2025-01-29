@@ -36,15 +36,15 @@ const Predict = () => {
 
     const soilBasedCrops: Record<string, { crops: string[], yield: string }> = {
       'clay': { 
-        crops: ['Rice', 'Wheat', 'Cotton', 'Soybeans', 'Pomegranate', 'Guava'],
+        crops: ['Wheat', 'Rice', 'Sugarcane', 'Cotton', 'Jute', 'Tobacco'],
         yield: '3.5-4.2 tons/acre'
       },
       'sandy': {
-        crops: ['Carrots', 'Potatoes', 'Peanuts', 'Watermelon', 'Coconut', 'Cashews', 'Dragon Fruit'],
+        crops: ['Groundnut', 'Watermelon', 'Coconut', 'Cashew', 'Pearl Millet', 'Sweet Potato'],
         yield: '2.8-3.5 tons/acre'
       },
       'loamy': {
-        crops: ['Corn', 'Soybeans', 'Vegetables', 'Apples', 'Oranges', 'Grapes', 'Mango', 'Banana'],
+        crops: ['Maize', 'Sugarcane', 'Cotton', 'Banana', 'Mango', 'Coffee'],
         yield: '4.0-4.8 tons/acre'
       }
     };
@@ -58,24 +58,24 @@ const Predict = () => {
     // Temperature-based recommendations
     if (tempNum < 10) {
       primaryCrop = 'Winter Wheat';
-      secondaryCrops = ['Rye', 'Barley', 'Apples', 'Pears'];
+      secondaryCrops = ['Barley', 'Oats', 'Rye', 'Mustard'];
     } else if (tempNum > 30) {
-      primaryCrop = 'Sorghum';
-      secondaryCrops = ['Millet', 'Cotton', 'Mango', 'Papaya', 'Pineapple'];
+      primaryCrop = 'Sugarcane';
+      secondaryCrops = ['Cotton', 'Pearl Millet', 'Sorghum', 'Sesame'];
     } else if (tempNum >= 20 && tempNum <= 30) {
-      if (!secondaryCrops.includes('Citrus Fruits')) {
-        secondaryCrops.push('Citrus Fruits', 'Grapes', 'Pomegranate');
+      if (!secondaryCrops.includes('Rice')) {
+        secondaryCrops.push('Rice', 'Maize', 'Soybean');
       }
     }
 
     // Weather-based adjustments
     if (weather === 'rainy' || weather === 'humid') {
       if (!secondaryCrops.includes('Rice')) {
-        secondaryCrops.unshift('Rice', 'Taro', 'Water Chestnut');
+        secondaryCrops.unshift('Rice', 'Jute', 'Tea');
       }
     } else if (weather === 'sunny' || weather === 'partially_cloudy') {
-      if (!secondaryCrops.includes('Sunflower')) {
-        secondaryCrops.push('Sunflower', 'Olives', 'Dates');
+      if (!secondaryCrops.includes('Cotton')) {
+        secondaryCrops.push('Cotton', 'Sunflower', 'Castor');
       }
     }
 
