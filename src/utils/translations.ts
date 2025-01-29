@@ -1,3 +1,5 @@
+import { SupportedLanguage } from '@/contexts/LanguageContext';
+
 export const translations = {
   en: {
     // Index page
@@ -189,9 +191,7 @@ export const translations = {
   }
 };
 
-export type Language = keyof typeof translations;
-
-export const getTranslation = (language: Language) => {
+export const getTranslation = (language: SupportedLanguage) => {
   console.log('Getting translation for language:', language);
   return translations[language] || translations.en;
 };

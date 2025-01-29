@@ -1,14 +1,16 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
+type SupportedLanguage = 'en' | 'hi' | 'te' | 'ta';
+
 type LanguageContextType = {
-  language: string;
-  setLanguage: (language: string) => void;
+  language: SupportedLanguage;
+  setLanguage: (language: SupportedLanguage) => void;
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState<SupportedLanguage>('en');
 
   console.log('LanguageProvider rendering with language:', language);
 
@@ -26,3 +28,5 @@ export function useLanguage() {
   }
   return context;
 }
+
+export type { SupportedLanguage };

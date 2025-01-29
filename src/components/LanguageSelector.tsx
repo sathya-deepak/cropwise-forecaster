@@ -1,14 +1,18 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, SupportedLanguage } from "@/contexts/LanguageContext";
 
 const LanguageSelector = () => {
   const { language, setLanguage } = useLanguage();
   
   console.log('Rendering LanguageSelector with current language:', language);
   
+  const handleValueChange = (value: string) => {
+    setLanguage(value as SupportedLanguage);
+  };
+  
   return (
     <div className="absolute top-4 right-4">
-      <Select value={language} onValueChange={setLanguage}>
+      <Select value={language} onValueChange={handleValueChange}>
         <SelectTrigger className="w-[120px] bg-white">
           <SelectValue placeholder="Language" />
         </SelectTrigger>
