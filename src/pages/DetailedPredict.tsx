@@ -142,14 +142,6 @@ const DetailedPredict = () => {
         title: "Analysis Complete",
         description: "Your detailed crop analysis is ready!",
       });
-
-      if (results && results.length > 0) {
-        setTimeout(() => {
-          navigate('/crop-economics', { 
-            state: { cropName: results[0].crop }
-          });
-        }, 3000);
-      }
     } catch (error) {
       console.error('Error generating predictions:', error);
       toast({
@@ -158,6 +150,12 @@ const DetailedPredict = () => {
         variant: "destructive"
       });
     }
+  };
+
+  const handleCheckEconomics = (cropName: string) => {
+    navigate('/crop-economics', { 
+      state: { cropName }
+    });
   };
 
   return (
@@ -261,6 +259,7 @@ const DetailedPredict = () => {
                     <TableHead>{t.suitabilityScore}</TableHead>
                     <TableHead>{t.expectedYield}</TableHead>
                     <TableHead>{t.keyConditions}</TableHead>
+                    <TableHead>Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -280,6 +279,15 @@ const DetailedPredict = () => {
                       </TableCell>
                       <TableCell>{prediction.yield}</TableCell>
                       <TableCell className="text-sm text-gray-600">{prediction.conditions}</TableCell>
+                      <TableCell>
+                        <Button
+                          onClick={() => handleCheckEconomics(prediction.crop)}
+                          variant="secondary"
+                          size="sm"
+                        >
+                          Check Economics
+                        </Button>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

@@ -19,6 +19,7 @@ const Predict = () => {
   const t = getTranslation(language);
   
   const [result, setResult] = useState<string | null>(null);
+  const [predictedCrop, setPredictedCrop] = useState<string | null>(null);
   const [month, setMonth] = useState<string>('');
   const [year, setYear] = useState<string>('');
   const [weather, setWeather] = useState<string>('');
@@ -96,24 +97,29 @@ const Predict = () => {
       const prediction = getCropRecommendation();
       console.log('Setting prediction result:', prediction);
       setResult(prediction);
+      
+      // Extract primary crop from prediction
+      const primaryCrop = prediction.split('we recommend planting ')[1].split(' as')[0];
+      setPredictedCrop(primaryCrop);
 
       toast({
         title: "Prediction Generated",
         description: "Your crop prediction is ready!",
       });
-
-      setTimeout(() => {
-        const primaryCrop = prediction.split('we recommend planting ')[1].split(' as')[0];
-        navigate('/crop-economics', { 
-          state: { cropName: primaryCrop }
-        });
-      }, 2000);
     } catch (error) {
       console.error('Error generating prediction:', error);
       toast({
         title: "Error",
         description: "Failed to generate prediction. Please try again.",
         variant: "destructive"
+      });
+    }
+  };
+
+  const handleCheckEconomics = () => {
+    if (predictedCrop) {
+      navigate('/crop-economics', { 
+        state: { cropName: predictedCrop }
       });
     }
   };
@@ -210,9 +216,18 @@ const Predict = () => {
           </form>
 
           {result && (
-            <div className="mt-6 p-4 bg-green-50 border border-primary rounded-lg">
-              <h3 className="text-lg font-semibold text-primary mb-2">{t.predictionResult}</h3>
-              <p className="text-gray-700">{result}</p>
+            <div className="mt-6 space-y-4">
+              <div className="p-4 bg-green-50 border border-primary rounded-lg">
+                <h3 className="text-lg font-semibold text-primary mb-2">{t.predictionResult}</h3>
+                <p className="text-gray-700">{result}</p>
+              </div>
+              
+              <Button 
+                onClick={handleCheckEconomics}
+                className="w-full bg-secondary hover:bg-secondary-dark text-white"
+              >
+                Check Economic Analysis
+              </Button>
             </div>
           )}
         </Card>
