@@ -141,7 +141,7 @@ const CropEconomics = () => {
         expectedYield: 70.0,
         marketPrice: 3500,
         timeToHarvest: 12,
-        imageUrl: 'https://images.unsplash.com/photo-1622821775271-e7e5ea520b50'  // Sugarcane field
+        imageUrl: 'https://images.unsplash.com/photo-1597362925123-77861d3fbac7'  // Updated sugarcane image
       },
       'unknown crop': {
         cropName: 'Vegetables (Recommended)',
