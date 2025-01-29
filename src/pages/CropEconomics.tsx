@@ -22,7 +22,6 @@ const CropEconomics = () => {
   console.log('Rendering CropEconomics for crop:', cropName);
 
   const getCropEconomics = (crop: string): CropEconomics => {
-    // Normalize crop name to handle variations
     const normalizedCrop = crop.toLowerCase().trim();
     console.log('Normalized crop name:', normalizedCrop);
 
@@ -34,7 +33,7 @@ const CropEconomics = () => {
         expectedYield: 6.5,
         marketPrice: 20000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1471194402529-8e0f5a675de6'
+        imageUrl: 'https://images.unsplash.com/photo-1601478192042-1fe2d7f0bc30'  // Close-up of corn
       },
       'rice': {
         cropName: 'Rice',
@@ -43,7 +42,7 @@ const CropEconomics = () => {
         expectedYield: 5.5,
         marketPrice: 22000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1517022812141-23620dba5c23'
+        imageUrl: 'https://images.unsplash.com/photo-1568347355280-d33fdf77d42a'  // Rice paddy field
       },
       'wheat': {
         cropName: 'Wheat',
@@ -52,7 +51,7 @@ const CropEconomics = () => {
         expectedYield: 4.2,
         marketPrice: 25000,
         timeToHarvest: 5,
-        imageUrl: 'https://images.unsplash.com/photo-1465379944081-7f47de8d74ac'
+        imageUrl: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b'  // Golden wheat field
       },
       'cotton': {
         cropName: 'Cotton',
@@ -61,7 +60,7 @@ const CropEconomics = () => {
         expectedYield: 2.8,
         marketPrice: 65000,
         timeToHarvest: 6,
-        imageUrl: 'https://images.unsplash.com/photo-1452378174528-3090a4bba7b2'
+        imageUrl: 'https://images.unsplash.com/photo-1594014302329-43d0097b2372'  // Cotton plant with bolls
       },
       'soybeans': {
         cropName: 'Soybeans',
@@ -70,7 +69,7 @@ const CropEconomics = () => {
         expectedYield: 3.8,
         marketPrice: 42000,
         timeToHarvest: 5,
-        imageUrl: 'https://images.unsplash.com/photo-1601459427108-47e20d579a35'
+        imageUrl: 'https://images.unsplash.com/photo-1628697289879-69c38b7fb05d'  // Soybean field
       },
       'vegetables': {
         cropName: 'Vegetables',
@@ -79,7 +78,7 @@ const CropEconomics = () => {
         expectedYield: 8.2,
         marketPrice: 35000,
         timeToHarvest: 3,
-        imageUrl: 'https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c'
+        imageUrl: 'https://images.unsplash.com/photo-1540420773420-3366772f4999'  // Fresh vegetables
       },
       'carrots': {
         cropName: 'Carrots',
@@ -88,7 +87,7 @@ const CropEconomics = () => {
         expectedYield: 4.5,
         marketPrice: 26000,
         timeToHarvest: 3,
-        imageUrl: 'https://images.unsplash.com/photo-1447175008436-054170c2e979'
+        imageUrl: 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37'  // Fresh carrots
       },
       'potatoes': {
         cropName: 'Potatoes',
@@ -97,7 +96,7 @@ const CropEconomics = () => {
         expectedYield: 4.8,
         marketPrice: 18000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655'
+        imageUrl: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655'  // Raw potatoes
       },
       'peanuts': {
         cropName: 'Peanuts',
@@ -106,7 +105,7 @@ const CropEconomics = () => {
         expectedYield: 2.5,
         marketPrice: 45000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1567529692333-de9fd6772897'
+        imageUrl: 'https://images.unsplash.com/photo-1587486937303-32eaa2134b78'  // Fresh peanuts
       },
       'cabbage': {
         cropName: 'Cabbage',
@@ -115,9 +114,8 @@ const CropEconomics = () => {
         expectedYield: 4.0,
         marketPrice: 25000,
         timeToHarvest: 3,
-        imageUrl: 'https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f'
+        imageUrl: 'https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f'  // Fresh cabbage
       },
-      // Additional crops to reduce "Unknown Crop" results
       'tomatoes': {
         cropName: 'Tomatoes',
         setupCost: 45000,
@@ -125,7 +123,7 @@ const CropEconomics = () => {
         expectedYield: 5.0,
         marketPrice: 30000,
         timeToHarvest: 3,
-        imageUrl: 'https://images.unsplash.com/photo-1592841200221-a6898f307baa'
+        imageUrl: 'https://images.unsplash.com/photo-1592841200221-a6898f307baa'  // Fresh tomatoes
       },
       'onions': {
         cropName: 'Onions',
@@ -134,7 +132,7 @@ const CropEconomics = () => {
         expectedYield: 4.2,
         marketPrice: 28000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb'
+        imageUrl: 'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb'  // Fresh onions
       },
       'sugarcane': {
         cropName: 'Sugarcane',
@@ -143,9 +141,8 @@ const CropEconomics = () => {
         expectedYield: 70.0,
         marketPrice: 3500,
         timeToHarvest: 12,
-        imageUrl: 'https://images.unsplash.com/photo-1596813362035-3edcff0c2487'
+        imageUrl: 'https://images.unsplash.com/photo-1622821775271-e7e5ea520b50'  // Sugarcane field
       },
-      // Default case with similar crop suggestion
       'unknown crop': {
         cropName: 'Vegetables (Recommended)',
         setupCost: 52000,
@@ -153,15 +150,13 @@ const CropEconomics = () => {
         expectedYield: 8.2,
         marketPrice: 35000,
         timeToHarvest: 3,
-        imageUrl: 'https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c'
+        imageUrl: 'https://images.unsplash.com/photo-1540420773420-3366772f4999'  // Generic vegetables image
       }
     };
 
     console.log('Looking up economics for crop:', normalizedCrop);
-    // Try to find exact match first
     let result = economics[normalizedCrop];
     
-    // If no exact match, try to find similar crop
     if (!result) {
       console.log('No exact match found, looking for similar crops');
       const similarCrop = Object.keys(economics).find(key => 
