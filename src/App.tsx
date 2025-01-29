@@ -6,6 +6,8 @@ import CropEconomics from "@/pages/CropEconomics";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 
 function App() {
+  console.log('Rendering App component');
+  
   return (
     <LanguageProvider>
       <Routes>
