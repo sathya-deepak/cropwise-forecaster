@@ -69,7 +69,7 @@ const CropEconomics = () => {
         expectedYield: 2.5,
         marketPrice: 45000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1587486937303-32eaa2134b78'
+        imageUrl: '/lovable-uploads/747624ef-1f0b-413f-a5b3-73d36fb48a54.png'
       },
       'peanuts': {
         cropName: 'Groundnut',
@@ -78,7 +78,7 @@ const CropEconomics = () => {
         expectedYield: 2.5,
         marketPrice: 45000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1587486937303-32eaa2134b78'
+        imageUrl: '/lovable-uploads/747624ef-1f0b-413f-a5b3-73d36fb48a54.png'
       },
       'sugarcane': {
         cropName: 'Sugarcane',
