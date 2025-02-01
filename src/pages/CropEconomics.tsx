@@ -89,6 +89,24 @@ const CropEconomics = () => {
         timeToHarvest: 12,
         imageUrl: 'https://images.unsplash.com/photo-1597362925123-77861d3fbac7'
       },
+      'maize': {
+        cropName: 'Maize',
+        setupCost: 42000,
+        maintenanceCost: 22000,
+        expectedYield: 6.5,
+        marketPrice: 20000,
+        timeToHarvest: 4,
+        imageUrl: 'https://images.unsplash.com/photo-1601478192042-1fe2d7f0bc30'
+      },
+      'winter wheat': {
+        cropName: 'Winter Wheat',
+        setupCost: 35000,
+        maintenanceCost: 18000,
+        expectedYield: 4.2,
+        marketPrice: 25000,
+        timeToHarvest: 5,
+        imageUrl: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b'
+      },
       'unknown crop': {
         cropName: 'Vegetables (Recommended)',
         setupCost: 52000,
