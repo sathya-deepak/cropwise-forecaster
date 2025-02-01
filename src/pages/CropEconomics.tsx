@@ -33,7 +33,7 @@ const CropEconomics = () => {
         expectedYield: 6.5,
         marketPrice: 20000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1601478192042-1fe2d7f0bc30'  // Close-up of corn
+        imageUrl: 'https://images.unsplash.com/photo-1601478192042-1fe2d7f0bc30'
       },
       'rice': {
         cropName: 'Rice',
@@ -42,7 +42,7 @@ const CropEconomics = () => {
         expectedYield: 5.5,
         marketPrice: 22000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1568347355280-d33fdf77d42a'  // Rice paddy field
+        imageUrl: 'https://images.unsplash.com/photo-1568347355280-d33fdf77d42a'
       },
       'wheat': {
         cropName: 'Wheat',
@@ -51,7 +51,7 @@ const CropEconomics = () => {
         expectedYield: 4.2,
         marketPrice: 25000,
         timeToHarvest: 5,
-        imageUrl: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b'  // Golden wheat field
+        imageUrl: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b'
       },
       'cotton': {
         cropName: 'Cotton',
@@ -60,7 +60,7 @@ const CropEconomics = () => {
         expectedYield: 2.8,
         marketPrice: 65000,
         timeToHarvest: 6,
-        imageUrl: 'https://images.unsplash.com/photo-1594014302329-43d0097b2372'  // Cotton plant with bolls
+        imageUrl: 'https://images.unsplash.com/photo-1594014302329-43d0097b2372'
       },
       'groundnut': {
         cropName: 'Groundnut',
@@ -69,7 +69,7 @@ const CropEconomics = () => {
         expectedYield: 2.5,
         marketPrice: 45000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1587486937303-32eaa2134b78'  // Fresh groundnuts
+        imageUrl: 'https://images.unsplash.com/photo-1587486937303-32eaa2134b78'
       },
       'peanuts': {
         cropName: 'Groundnut',
@@ -78,7 +78,7 @@ const CropEconomics = () => {
         expectedYield: 2.5,
         marketPrice: 45000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1587486937303-32eaa2134b78'  // Fresh groundnuts
+        imageUrl: 'https://images.unsplash.com/photo-1587486937303-32eaa2134b78'
       },
       'sugarcane': {
         cropName: 'Sugarcane',
@@ -87,7 +87,7 @@ const CropEconomics = () => {
         expectedYield: 70.0,
         marketPrice: 3500,
         timeToHarvest: 12,
-        imageUrl: 'https://images.unsplash.com/photo-1597362925123-77861d3fbac7'  // Updated sugarcane image
+        imageUrl: 'https://images.unsplash.com/photo-1597362925123-77861d3fbac7'
       },
       'unknown crop': {
         cropName: 'Vegetables (Recommended)',
@@ -96,7 +96,7 @@ const CropEconomics = () => {
         expectedYield: 8.2,
         marketPrice: 35000,
         timeToHarvest: 3,
-        imageUrl: 'https://images.unsplash.com/photo-1540420773420-3366772f4999'  // Generic vegetables image
+        imageUrl: 'https://images.unsplash.com/photo-1540420773420-3366772f4999'
       }
     };
 
