@@ -62,77 +62,23 @@ const CropEconomics = () => {
         timeToHarvest: 6,
         imageUrl: 'https://images.unsplash.com/photo-1594014302329-43d0097b2372'  // Cotton plant with bolls
       },
-      'soybeans': {
-        cropName: 'Soybeans',
-        setupCost: 38000,
-        maintenanceCost: 20000,
-        expectedYield: 3.8,
-        marketPrice: 42000,
-        timeToHarvest: 5,
-        imageUrl: 'https://images.unsplash.com/photo-1628697289879-69c38b7fb05d'  // Soybean field
-      },
-      'vegetables': {
-        cropName: 'Vegetables',
-        setupCost: 52000,
-        maintenanceCost: 30000,
-        expectedYield: 8.2,
-        marketPrice: 35000,
-        timeToHarvest: 3,
-        imageUrl: 'https://images.unsplash.com/photo-1540420773420-3366772f4999'  // Fresh vegetables
-      },
-      'carrots': {
-        cropName: 'Carrots',
-        setupCost: 38000,
-        maintenanceCost: 20000,
-        expectedYield: 4.5,
-        marketPrice: 26000,
-        timeToHarvest: 3,
-        imageUrl: 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37'  // Fresh carrots
-      },
-      'potatoes': {
-        cropName: 'Potatoes',
-        setupCost: 32000,
-        maintenanceCost: 16000,
-        expectedYield: 4.8,
-        marketPrice: 18000,
-        timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655'  // Raw potatoes
-      },
-      'peanuts': {
-        cropName: 'Peanuts',
+      'groundnut': {
+        cropName: 'Groundnut',
         setupCost: 36000,
         maintenanceCost: 19000,
         expectedYield: 2.5,
         marketPrice: 45000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1587486937303-32eaa2134b78'  // Fresh peanuts
+        imageUrl: 'https://images.unsplash.com/photo-1587486937303-32eaa2134b78'  // Fresh groundnuts
       },
-      'cabbage': {
-        cropName: 'Cabbage',
-        setupCost: 40000,
-        maintenanceCost: 20000,
-        expectedYield: 4.0,
-        marketPrice: 25000,
-        timeToHarvest: 3,
-        imageUrl: 'https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f'  // Fresh cabbage
-      },
-      'tomatoes': {
-        cropName: 'Tomatoes',
-        setupCost: 45000,
-        maintenanceCost: 23000,
-        expectedYield: 5.0,
-        marketPrice: 30000,
-        timeToHarvest: 3,
-        imageUrl: 'https://images.unsplash.com/photo-1592841200221-a6898f307baa'  // Fresh tomatoes
-      },
-      'onions': {
-        cropName: 'Onions',
-        setupCost: 35000,
-        maintenanceCost: 18000,
-        expectedYield: 4.2,
-        marketPrice: 28000,
+      'peanuts': {
+        cropName: 'Groundnut',
+        setupCost: 36000,
+        maintenanceCost: 19000,
+        expectedYield: 2.5,
+        marketPrice: 45000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb'  // Fresh onions
+        imageUrl: 'https://images.unsplash.com/photo-1587486937303-32eaa2134b78'  // Fresh groundnuts
       },
       'sugarcane': {
         cropName: 'Sugarcane',
