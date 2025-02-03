@@ -96,7 +96,7 @@ const CropEconomics = () => {
         expectedYield: 6.5,
         marketPrice: 20000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1601478192042-1fe2d7f0bc30?auto=format&fit=crop&w=800&q=80'
+        imageUrl: 'https://images.unsplash.com/photo-1615729947596-a598e5de0ab3?auto=format&fit=crop&w=800&q=80'
       },
       'winter wheat': {
         cropName: 'Winter Wheat',
