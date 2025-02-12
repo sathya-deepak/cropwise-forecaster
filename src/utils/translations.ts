@@ -46,7 +46,19 @@ export const translations = {
     expectedRevenue: "Expected Revenue",
     expectedProfit: "Expected Profit",
     roiAnalysis: "ROI Analysis",
-    months: "months"
+    months: "months",
+    
+    // Chatbot translations
+    typeMessage: "Type your message...",
+    farmingAssistant: "Farming Assistant",
+    welcomeMessage: "Hello! I'm your farming assistant. How can I help you today?",
+    error: "Error",
+    errorMessage: "Failed to generate response. Please try again.",
+    weatherAdvice: "For optimal crop growth, monitor local weather forecasts daily. Consider installing a small weather station in your field for precise measurements. Protect crops from extreme weather conditions using appropriate measures like shade nets or windbreakers.",
+    pestAdvice: "Regular crop monitoring is essential. Use integrated pest management (IPM) techniques. Consider natural predators and resistant varieties. Only use pesticides as a last resort and follow proper safety guidelines.",
+    waterAdvice: "Implement efficient irrigation practices. Use soil moisture sensors to optimize water usage. Consider drip irrigation for water conservation. Water early morning or late evening to minimize evaporation.",
+    fertilizerAdvice: "Conduct regular soil tests to determine nutrient needs. Use organic fertilizers when possible. Apply fertilizers in split doses for better absorption. Maintain proper soil pH for optimal nutrient uptake.",
+    generalAdvice: "For best results, maintain regular crop monitoring, follow recommended practices, and keep detailed records of your farming activities. Would you like specific advice about weather, pests, irrigation, or fertilizers?"
   },
   hi: {
     // Index page
@@ -93,7 +105,19 @@ export const translations = {
     expectedRevenue: "अपेक्षित राजस्व",
     expectedProfit: "अपेक्षित लाभ",
     roiAnalysis: "आरओआई विश्लेषण",
-    months: "महीने"
+    months: "महीने",
+    
+    // Chatbot translations
+    typeMessage: "अपना संदेश टाइप करें...",
+    farmingAssistant: "कृषि सहायक",
+    welcomeMessage: "नमस्ते! मैं आपका कृषि सहायक हूं। मैं आपकी कैसे मदद कर सकता हूं?",
+    error: "त्रुटि",
+    errorMessage: "प्रतिक्रिया जनरेट करने में विफल। कृपया पुनः प्रयास करें।",
+    weatherAdvice: "फसल की इष्टतम वृद्धि के लिए, स्थानीय मौसम की भविष्यवाणी पर दैनिक नज़र रखें। सटीक मापन के लिए अपने खेत में एक छोटा मौसम स्टेशन स्थापित करने पर विचार करें।",
+    pestAdvice: "नियमित फसल निगरानी आवश्यक है। एकीकृत कीट प्रबंधन (IPM) तकनीकों का उपयोग करें। प्राकृतिक शिकारियों और प्रतिरोधी किस्मों पर विचार करें।",
+    waterAdvice: "कुशल सिंचाई प्रथाओं को लागू करें। पानी के उपयोग को अनुकूलित करने के लिए मिट्टी की नमी सेंसर का उपयोग करें। पानी के संरक्षण के लिए ड्रिप सिंचाई पर विचार करें।",
+    fertilizerAdvice: "पोषक तत्वों की आवश्यकता निर्धारित करने के लिए नियमित मिट्टी परीक्षण करें। जब संभव हो जैविक उर्वरकों का उपयोग करें।",
+    generalAdvice: "सर्वोत्तम परिणामों के लिए, नियमित फसल निगरानी बनाए रखें। क्या आप मौसम, कीट, सिंचाई या उर्वरकों के बारे में विशिष्ट सलाह चाहेंगे?"
   },
   te: {
     // Index page
@@ -140,7 +164,19 @@ export const translations = {
     expectedRevenue: "అంచనా ఆదాయం",
     expectedProfit: "అంచనా లాభం",
     roiAnalysis: "ROI విశ్లేషణ",
-    months: "నెలలు"
+    months: "నెలలు",
+    
+    // Chatbot translations
+    typeMessage: "మీ సందేశాన్ని టైప్ చేయండి...",
+    farmingAssistant: "వ్యవసాయ సహాయకుడు",
+    welcomeMessage: "నమస్కారం! నేను మీ వ్యవసాయ సహాయకుడిని. నేను మీకు ఎలా సహాయం చేయగలను?",
+    error: "లోపం",
+    errorMessage: "ప్రతిస్పందనను రూపొందించడంలో విఫలమైంది. దయచేసి మళ్లీ ప్రయత్నించండి.",
+    weatherAdvice: "పంట యొక్క అనుకూల వృద్ధి కోసం, స్థానిక వాతావరణ సూచనలను రోజువారీగా పర్యవేక్షించండి.",
+    pestAdvice: "క్రమం తప్పకుండా పంట పర్యవేక్షణ అవసరం. సమగ్ర పురుగు నిర్వహణ (IPM) పద్ధతులను ఉపయోగించండి.",
+    waterAdvice: "సమర్థవంతమైన నీటిపారుదల పద్ధతులను అమలు చేయండి. నీటి వినియోగాన్ని అనుకూలీకరించడానికి నేల తేమ సెన్సార్లను ఉపయోగించండి.",
+    fertilizerAdvice: "పోషక అవసరాలను నిర్ధారించడానికి క్రమం తప్పకుండా నేల పరీక్షలు నిర్వహించండి.",
+    generalAdvice: "ఉత్తమ ఫలితాల కోసం, క్రమం తప్పకుండా పంట పర్యవేక్షణను కొనసాగించండి. మీరు వాతావరణం, పురుగులు, నీటిపారుదల లేదా ఎరువుల గురించి నిర్దిష్ట సలహా కావాలా?"
   },
   ta: {
     // Index page
@@ -187,7 +223,19 @@ export const translations = {
     expectedRevenue: "எதிர்பார்க்கப்படும் வருவாய்",
     expectedProfit: "எதிர்பார்க்கப்படும் லாபம்",
     roiAnalysis: "ROI பகுப்பாய்வு",
-    months: "மாதங்கள்"
+    months: "மாதங்கள்",
+    
+    // Chatbot translations
+    typeMessage: "உங்கள் செய்தியை தட்டச்சு செய்யவும்...",
+    farmingAssistant: "விவசாய உதவியாளர்",
+    welcomeMessage: "வணக்கம்! நான் உங்கள் விவசாய உதவியாளர். நான் எப்படி உதவ முடியும்?",
+    error: "பிழை",
+    errorMessage: "பதிலை உருவாக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.",
+    weatherAdvice: "பயிர் வளர்ச்சிக்கு உகந்த வானிலை முன்னறிவிப்புகளை தினசரி கண்காணிக்கவும்.",
+    pestAdvice: "வழக்கமான பயிர் கண்காணிப்பு அவசியம். ஒருங்கிணைந்த பூச்சி மேலாண்மை (IPM) நுட்பங்களைப் பயன்படுத்தவும்.",
+    waterAdvice: "திறமையான நீர்ப்பாசன முறைகளை செயல்படுத்தவும். நீர் பயன்பாட்டை உகந்ததாக்க மண் ஈரப்பத உணர்விகளைப் பயன்படுத்தவும்.",
+    fertilizerAdvice: "ஊட்டச்சத்து தேவைகளை தீர்மானிக்க வழக்கமான மண் சோதனைகளை நடத்தவும்.",
+    generalAdvice: "சிறந்த முடிவுகளுக்கு, வழக்கமான பயிர் கண்காணிப்பை பராமரிக்கவும். வானிலை, பூச்சிகள், நீர்ப்பாசனம் அல்லது உரங்கள் பற்றிய குறிப்பிட்ட ஆலோசனை வேண்டுமா?"
   }
 };
 

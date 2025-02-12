@@ -1,9 +1,11 @@
+
 import { Routes, Route } from "react-router-dom";
 import Index from "@/pages/Index";
 import Predict from "@/pages/Predict";
 import DetailedPredict from "@/pages/DetailedPredict";
 import CropEconomics from "@/pages/CropEconomics";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import Chatbot from "@/components/chat/Chatbot";
 
 function App() {
   console.log('Rendering App component');
@@ -16,6 +18,7 @@ function App() {
         <Route path="/detailed-predict" element={<DetailedPredict />} />
         <Route path="/crop-economics" element={<CropEconomics />} />
       </Routes>
+      <Chatbot />
     </LanguageProvider>
   );
 }
