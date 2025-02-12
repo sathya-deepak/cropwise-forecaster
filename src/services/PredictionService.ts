@@ -9,11 +9,13 @@ interface WeatherData {
 }
 
 interface SoilData {
-  type: string;
+  type: 'alluvial' | 'black' | 'red' | 'laterite' | 'sandy' | 'clay' | 'loamy' | 'saline' | 'peaty';
   ph: number;
   nitrogen: number;
   phosphorus: number;
   potassium: number;
+  organicMatter?: number;
+  drainage?: 'good' | 'moderate' | 'poor';
 }
 
 export interface PredictionInput {
@@ -21,6 +23,7 @@ export interface PredictionInput {
   soil: SoilData;
   region: string;
   previousCrop?: string;
+  irrigationAvailable?: boolean;
 }
 
 export interface PredictionResult {
@@ -31,24 +34,52 @@ export interface PredictionResult {
     max: number;
   };
   riskLevel: 'low' | 'medium' | 'high';
+  soilSuitability: {
+    score: number;
+    recommendations?: string[];
+  };
 }
 
 export class PredictionService {
-  private static modelEndpoint = 'https://api.example.com/predict'; // Replace with actual AI model endpoint
+  private static modelEndpoint = 'https://api.example.com/predict';
 
   static async predictCrops(input: PredictionInput): Promise<PredictionResult> {
     try {
-      // This is a placeholder for the actual AI model integration
-      // In a real implementation, this would call a machine learning model
-      
+      // Enhanced mock prediction logic with soil type consideration
+      const soilSuitabilityMap: Record<string, number> = {
+        'alluvial': 0.95,
+        'black': 0.9,
+        'clay': 0.85,
+        'loamy': 0.8,
+        'sandy': 0.6,
+        'red': 0.7,
+        'laterite': 0.65,
+        'saline': 0.4,
+        'peaty': 0.5
+      };
+
+      const soilSuitability = soilSuitabilityMap[input.soil.type] || 0.5;
+      const recommendations: string[] = [];
+
+      if (input.soil.ph < 6.5) {
+        recommendations.push('Consider lime application to increase soil pH');
+      }
+      if (input.soil.nitrogen < 140) {
+        recommendations.push('Increase nitrogen fertilization');
+      }
+
       const mockPrediction: PredictionResult = {
-        recommendedCrops: ['Rice', 'Wheat', 'Maize'],
-        confidence: 0.85,
+        recommendedCrops: ['Sugarcane', 'Rice', 'Wheat'],
+        confidence: 0.85 * soilSuitability,
         marketPriceRange: {
-          min: 20000,
-          max: 25000
+          min: 3200,
+          max: 3800
         },
-        riskLevel: 'low'
+        riskLevel: soilSuitability > 0.7 ? 'low' : soilSuitability > 0.5 ? 'medium' : 'high',
+        soilSuitability: {
+          score: soilSuitability,
+          recommendations
+        }
       };
 
       return mockPrediction;
@@ -59,13 +90,10 @@ export class PredictionService {
   }
 
   static analyzeHistoricalPrices(crop: string, months: number = 12): number[] {
-    // This would typically fetch historical price data from an API
-    // For now, we'll generate some realistic mock data
     const basePrice = this.getBasePriceForCrop(crop);
     const prices: number[] = [];
     
     for (let i = 0; i < months; i++) {
-      // Add some realistic variation to prices
       const seasonalFactor = Math.sin((i / 12) * Math.PI * 2);
       const randomFactor = (Math.random() - 0.5) * 0.2;
       const price = basePrice * (1 + seasonalFactor * 0.15 + randomFactor);
@@ -82,9 +110,28 @@ export class PredictionService {
       'maize': 20000,
       'cotton': 65000,
       'groundnut': 45000,
-      'sugarcane': 3500
+      'sugarcane': 3500,
+      'soybean': 38000,
+      'mustard': 42000,
+      'barley': 28000
     };
     
     return basePrices[crop.toLowerCase()] || 30000;
+  }
+
+  static getSoilTypeRecommendations(soilType: string): string[] {
+    const recommendations: Record<string, string[]> = {
+      'alluvial': ['Sugarcane', 'Rice', 'Wheat', 'Cotton'],
+      'black': ['Cotton', 'Sugarcane', 'Wheat'],
+      'red': ['Groundnut', 'Tobacco', 'Vegetables'],
+      'laterite': ['Cashew', 'Rubber', 'Tea'],
+      'sandy': ['Groundnut', 'Potato', 'Vegetables'],
+      'clay': ['Rice', 'Sugarcane', 'Jute'],
+      'loamy': ['Most crops', 'Vegetables', 'Fruits'],
+      'saline': ['Salt-tolerant crops', 'Date palm'],
+      'peaty': ['Vegetables', 'Rice']
+    };
+
+    return recommendations[soilType.toLowerCase()] || ['Consider soil testing for specific recommendations'];
   }
 }
