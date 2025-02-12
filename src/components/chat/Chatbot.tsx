@@ -100,16 +100,16 @@ const Chatbot = () => {
   return (
     <>
       <Button
-        className="fixed bottom-4 right-4 rounded-full w-12 h-12 p-0"
+        className="fixed bottom-4 right-4 rounded-full w-12 h-12 p-0 shadow-lg"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? <X /> : <MessageCircle />}
       </Button>
 
       {isOpen && (
-        <Card className="fixed bottom-20 right-4 w-[350px] h-[500px] p-4 flex flex-col gap-4">
-          <div className="flex justify-between items-center">
-            <h3 className="font-semibold">{t.farmingAssistant}</h3>
+        <Card className="fixed bottom-20 right-4 w-[350px] h-[500px] p-4 flex flex-col gap-4 bg-background border-2 shadow-xl z-50">
+          <div className="flex justify-between items-center bg-background">
+            <h3 className="font-semibold text-foreground">{t.farmingAssistant}</h3>
           </div>
 
           <ScrollArea className="flex-1 pr-4" ref={scrollAreaRef}>

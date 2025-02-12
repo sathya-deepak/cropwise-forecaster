@@ -15,9 +15,9 @@ const ChatMessage = ({ message, isBot, timestamp }: ChatMessageProps) => {
         <span className="text-xs text-white">{isBot ? 'Bot' : 'You'}</span>
       </Avatar>
       <div className={`max-w-[80%] rounded-lg p-3 ${
-        isBot ? 'bg-primary/10' : 'bg-secondary/10'
+        isBot ? 'bg-primary/20 border border-primary/30' : 'bg-secondary/20 border border-secondary/30'
       }`}>
-        <p className="text-sm">{message}</p>
+        <p className="text-sm text-foreground">{message}</p>
         <span className="text-xs text-gray-500 mt-1">
           {timestamp.toLocaleTimeString()}
         </span>
