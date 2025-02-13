@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -107,6 +108,42 @@ const CropEconomics = () => {
         timeToHarvest: 5,
         imageUrl: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80'
       },
+      'soybean': {
+        cropName: 'Soybean',
+        setupCost: 38000,
+        maintenanceCost: 20000,
+        expectedYield: 3.5,
+        marketPrice: 38000,
+        timeToHarvest: 4,
+        imageUrl: 'https://images.unsplash.com/photo-1601492982645-899b7655f2fc?auto=format&fit=crop&w=800&q=80'
+      },
+      'mustard': {
+        cropName: 'Mustard',
+        setupCost: 32000,
+        maintenanceCost: 16000,
+        expectedYield: 2.0,
+        marketPrice: 42000,
+        timeToHarvest: 4,
+        imageUrl: 'https://images.unsplash.com/photo-1618586810102-e1fc26c5668f?auto=format&fit=crop&w=800&q=80'
+      },
+      'barley': {
+        cropName: 'Barley',
+        setupCost: 30000,
+        maintenanceCost: 15000,
+        expectedYield: 3.8,
+        marketPrice: 28000,
+        timeToHarvest: 4,
+        imageUrl: 'https://images.unsplash.com/photo-1597652578633-1947d325d6f9?auto=format&fit=crop&w=800&q=80'
+      },
+      'vegetables': {
+        cropName: 'Vegetables',
+        setupCost: 52000,
+        maintenanceCost: 30000,
+        expectedYield: 8.2,
+        marketPrice: 35000,
+        timeToHarvest: 3,
+        imageUrl: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80'
+      },
       'unknown crop': {
         cropName: 'Vegetables (Recommended)',
         setupCost: 52000,
@@ -163,6 +200,10 @@ const CropEconomics = () => {
               src={economics.imageUrl} 
               alt={economics.cropName}
               className="w-full h-48 object-cover rounded-lg mb-4"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80';
+              }}
             />
             <h2 className="text-2xl font-semibold text-primary mb-4">{economics.cropName}</h2>
             <div className="space-y-2">
