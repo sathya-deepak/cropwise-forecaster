@@ -33,7 +33,7 @@ const CropEconomics = () => {
         expectedYield: 6.5,
         marketPrice: 20000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1601478192042-1fe2d7f0bc30?auto=format&fit=crop&w=800&q=80'
+        imageUrl: '/lovable-uploads/corn-crop.png'
       },
       'rice': {
         cropName: 'Rice',
@@ -42,7 +42,7 @@ const CropEconomics = () => {
         expectedYield: 5.5,
         marketPrice: 22000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1568347355280-d33fdf77d42a?auto=format&fit=crop&w=800&q=80'
+        imageUrl: '/lovable-uploads/rice-crop.png'
       },
       'wheat': {
         cropName: 'Wheat',
@@ -51,7 +51,7 @@ const CropEconomics = () => {
         expectedYield: 4.2,
         marketPrice: 25000,
         timeToHarvest: 5,
-        imageUrl: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80'
+        imageUrl: '/lovable-uploads/wheat-crop.png'
       },
       'cotton': {
         cropName: 'Cotton',
@@ -60,7 +60,7 @@ const CropEconomics = () => {
         expectedYield: 2.8,
         marketPrice: 65000,
         timeToHarvest: 6,
-        imageUrl: 'https://images.unsplash.com/photo-1594014302329-43d0097b2372?auto=format&fit=crop&w=800&q=80'
+        imageUrl: '/lovable-uploads/cotton-crop.png'
       },
       'groundnut': {
         cropName: 'Groundnut',
@@ -96,7 +96,7 @@ const CropEconomics = () => {
         expectedYield: 6.5,
         marketPrice: 20000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1615729947596-a598e5de0ab3?auto=format&fit=crop&w=800&q=80'
+        imageUrl: '/lovable-uploads/maize-crop.png'
       },
       'winter wheat': {
         cropName: 'Winter Wheat',
@@ -105,7 +105,7 @@ const CropEconomics = () => {
         expectedYield: 4.2,
         marketPrice: 25000,
         timeToHarvest: 5,
-        imageUrl: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80'
+        imageUrl: '/lovable-uploads/wheat-crop.png'
       },
       'soybean': {
         cropName: 'Soybean',
@@ -114,7 +114,7 @@ const CropEconomics = () => {
         expectedYield: 3.5,
         marketPrice: 38000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1601492982645-899b7655f2fc?auto=format&fit=crop&w=800&q=80'
+        imageUrl: '/lovable-uploads/soybean-crop.png'
       },
       'mustard': {
         cropName: 'Mustard',
@@ -123,7 +123,7 @@ const CropEconomics = () => {
         expectedYield: 2.0,
         marketPrice: 42000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1618586810102-e1fc26c5668f?auto=format&fit=crop&w=800&q=80'
+        imageUrl: '/lovable-uploads/mustard-crop.png'
       },
       'barley': {
         cropName: 'Barley',
@@ -132,7 +132,7 @@ const CropEconomics = () => {
         expectedYield: 3.8,
         marketPrice: 28000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1597652578633-1947d325d6f9?auto=format&fit=crop&w=800&q=80'
+        imageUrl: '/lovable-uploads/barley-crop.png'
       },
       'vegetables': {
         cropName: 'Vegetables',
@@ -141,7 +141,7 @@ const CropEconomics = () => {
         expectedYield: 8.2,
         marketPrice: 35000,
         timeToHarvest: 3,
-        imageUrl: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80'
+        imageUrl: '/lovable-uploads/vegetables-crop.png'
       },
       'unknown crop': {
         cropName: 'Vegetables (Recommended)',
@@ -150,7 +150,7 @@ const CropEconomics = () => {
         expectedYield: 8.2,
         marketPrice: 35000,
         timeToHarvest: 3,
-        imageUrl: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80'
+        imageUrl: '/lovable-uploads/vegetables-crop.png'
       }
     };
 
