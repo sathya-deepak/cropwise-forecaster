@@ -33,7 +33,7 @@ const CropEconomics = () => {
         expectedYield: 6.5,
         marketPrice: 20000,
         timeToHarvest: 4,
-        imageUrl: '/lovable-uploads/corn-crop.png'
+        imageUrl: '/lovable-uploads/e30bdd3b-18f2-4e54-a71b-84481515c8d0.png'
       },
       'rice': {
         cropName: 'Rice',
@@ -42,7 +42,7 @@ const CropEconomics = () => {
         expectedYield: 5.5,
         marketPrice: 22000,
         timeToHarvest: 4,
-        imageUrl: '/lovable-uploads/rice-crop.png'
+        imageUrl: '/lovable-uploads/2a34d800-9767-4290-aa48-5b8bc3db4f0d.png'
       },
       'wheat': {
         cropName: 'Wheat',
@@ -51,7 +51,7 @@ const CropEconomics = () => {
         expectedYield: 4.2,
         marketPrice: 25000,
         timeToHarvest: 5,
-        imageUrl: '/lovable-uploads/wheat-crop.png'
+        imageUrl: '/lovable-uploads/e81826e4-6d9b-400d-9eae-1d19496a7c76.png'
       },
       'cotton': {
         cropName: 'Cotton',
@@ -60,7 +60,7 @@ const CropEconomics = () => {
         expectedYield: 2.8,
         marketPrice: 65000,
         timeToHarvest: 6,
-        imageUrl: '/lovable-uploads/cotton-crop.png'
+        imageUrl: '/lovable-uploads/964b9808-96a7-42d1-8d5c-74dd5ad52493.png'
       },
       'groundnut': {
         cropName: 'Groundnut',
@@ -96,7 +96,7 @@ const CropEconomics = () => {
         expectedYield: 6.5,
         marketPrice: 20000,
         timeToHarvest: 4,
-        imageUrl: '/lovable-uploads/maize-crop.png'
+        imageUrl: '/lovable-uploads/be063965-1907-4695-b603-b0c288cb3724.png'
       },
       'winter wheat': {
         cropName: 'Winter Wheat',
@@ -105,7 +105,7 @@ const CropEconomics = () => {
         expectedYield: 4.2,
         marketPrice: 25000,
         timeToHarvest: 5,
-        imageUrl: '/lovable-uploads/wheat-crop.png'
+        imageUrl: '/lovable-uploads/e81826e4-6d9b-400d-9eae-1d19496a7c76.png'
       },
       'soybean': {
         cropName: 'Soybean',
@@ -114,7 +114,7 @@ const CropEconomics = () => {
         expectedYield: 3.5,
         marketPrice: 38000,
         timeToHarvest: 4,
-        imageUrl: '/lovable-uploads/soybean-crop.png'
+        imageUrl: '/lovable-uploads/f5332841-622c-4aed-99ee-365aa4c667d2.png'
       },
       'mustard': {
         cropName: 'Mustard',
@@ -132,7 +132,7 @@ const CropEconomics = () => {
         expectedYield: 3.8,
         marketPrice: 28000,
         timeToHarvest: 4,
-        imageUrl: '/lovable-uploads/barley-crop.png'
+        imageUrl: '/lovable-uploads/bc7b7d0f-eafa-47fc-872a-fc1d8800a092.png'
       },
       'vegetables': {
         cropName: 'Vegetables',
