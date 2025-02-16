@@ -87,7 +87,7 @@ const CropEconomics = () => {
         expectedYield: 70.0,
         marketPrice: 3500,
         timeToHarvest: 12,
-        imageUrl: '/lovable-uploads/96aaf197-d245-467c-b754-5917fd9fe6b6.png'
+        imageUrl: '/lovable-uploads/abe2845e-6b1b-4e52-8868-ad783a77e47d.png'
       },
       'maize': {
         cropName: 'Maize',
