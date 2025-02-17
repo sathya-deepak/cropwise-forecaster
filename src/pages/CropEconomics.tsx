@@ -53,6 +53,15 @@ const CropEconomics = () => {
         timeToHarvest: 5,
         imageUrl: '/lovable-uploads/e81826e4-6d9b-400d-9eae-1d19496a7c76.png'
       },
+      'winter wheat': {
+        cropName: 'Winter Wheat',
+        setupCost: 35000,
+        maintenanceCost: 18000,
+        expectedYield: 4.2,
+        marketPrice: 25000,
+        timeToHarvest: 5,
+        imageUrl: '/lovable-uploads/e81826e4-6d9b-400d-9eae-1d19496a7c76.png'
+      },
       'cotton': {
         cropName: 'Cotton',
         setupCost: 55000,
@@ -98,15 +107,6 @@ const CropEconomics = () => {
         timeToHarvest: 4,
         imageUrl: '/lovable-uploads/be063965-1907-4695-b603-b0c288cb3724.png'
       },
-      'winter wheat': {
-        cropName: 'Winter Wheat',
-        setupCost: 35000,
-        maintenanceCost: 18000,
-        expectedYield: 4.2,
-        marketPrice: 25000,
-        timeToHarvest: 5,
-        imageUrl: '/lovable-uploads/e81826e4-6d9b-400d-9eae-1d19496a7c76.png'
-      },
       'soybean': {
         cropName: 'Soybean',
         setupCost: 38000,
@@ -115,15 +115,6 @@ const CropEconomics = () => {
         marketPrice: 38000,
         timeToHarvest: 4,
         imageUrl: '/lovable-uploads/f5332841-622c-4aed-99ee-365aa4c667d2.png'
-      },
-      'mustard': {
-        cropName: 'Mustard',
-        setupCost: 32000,
-        maintenanceCost: 16000,
-        expectedYield: 2.0,
-        marketPrice: 42000,
-        timeToHarvest: 4,
-        imageUrl: '/lovable-uploads/mustard-crop.png'
       },
       'barley': {
         cropName: 'Barley',
