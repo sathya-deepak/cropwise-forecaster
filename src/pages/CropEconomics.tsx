@@ -8,6 +8,10 @@ import ProfitChart from '@/components/dashboard/ProfitChart';
 import CropCalendar from '@/components/dashboard/CropCalendar';
 import SoilAnalysis from '@/components/dashboard/SoilAnalysis';
 import SustainableTips from '@/components/dashboard/SustainableTips';
+import MarketTrends from '@/components/dashboard/MarketTrends';
+import DiseaseGuide from '@/components/dashboard/DiseaseGuide';
+import CommunityForum from '@/components/dashboard/CommunityForum';
+import CropRotationPlanner from '@/components/dashboard/CropRotationPlanner';
 
 interface CropEconomics {
   cropName: string;
@@ -205,6 +209,11 @@ const CropEconomics = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 mb-6">
+          <MarketTrends cropName={economics.cropName} />
+          <DiseaseGuide cropName={economics.cropName} />
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
           <CropCalendar cropName={economics.cropName} />
           <SoilAnalysis cropName={economics.cropName} />
         </div>
@@ -238,6 +247,11 @@ const CropEconomics = () => {
             </div>
           </Card>
           <SustainableTips cropName={economics.cropName} />
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
+          <CommunityForum cropName={economics.cropName} />
+          <CropRotationPlanner currentCrop={economics.cropName} />
         </div>
       </div>
     </div>
