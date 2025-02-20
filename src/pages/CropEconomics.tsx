@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft } from 'lucide-react';
+import WeatherWidget from '@/components/dashboard/WeatherWidget';
+import ProfitChart from '@/components/dashboard/ProfitChart';
 
 interface CropEconomics {
   cropName: string;
@@ -166,12 +168,6 @@ const CropEconomics = () => {
   const expectedRevenue = economics.expectedYield * economics.marketPrice;
   const expectedProfit = expectedRevenue - totalCost;
 
-  console.log('Calculated values:', {
-    totalCost,
-    expectedRevenue,
-    expectedProfit
-  });
-
   return (
     <div className="min-h-screen bg-cream p-6">
       <Button 
@@ -182,10 +178,11 @@ const CropEconomics = () => {
         <ArrowLeft className="w-4 h-4 mr-2" /> Back to Prediction
       </Button>
 
-      <div className="container mx-auto max-w-4xl">
+      <div className="container mx-auto max-w-6xl">
         <h1 className="text-4xl font-bold text-primary mb-8 text-center">Crop Economics Analysis</h1>
         
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
+          <WeatherWidget />
           <Card className="p-6">
             <img 
               src={economics.imageUrl} 
@@ -203,31 +200,35 @@ const CropEconomics = () => {
               <p><span className="font-semibold">Market Price:</span> ₹{economics.marketPrice.toLocaleString()}/ton</p>
             </div>
           </Card>
-
-          <Card className="p-6">
-            <h3 className="text-xl font-semibold text-primary mb-4">Financial Analysis</h3>
-            <div className="space-y-4">
-              <div className="p-4 bg-red-50 rounded-lg">
-                <h4 className="font-semibold text-red-700">Costs</h4>
-                <p>Setup Cost: ₹{economics.setupCost.toLocaleString()}</p>
-                <p>Maintenance: ₹{economics.maintenanceCost.toLocaleString()}</p>
-                <p className="font-semibold">Total Cost: ₹{totalCost.toLocaleString()}</p>
-              </div>
-
-              <div className="p-4 bg-green-50 rounded-lg">
-                <h4 className="font-semibold text-green-700">Revenue</h4>
-                <p>Expected Revenue: ₹{expectedRevenue.toLocaleString()}</p>
-                <p className="font-semibold">Expected Profit: ₹{expectedProfit.toLocaleString()}</p>
-              </div>
-
-              <div className="p-4 bg-blue-50 rounded-lg">
-                <h4 className="font-semibold text-blue-700">ROI Analysis</h4>
-                <p>ROI: {((expectedProfit / totalCost) * 100).toFixed(2)}%</p>
-                <p>Break-even Point: {(totalCost / (expectedRevenue / economics.timeToHarvest)).toFixed(1)} months</p>
-              </div>
-            </div>
-          </Card>
         </div>
+
+        <div className="mb-6">
+          <ProfitChart />
+        </div>
+
+        <Card className="p-6">
+          <h3 className="text-xl font-semibold text-primary mb-4">Financial Analysis</h3>
+          <div className="space-y-4">
+            <div className="p-4 bg-red-50 rounded-lg">
+              <h4 className="font-semibold text-red-700">Costs</h4>
+              <p>Setup Cost: ₹{economics.setupCost.toLocaleString()}</p>
+              <p>Maintenance: ₹{economics.maintenanceCost.toLocaleString()}</p>
+              <p className="font-semibold">Total Cost: ₹{totalCost.toLocaleString()}</p>
+            </div>
+
+            <div className="p-4 bg-green-50 rounded-lg">
+              <h4 className="font-semibold text-green-700">Revenue</h4>
+              <p>Expected Revenue: ₹{expectedRevenue.toLocaleString()}</p>
+              <p className="font-semibold">Expected Profit: ₹{expectedProfit.toLocaleString()}</p>
+            </div>
+
+            <div className="p-4 bg-blue-50 rounded-lg">
+              <h4 className="font-semibold text-blue-700">ROI Analysis</h4>
+              <p>ROI: {((expectedProfit / totalCost) * 100).toFixed(2)}%</p>
+              <p>Break-even Point: {(totalCost / (expectedRevenue / economics.timeToHarvest)).toFixed(1)} months</p>
+            </div>
+          </div>
+        </Card>
       </div>
     </div>
   );
