@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -6,6 +5,9 @@ import { Card } from "@/components/ui/card";
 import { ArrowLeft } from 'lucide-react';
 import WeatherWidget from '@/components/dashboard/WeatherWidget';
 import ProfitChart from '@/components/dashboard/ProfitChart';
+import CropCalendar from '@/components/dashboard/CropCalendar';
+import SoilAnalysis from '@/components/dashboard/SoilAnalysis';
+import SustainableTips from '@/components/dashboard/SustainableTips';
 
 interface CropEconomics {
   cropName: string;
@@ -202,33 +204,41 @@ const CropEconomics = () => {
           </Card>
         </div>
 
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
+          <CropCalendar cropName={economics.cropName} />
+          <SoilAnalysis cropName={economics.cropName} />
+        </div>
+
         <div className="mb-6">
           <ProfitChart />
         </div>
 
-        <Card className="p-6">
-          <h3 className="text-xl font-semibold text-primary mb-4">Financial Analysis</h3>
-          <div className="space-y-4">
-            <div className="p-4 bg-red-50 rounded-lg">
-              <h4 className="font-semibold text-red-700">Costs</h4>
-              <p>Setup Cost: ₹{economics.setupCost.toLocaleString()}</p>
-              <p>Maintenance: ₹{economics.maintenanceCost.toLocaleString()}</p>
-              <p className="font-semibold">Total Cost: ₹{totalCost.toLocaleString()}</p>
-            </div>
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
+          <Card className="p-6">
+            <h3 className="text-xl font-semibold text-primary mb-4">Financial Analysis</h3>
+            <div className="space-y-4">
+              <div className="p-4 bg-red-50 rounded-lg">
+                <h4 className="font-semibold text-red-700">Costs</h4>
+                <p>Setup Cost: ₹{economics.setupCost.toLocaleString()}</p>
+                <p>Maintenance: ₹{economics.maintenanceCost.toLocaleString()}</p>
+                <p className="font-semibold">Total Cost: ₹{totalCost.toLocaleString()}</p>
+              </div>
 
-            <div className="p-4 bg-green-50 rounded-lg">
-              <h4 className="font-semibold text-green-700">Revenue</h4>
-              <p>Expected Revenue: ₹{expectedRevenue.toLocaleString()}</p>
-              <p className="font-semibold">Expected Profit: ₹{expectedProfit.toLocaleString()}</p>
-            </div>
+              <div className="p-4 bg-green-50 rounded-lg">
+                <h4 className="font-semibold text-green-700">Revenue</h4>
+                <p>Expected Revenue: ₹{expectedRevenue.toLocaleString()}</p>
+                <p className="font-semibold">Expected Profit: ₹{expectedProfit.toLocaleString()}</p>
+              </div>
 
-            <div className="p-4 bg-blue-50 rounded-lg">
-              <h4 className="font-semibold text-blue-700">ROI Analysis</h4>
-              <p>ROI: {((expectedProfit / totalCost) * 100).toFixed(2)}%</p>
-              <p>Break-even Point: {(totalCost / (expectedRevenue / economics.timeToHarvest)).toFixed(1)} months</p>
+              <div className="p-4 bg-blue-50 rounded-lg">
+                <h4 className="font-semibold text-blue-700">ROI Analysis</h4>
+                <p>ROI: {((expectedProfit / totalCost) * 100).toFixed(2)}%</p>
+                <p>Break-even Point: {(totalCost / (expectedRevenue / economics.timeToHarvest)).toFixed(1)} months</p>
+              </div>
             </div>
-          </div>
-        </Card>
+          </Card>
+          <SustainableTips cropName={economics.cropName} />
+        </div>
       </div>
     </div>
   );
