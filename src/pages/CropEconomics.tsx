@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -97,7 +96,7 @@ const CropEconomics = () => {
         expectedYield: 70.0,
         marketPrice: 3500,
         timeToHarvest: 12,
-        imageUrl: 'https://images.unsplash.com/photo-1598533378162-764ec509a612?w=800&auto=format&fit=crop'
+        imageUrl: '/lovable-uploads/649a61a7-c80c-40b5-9533-bc80cee3a849.png'
       },
       'maize': {
         cropName: 'Maize',
