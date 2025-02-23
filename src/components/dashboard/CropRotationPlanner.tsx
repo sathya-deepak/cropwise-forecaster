@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Card } from "@/components/ui/card";
-import { PredictionService } from '@/services/PredictionService';
 
 interface RotationPlan {
   season: string;
@@ -12,23 +11,152 @@ interface RotationPlan {
 
 const CropRotationPlanner = ({ currentCrop }: { currentCrop: string }) => {
   const getRotationPlan = (crop: string): RotationPlan[] => {
-    // Get soil type recommendations for different crops
-    const nextSeasonCrops = PredictionService.getSoilTypeRecommendations('alluvial')
-      .filter(c => c.toLowerCase() !== crop.toLowerCase())
-      .slice(0, 3);
-
-    const seasons = ['Summer', 'Monsoon', 'Winter'];
-    
-    return seasons.map((season, index) => ({
-      season,
-      recommendedCrops: nextSeasonCrops,
-      benefits: [
-        'Improves soil fertility',
-        'Breaks pest cycles',
-        'Enhances yield'
+    const rotationPlans: Record<string, RotationPlan[]> = {
+      'rice': [
+        {
+          season: 'Summer',
+          recommendedCrops: ['Green Gram', 'Black Gram', 'Sesame'],
+          benefits: ['Nitrogen fixation', 'Soil structure improvement', 'Pest cycle break'],
+          soilPreparation: 'Minimum tillage, add organic matter'
+        },
+        {
+          season: 'Monsoon',
+          recommendedCrops: ['Rice', 'Jute'],
+          benefits: ['Water utilization', 'High productivity', 'Weed suppression'],
+          soilPreparation: 'Puddling, leveling, green manuring'
+        },
+        {
+          season: 'Winter',
+          recommendedCrops: ['Wheat', 'Potato', 'Mustard'],
+          benefits: ['Residual moisture use', 'Different nutrient needs', 'Disease reduction'],
+          soilPreparation: 'Light tillage, residue incorporation'
+        }
       ],
-      soilPreparation: 'Standard soil preparation with organic matter addition'
-    }));
+      'wheat': [
+        {
+          season: 'Summer',
+          recommendedCrops: ['Moong Bean', 'Cowpea', 'Soybean'],
+          benefits: ['Nitrogen fixation', 'Soil health improvement', 'Erosion control'],
+          soilPreparation: 'Summer plowing, organic matter addition'
+        },
+        {
+          season: 'Monsoon',
+          recommendedCrops: ['Rice', 'Maize', 'Sorghum'],
+          benefits: ['Water efficiency', 'Different root depths', 'Pest management'],
+          soilPreparation: 'Deep plowing, proper drainage'
+        },
+        {
+          season: 'Winter',
+          recommendedCrops: ['Wheat', 'Chickpea', 'Lentil'],
+          benefits: ['Optimal temperature', 'Nitrogen balance', 'Market value'],
+          soilPreparation: 'Fine tillage, proper seed bed'
+        }
+      ],
+      'cotton': [
+        {
+          season: 'Summer',
+          recommendedCrops: ['Green Gram', 'Cluster Bean', 'Sesame'],
+          benefits: ['Soil enrichment', 'Water conservation', 'Pest reduction'],
+          soilPreparation: 'Deep summer plowing'
+        },
+        {
+          season: 'Monsoon',
+          recommendedCrops: ['Cotton', 'Pigeon Pea'],
+          benefits: ['Rain utilization', 'Long duration crop', 'High returns'],
+          soilPreparation: 'Ridge and furrow preparation'
+        },
+        {
+          season: 'Winter',
+          recommendedCrops: ['Wheat', 'Chickpea', 'Safflower'],
+          benefits: ['Residual moisture use', 'Soil structure', 'Risk distribution'],
+          soilPreparation: 'Minimum tillage, moisture conservation'
+        }
+      ],
+      'sugarcane': [
+        {
+          season: 'Summer',
+          recommendedCrops: ['Moong Bean', 'Sesbania', 'Sunflower'],
+          benefits: ['Short duration', 'Soil improvement', 'Additional income'],
+          soilPreparation: 'Field cleaning, organic matter'
+        },
+        {
+          season: 'Monsoon',
+          recommendedCrops: ['Rice', 'Maize'],
+          benefits: ['Water utilization', 'Nutrient cycling', 'Weed control'],
+          soilPreparation: 'Proper drainage, land leveling'
+        },
+        {
+          season: 'Winter',
+          recommendedCrops: ['Potato', 'Mustard', 'Vegetables'],
+          benefits: ['Cash crop option', 'Soil health', 'Market demand'],
+          soilPreparation: 'Light tillage, bed preparation'
+        }
+      ],
+      'maize': [
+        {
+          season: 'Summer',
+          recommendedCrops: ['Green Gram', 'Cowpea', 'Groundnut'],
+          benefits: ['Nitrogen addition', 'Soil conservation', 'Risk mitigation'],
+          soilPreparation: 'Summer plowing, residue management'
+        },
+        {
+          season: 'Monsoon',
+          recommendedCrops: ['Rice', 'Soybean', 'Cotton'],
+          benefits: ['Rain-fed cultivation', 'Different root system', 'Market value'],
+          soilPreparation: 'Ridge making, drainage'
+        },
+        {
+          season: 'Winter',
+          recommendedCrops: ['Wheat', 'Peas', 'Mustard'],
+          benefits: ['Temperature suitable', 'Nutrient efficiency', 'Good returns'],
+          soilPreparation: 'Minimum tillage, moisture conservation'
+        }
+      ],
+      'groundnut': [
+        {
+          season: 'Summer',
+          recommendedCrops: ['Sesame', 'Sunflower', 'Pearl Millet'],
+          benefits: ['Drought tolerance', 'Different nutrient needs', 'Soil structure'],
+          soilPreparation: 'Deep plowing, organic matter'
+        },
+        {
+          season: 'Monsoon',
+          recommendedCrops: ['Soybean', 'Pigeon Pea', 'Cotton'],
+          benefits: ['Rainfall utilization', 'Soil improvement', 'Economic returns'],
+          soilPreparation: 'Broad bed furrow system'
+        },
+        {
+          season: 'Winter',
+          recommendedCrops: ['Wheat', 'Chickpea', 'Coriander'],
+          benefits: ['Cool season crops', 'Market demand', 'Soil health'],
+          soilPreparation: 'Light tillage, raised beds'
+        }
+      ]
+    };
+
+    const normalizedCrop = crop.toLowerCase();
+    const defaultPlan = [
+      {
+        season: 'Summer',
+        recommendedCrops: ['Green Gram', 'Cowpea', 'Sesame'],
+        benefits: ['Soil health improvement', 'Water conservation', 'Pest management'],
+        soilPreparation: 'Standard soil preparation with organic matter addition'
+      },
+      {
+        season: 'Monsoon',
+        recommendedCrops: ['Rice', 'Maize', 'Soybean'],
+        benefits: ['Water utilization', 'Nutrient cycling', 'Economic returns'],
+        soilPreparation: 'Proper drainage and land preparation'
+      },
+      {
+        season: 'Winter',
+        recommendedCrops: ['Wheat', 'Chickpea', 'Mustard'],
+        benefits: ['Temperature suitable', 'Market demand', 'Soil improvement'],
+        soilPreparation: 'Minimum tillage with moisture conservation'
+      }
+    ];
+
+    return rotationPlans[normalizedCrop] || defaultPlan;
   };
 
   const rotationPlan = getRotationPlan(currentCrop);
