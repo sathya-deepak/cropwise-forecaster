@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,7 @@ import MarketTrends from '@/components/dashboard/MarketTrends';
 import DiseaseGuide from '@/components/dashboard/DiseaseGuide';
 import CommunityForum from '@/components/dashboard/CommunityForum';
 import CropRotationPlanner from '@/components/dashboard/CropRotationPlanner';
+import LanguageSelector from '@/components/LanguageSelector';
 
 interface CropEconomics {
   cropName: string;
@@ -177,6 +179,7 @@ const CropEconomics = () => {
 
   return (
     <div className="min-h-screen bg-cream p-6">
+      <LanguageSelector />
       <Link 
         to="/predict"
         className="inline-block mb-6"
