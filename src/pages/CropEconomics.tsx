@@ -42,7 +42,7 @@ const CropEconomics = () => {
         expectedYield: 6.5,
         marketPrice: 20000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1633396705863-c69a5c96afc7?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse4.mm.bing.net/th?id=OIP.EaGCgj3Xiy6MWNzb_UX34QHaEK&pid=Api&P=0&h=180'
       },
       'rice': {
         cropName: 'Rice',
@@ -51,7 +51,7 @@ const CropEconomics = () => {
         expectedYield: 5.5,
         marketPrice: 22000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1568636653097-81be8bd876b6?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse1.mm.bing.net/th?id=OIP.hKPPPNaoUMBjvEq3T5kGbgHaE8&pid=Api&P=0&h=180'
       },
       'wheat': {
         cropName: 'Wheat',
@@ -60,7 +60,7 @@ const CropEconomics = () => {
         expectedYield: 4.2,
         marketPrice: 25000,
         timeToHarvest: 5,
-        imageUrl: 'https://images.unsplash.com/photo-1631651363531-ee7f0f20b5df?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse1.mm.bing.net/th?id=OIP.jEtws9_luAKsuyrFXVRNrwHaEv&pid=Api&P=0&h=180'
       },
       'winter wheat': {
         cropName: 'Winter Wheat',
@@ -69,7 +69,7 @@ const CropEconomics = () => {
         expectedYield: 4.2,
         marketPrice: 25000,
         timeToHarvest: 5,
-        imageUrl: 'https://images.unsplash.com/photo-1631651363531-ee7f0f20b5df?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse1.mm.bing.net/th?id=OIP.jEtws9_luAKsuyrFXVRNrwHaEv&pid=Api&P=0&h=180'
       },
       'cotton': {
         cropName: 'Cotton',
@@ -78,7 +78,7 @@ const CropEconomics = () => {
         expectedYield: 2.8,
         marketPrice: 65000,
         timeToHarvest: 6,
-        imageUrl: 'https://images.unsplash.com/photo-1599686268343-e08da60d0b5b?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse1.mm.bing.net/th?id=OIP.KDnjxIFMWIFc69LfDalT7AHaE8&pid=Api&P=0&h=180'
       },
       'groundnut': {
         cropName: 'Groundnut',
@@ -87,7 +87,7 @@ const CropEconomics = () => {
         expectedYield: 2.5,
         marketPrice: 45000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1543362905-f2423ef4e0f8?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse3.mm.bing.net/th?id=OIP.ARpsHdxHQLPWMB2YaGWgFgHaE7&pid=Api&P=0&h=180'
       },
       'peanuts': {
         cropName: 'Groundnut',
@@ -96,7 +96,7 @@ const CropEconomics = () => {
         expectedYield: 2.5,
         marketPrice: 45000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1543362905-f2423ef4e0f8?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse3.mm.bing.net/th?id=OIP.ARpsHdxHQLPWMB2YaGWgFgHaE7&pid=Api&P=0&h=180'
       },
       'sugarcane': {
         cropName: 'Sugarcane',
@@ -114,7 +114,7 @@ const CropEconomics = () => {
         expectedYield: 6.5,
         marketPrice: 20000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1633396705863-c69a5c96afc7?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse4.mm.bing.net/th?id=OIP.EaGCgj3Xiy6MWNzb_UX34QHaEK&pid=Api&P=0&h=180'
       },
       'soybean': {
         cropName: 'Soybean',
@@ -123,7 +123,7 @@ const CropEconomics = () => {
         expectedYield: 3.5,
         marketPrice: 38000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1601492982645-e5c4b0ccf651?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse4.mm.bing.net/th?id=OIP.Ull9sExmcM4JW8DGHLh1CgHaFj&pid=Api&P=0&h=180'
       },
       'barley': {
         cropName: 'Barley',
@@ -132,7 +132,7 @@ const CropEconomics = () => {
         expectedYield: 3.8,
         marketPrice: 28000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1562242203-4d0f8d4fe99f?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse1.mm.bing.net/th?id=OIP.-UjwP1IvJ-HpSZlZ_cGlxAHaFH&pid=Api&P=0&h=180'
       },
       'vegetables': {
         cropName: 'Vegetables',
