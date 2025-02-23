@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -55,7 +55,6 @@ const Predict = () => {
       expectedYield = soilBasedCrops[soil].yield;
     }
 
-    // Temperature-based recommendations
     if (tempNum < 10) {
       primaryCrop = 'Winter Wheat';
       secondaryCrops = ['Barley', 'Oats', 'Rye', 'Mustard'];
@@ -68,7 +67,6 @@ const Predict = () => {
       }
     }
 
-    // Weather-based adjustments
     if (weather === 'rainy' || weather === 'humid') {
       if (!secondaryCrops.includes('Rice')) {
         secondaryCrops.unshift('Rice', 'Jute', 'Tea');
@@ -104,7 +102,6 @@ const Predict = () => {
       console.log('Setting prediction result:', prediction);
       setResult(prediction);
       
-      // Extract primary crop from prediction
       const primaryCrop = prediction.split('we recommend planting ')[1].split(' as')[0];
       setPredictedCrop(primaryCrop);
 
@@ -118,14 +115,6 @@ const Predict = () => {
         title: "Error",
         description: "Failed to generate prediction. Please try again.",
         variant: "destructive"
-      });
-    }
-  };
-
-  const handleCheckEconomics = () => {
-    if (predictedCrop) {
-      navigate('/crop-economics', { 
-        state: { cropName: predictedCrop }
       });
     }
   };
@@ -228,12 +217,18 @@ const Predict = () => {
                 <p className="text-gray-700">{result}</p>
               </div>
               
-              <Button 
-                onClick={handleCheckEconomics}
-                className="w-full bg-secondary hover:bg-secondary-dark text-white"
+              <Link 
+                to="/crop-economics" 
+                state={{ cropName: predictedCrop }}
+                className="block w-full"
               >
-                Check Economic Analysis
-              </Button>
+                <Button 
+                  type="button"
+                  className="w-full bg-secondary hover:bg-secondary-dark text-white"
+                >
+                  Check Economic Analysis
+                </Button>
+              </Link>
             </div>
           )}
         </Card>

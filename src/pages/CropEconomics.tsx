@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft } from 'lucide-react';
@@ -26,7 +26,8 @@ interface CropEconomics {
 const CropEconomics = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { cropName } = location.state || { cropName: 'Unknown Crop' };
+  
+  const { cropName = 'Unknown Crop' } = location.state || {};
 
   console.log('Rendering CropEconomics for crop:', cropName);
 
@@ -176,13 +177,18 @@ const CropEconomics = () => {
 
   return (
     <div className="min-h-screen bg-cream p-6">
-      <Button 
-        variant="ghost" 
-        onClick={() => navigate('/predict')}
-        className="mb-6 text-primary hover:text-primary-dark"
+      <Link 
+        to="/predict"
+        className="inline-block mb-6"
       >
-        <ArrowLeft className="w-4 h-4 mr-2" /> Back to Prediction
-      </Button>
+        <Button 
+          variant="ghost" 
+          type="button"
+          className="text-primary hover:text-primary-dark"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" /> Back to Prediction
+        </Button>
+      </Link>
 
       <div className="container mx-auto max-w-6xl">
         <h1 className="text-4xl font-bold text-primary mb-8 text-center">Crop Economics Analysis</h1>
