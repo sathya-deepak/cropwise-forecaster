@@ -1,3 +1,4 @@
+
 import { SupportedLanguage } from '@/contexts/LanguageContext';
 
 export const translations = {
@@ -38,7 +39,6 @@ export const translations = {
     cropEconomicsAnalysis: "Crop Economics Analysis",
     timeToHarvest: "Time to Harvest",
     months: "months",
-    expectedYield: "Expected Yield",
     tonsPerAcre: "tons/acre",
     marketPrice: "Market Price",
     ton: "ton",
@@ -92,7 +92,6 @@ export const translations = {
     cropEconomicsAnalysis: "फसल अर्थशास्त्र विश्लेषण",
     timeToHarvest: "कटाई का समय",
     months: "महीने",
-    expectedYield: "अपेक्षित उपज",
     tonsPerAcre: "टन/एकड़",
     marketPrice: "बाजार मूल्य",
     ton: "टन",
@@ -106,7 +105,7 @@ export const translations = {
     weatherAdvice: "फसल की इष्टतम वृद्धि के लिए, स्थानीय मौसम की भविष्यवाणी पर दैनिक नज़र रखें। सटीक मापन के लिए अपने खेत में एक छोटा मौसम स्टेशन स्थापित करने पर विचार करें।",
     pestAdvice: "नियमित फसल निगरानी आवश्यक है। एकीकृत कीट प्रबंधन (IPM) तकनीकों का उपयोग करें। प्राकृतिक शिकारियों और प्रतिरोधी किस्मों पर विचार करें।",
     waterAdvice: "कुशल सिंचाई प्रथाओं को लागू करें। पानी के उपयोग को अनुकूलित करने के लिए मिट्टी की नमी सेंसर का उपयोग करें। पानी के संरक्षण के लिए ड्रिप सिंचाई पर विचार करें।",
-    fertilizerAdvice: "पोषक त���्वों की आवश्यकता निर्धारित करने के लिए नियमित मिट्टी परीक्षण करें। जब संभव हो जैविक उर्वरकों का उपयोग करें।",
+    fertilizerAdvice: "पोषक तत्वों की आवश्यकता निर्धारित करने के लिए नियमित मिट्टी परीक्षण करें। जब संभव हो जैविक उर्वरकों का उपयोग करें।",
     generalAdvice: "सर्वोत्तम परिणामों के लिए, नियमित फसल निगरानी बनाए रखें। क्या आप मौसम, कीट, सिंचाई या उर्वरकों के बारे में विशिष्ट सलाह चाहेंगे?"
   },
   te: {
@@ -136,7 +135,7 @@ export const translations = {
     
     // DetailedPredict page
     detailedTitle: "వివరణాత్మక పంట విశ్లేషణ",
-    analyzeCrop: "పంట అనుకూలత విశ్లేషण",
+    analyzeCrop: "పంట అనుకూలత విశ్లేషణ",
     suitabilityScore: "అనుకూలత స్కోరు",
     expectedYield: "ఊహించిన దిగుబడి",
     keyConditions: "ముఖ్య పరిస్థితులు",
@@ -146,7 +145,6 @@ export const translations = {
     cropEconomicsAnalysis: "పంట ఆర్థిక విశ్లేషణ",
     timeToHarvest: "పంట కోతకు సమయం",
     months: "నెలలు",
-    expectedYield: "ఊహించిన దిగుబడి",
     tonsPerAcre: "టన్నులు/ఎకరం",
     marketPrice: "మార్కెట్ ధర",
     ton: "టన్ను",
@@ -161,7 +159,7 @@ export const translations = {
     pestAdvice: "క్రమం తప్పకుండా పంట పర్యవేక్షణ అవసరం. సమగ్ర పురుగు నిర్వహణ (IPM) పద్ధతులను ఉపయోగించండి.",
     waterAdvice: "సమర్థవంతమైన నీటిపారుదల పద్ధతులను అమలు చేయండి. నీటి వినియోగాన్ని అనుకూలీకరించడానికి నేల తేమ సెన్సార్లను ఉపయోగించండి.",
     fertilizerAdvice: "పోషక అవసరాలను నిర్ధారించడానికి క్రమం తప్పకుండా నేల పరీక్షలు నిర్వహించండి.",
-    generalAdvice: "ఉత్తమ ఫలితాల కోసం, క్రమం తప్పకుండా పంట పర్యవేక్షణను కొనసాగించండి. మీరు వాతావరణం, పూச்சிகளు, నీర்பాசனமు அல்லது ఉరங்களు பற்றிய குறிப்பிட்ட ஆலோசனை வேண்டுமா?"
+    generalAdvice: "ఉత్తమ ఫలితాల కోసం, క్రమం తప్పకుండా పంట పర్యవేక్షణను కొనసాగించండి. మీరు వాతావరణం, పూచ్చికలు, నీటిపారుదల లేదా ఎరువుల గురించి నిర్దిష్ట సలహా కోరుకుంటున్నారా?"
   },
   ta: {
     // Index page
@@ -200,7 +198,6 @@ export const translations = {
     cropEconomicsAnalysis: "பயிர் பொருளாதார பகுப்பாய்வு",
     timeToHarvest: "அறுவடைக்கான காலம்",
     months: "மாதங்கள்",
-    expectedYield: "எதிர்பார்க்கப்படும் மகசூல்",
     tonsPerAcre: "டன்கள்/ஏக்கர்",
     marketPrice: "சந்தை விலை",
     ton: "டன்",
