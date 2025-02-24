@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -12,6 +11,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { getTranslation } from "@/utils/translations";
 import LanguageSelector from '@/components/LanguageSelector';
 import { PredictionService } from '@/services/PredictionService';
+import ExpertConsultation from '@/components/community/ExpertConsultation';
+import ROICalculator from '@/components/financial/ROICalculator';
 
 const Predict = () => {
   const navigate = useNavigate();
@@ -123,69 +124,77 @@ const Predict = () => {
         <ArrowLeft className="w-4 h-4 mr-2" /> {t.backToHome}
       </Button>
 
-      <div className="container mx-auto max-w-4xl">
+      <div className="container mx-auto max-w-6xl">
         <h1 className="text-4xl font-bold text-primary mb-8 text-center">{t.quickPrediction}</h1>
         
-        <Card className="p-6">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="location">Location</Label>
-                <Input 
-                  id="location"
-                  placeholder="Enter your location"
-                  className="bg-white border-2 border-primary/20 shadow-sm"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  required
-                />
+        <div className="grid lg:grid-cols-2 gap-6 mb-6">
+          <Card className="p-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="location">Location</Label>
+                  <Input 
+                    id="location"
+                    placeholder="Enter your location"
+                    className="bg-white border-2 border-primary/20 shadow-sm"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="soilType">Soil Type</Label>
+                  <Select value={soilType} onValueChange={setSoilType} required>
+                    <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
+                      <SelectValue placeholder="Select soil type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="alluvial">Alluvial Soil</SelectItem>
+                      <SelectItem value="black">Black Soil</SelectItem>
+                      <SelectItem value="red">Red Soil</SelectItem>
+                      <SelectItem value="laterite">Laterite Soil</SelectItem>
+                      <SelectItem value="sandy">Sandy Soil</SelectItem>
+                      <SelectItem value="clay">Clay Soil</SelectItem>
+                      <SelectItem value="loamy">Loamy Soil</SelectItem>
+                      <SelectItem value="saline">Saline Soil</SelectItem>
+                      <SelectItem value="peaty">Peaty Soil</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="soilType">Soil Type</Label>
-                <Select value={soilType} onValueChange={setSoilType} required>
-                  <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
-                    <SelectValue placeholder="Select soil type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="alluvial">Alluvial Soil</SelectItem>
-                    <SelectItem value="black">Black Soil</SelectItem>
-                    <SelectItem value="red">Red Soil</SelectItem>
-                    <SelectItem value="laterite">Laterite Soil</SelectItem>
-                    <SelectItem value="sandy">Sandy Soil</SelectItem>
-                    <SelectItem value="clay">Clay Soil</SelectItem>
-                    <SelectItem value="loamy">Loamy Soil</SelectItem>
-                    <SelectItem value="saline">Saline Soil</SelectItem>
-                    <SelectItem value="peaty">Peaty Soil</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <Button 
-              type="submit" 
-              className="w-full bg-primary hover:bg-primary-dark text-white"
-            >
-              {t.getPrediction}
-            </Button>
-          </form>
-
-          {result && weatherData && (
-            <div className="mt-6 space-y-4">
-              <div className="p-4 bg-green-50 border border-primary rounded-lg">
-                <h3 className="text-lg font-semibold text-primary mb-2">{t.predictionResult}</h3>
-                <p className="text-gray-700">{result}</p>
-              </div>
-              
               <Button 
-                onClick={handleCheckEconomics}
-                className="w-full bg-secondary hover:bg-secondary-dark text-white"
+                type="submit" 
+                className="w-full bg-primary hover:bg-primary-dark text-white"
               >
-                Check Economic Analysis
+                {t.getPrediction}
               </Button>
-            </div>
-          )}
-        </Card>
+            </form>
+
+            {result && weatherData && (
+              <div className="mt-6 space-y-4">
+                <div className="p-4 bg-green-50 border border-primary rounded-lg">
+                  <h3 className="text-lg font-semibold text-primary mb-2">{t.predictionResult}</h3>
+                  <p className="text-gray-700">{result}</p>
+                </div>
+                
+                <Button 
+                  onClick={handleCheckEconomics}
+                  className="w-full bg-secondary hover:bg-secondary-dark text-white"
+                >
+                  Check Economic Analysis
+                </Button>
+              </div>
+            )}
+          </Card>
+
+          <ROICalculator />
+        </div>
+
+        <div className="mt-8">
+          <ExpertConsultation />
+        </div>
       </div>
     </div>
   );
