@@ -34,19 +34,14 @@ export const translations = {
     keyConditions: "Key Conditions",
     
     // CropEconomics page
-    economicsTitle: "Crop Economics Analysis",
-    setupCost: "Setup Cost",
-    maintenanceCost: "Maintenance Cost",
-    marketPrice: "Market Price",
+    backToPrediction: "Back to Prediction",
+    cropEconomicsAnalysis: "Crop Economics Analysis",
     timeToHarvest: "Time to Harvest",
-    financialAnalysis: "Financial Analysis",
-    costs: "Costs",
-    revenue: "Revenue",
-    totalCost: "Total Cost",
-    expectedRevenue: "Expected Revenue",
-    expectedProfit: "Expected Profit",
-    roiAnalysis: "ROI Analysis",
     months: "months",
+    expectedYield: "Expected Yield",
+    tonsPerAcre: "tons/acre",
+    marketPrice: "Market Price",
+    ton: "ton",
     
     // Chatbot translations
     typeMessage: "Type your message...",
@@ -93,19 +88,14 @@ export const translations = {
     keyConditions: "प्रमुख स्थितियां",
     
     // CropEconomics page
-    economicsTitle: "फसल अर्थशास्त्र विश्लेषण",
-    setupCost: "सेटअप लागत",
-    maintenanceCost: "रखरखाव लागत",
-    marketPrice: "बाजार मूल्य",
+    backToPrediction: "पूर्वानुमान पर वापस जाएं",
+    cropEconomicsAnalysis: "फसल अर्थशास्त्र विश्लेषण",
     timeToHarvest: "कटाई का समय",
-    financialAnalysis: "वित्तीय विश्लेषण",
-    costs: "लागत",
-    revenue: "राजस्व",
-    totalCost: "कुल लागत",
-    expectedRevenue: "अपेक्षित राजस्व",
-    expectedProfit: "अपेक्षित लाभ",
-    roiAnalysis: "आरओआई विश्लेषण",
     months: "महीने",
+    expectedYield: "अपेक्षित उपज",
+    tonsPerAcre: "टन/एकड़",
+    marketPrice: "बाजार मूल्य",
+    ton: "टन",
     
     // Chatbot translations
     typeMessage: "अपना संदेश टाइप करें...",
@@ -116,7 +106,7 @@ export const translations = {
     weatherAdvice: "फसल की इष्टतम वृद्धि के लिए, स्थानीय मौसम की भविष्यवाणी पर दैनिक नज़र रखें। सटीक मापन के लिए अपने खेत में एक छोटा मौसम स्टेशन स्थापित करने पर विचार करें।",
     pestAdvice: "नियमित फसल निगरानी आवश्यक है। एकीकृत कीट प्रबंधन (IPM) तकनीकों का उपयोग करें। प्राकृतिक शिकारियों और प्रतिरोधी किस्मों पर विचार करें।",
     waterAdvice: "कुशल सिंचाई प्रथाओं को लागू करें। पानी के उपयोग को अनुकूलित करने के लिए मिट्टी की नमी सेंसर का उपयोग करें। पानी के संरक्षण के लिए ड्रिप सिंचाई पर विचार करें।",
-    fertilizerAdvice: "पोषक तत्वों की आवश्यकता निर्धारित करने के लिए नियमित मिट्टी परीक्षण करें। जब संभव हो जैविक उर्वरकों का उपयोग करें।",
+    fertilizerAdvice: "पोषक त���्वों की आवश्यकता निर्धारित करने के लिए नियमित मिट्टी परीक्षण करें। जब संभव हो जैविक उर्वरकों का उपयोग करें।",
     generalAdvice: "सर्वोत्तम परिणामों के लिए, नियमित फसल निगरानी बनाए रखें। क्या आप मौसम, कीट, सिंचाई या उर्वरकों के बारे में विशिष्ट सलाह चाहेंगे?"
   },
   te: {
@@ -146,25 +136,20 @@ export const translations = {
     
     // DetailedPredict page
     detailedTitle: "వివరణాత్మక పంట విశ్లేషణ",
-    analyzeCrop: "పంట అనుకూలత విశ్లేషణ",
+    analyzeCrop: "పంట అనుకూలత విశ్లేషण",
     suitabilityScore: "అనుకూలత స్కోరు",
     expectedYield: "ఊహించిన దిగుబడి",
     keyConditions: "ముఖ్య పరిస్థితులు",
     
     // CropEconomics page
-    economicsTitle: "పంట ఆర్థిక విశ్లేషణ",
-    setupCost: "సెటప్ ఖర్చు",
-    maintenanceCost: "నిర్వహణ ఖర్చు",
-    marketPrice: "మార్కెట్ ధర",
+    backToPrediction: "అంచనాకు తిరిగి వెళ్ళు",
+    cropEconomicsAnalysis: "పంట ఆర్థిక విశ్లేషణ",
     timeToHarvest: "పంట కోతకు సమయం",
-    financialAnalysis: "ఆర్థిక విశ్లేషణ",
-    costs: "ఖర్చులు",
-    revenue: "ఆదాయం",
-    totalCost: "మొత్తం ఖర్చు",
-    expectedRevenue: "అంచనా ఆదాయం",
-    expectedProfit: "అంచనా లాభం",
-    roiAnalysis: "ROI విశ్లేషణ",
     months: "నెలలు",
+    expectedYield: "ఊహించిన దిగుబడి",
+    tonsPerAcre: "టన్నులు/ఎకరం",
+    marketPrice: "మార్కెట్ ధర",
+    ton: "టన్ను",
     
     // Chatbot translations
     typeMessage: "మీ సందేశాన్ని టైప్ చేయండి...",
@@ -176,7 +161,7 @@ export const translations = {
     pestAdvice: "క్రమం తప్పకుండా పంట పర్యవేక్షణ అవసరం. సమగ్ర పురుగు నిర్వహణ (IPM) పద్ధతులను ఉపయోగించండి.",
     waterAdvice: "సమర్థవంతమైన నీటిపారుదల పద్ధతులను అమలు చేయండి. నీటి వినియోగాన్ని అనుకూలీకరించడానికి నేల తేమ సెన్సార్లను ఉపయోగించండి.",
     fertilizerAdvice: "పోషక అవసరాలను నిర్ధారించడానికి క్రమం తప్పకుండా నేల పరీక్షలు నిర్వహించండి.",
-    generalAdvice: "ఉత్తమ ఫలితాల కోసం, క్రమం తప్పకుండా పంట పర్యవేక్షణను కొనసాగించండి. మీరు వాతావరణం, పురుగులు, నీటిపారుదల లేదా ఎరువుల గురించి నిర్దిష్ట సలహా కావాలా?"
+    generalAdvice: "ఉత్తమ ఫలితాల కోసం, క్రమం తప్పకుండా పంట పర్యవేక్షణను కొనసాగించండి. మీరు వాతావరణం, పూச்சிகளు, నీర்பాசனமు அல்லது ఉరங்களు பற்றிய குறிப்பிட்ட ஆலோசனை வேண்டுமா?"
   },
   ta: {
     // Index page
@@ -211,19 +196,14 @@ export const translations = {
     keyConditions: "முக்கிய நிலைமைகள்",
     
     // CropEconomics page
-    economicsTitle: "பயிர் பொருளாதார பகுப்பாய்வு",
-    setupCost: "அமைப்பு செலவு",
-    maintenanceCost: "பராமரிப்பு செலவு",
-    marketPrice: "சந்தை விலை",
+    backToPrediction: "கணிப்புக்கு திரும்பு",
+    cropEconomicsAnalysis: "பயிர் பொருளாதார பகுப்பாய்வு",
     timeToHarvest: "அறுவடைக்கான காலம்",
-    financialAnalysis: "நிதி பகுப்பாய்வு",
-    costs: "செலவுகள்",
-    revenue: "வருவாய்",
-    totalCost: "மொத்த செலவு",
-    expectedRevenue: "எதிர்பார்க்கப்படும் வருவாய்",
-    expectedProfit: "எதிர்பார்க்கப்படும் லாபம்",
-    roiAnalysis: "ROI பகுப்பாய்வு",
     months: "மாதங்கள்",
+    expectedYield: "எதிர்பார்க்கப்படும் மகசூல்",
+    tonsPerAcre: "டன்கள்/ஏக்கர்",
+    marketPrice: "சந்தை விலை",
+    ton: "டன்",
     
     // Chatbot translations
     typeMessage: "உங்கள் செய்தியை தட்டச்சு செய்யவும்...",
