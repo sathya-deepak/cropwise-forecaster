@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -30,11 +29,10 @@ interface CropEconomics {
 const CropEconomics = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { cropName, location: cropLocation, weatherData } = location.state || {};
+  
   const { language } = useLanguage();
   const t = getTranslation(language);
-  
-  // Get cropName from state, if not present redirect back to prediction
-  const { cropName } = location.state || {};
   
   useEffect(() => {
     if (!cropName) {
@@ -204,30 +202,27 @@ const CropEconomics = () => {
 
   return (
     <div className="min-h-screen bg-cream p-6">
-      <div className="absolute top-4 right-4">
-        <LanguageSelector />
-      </div>
-      
-      <Link 
-        to="/predict"
-        className="inline-block mb-6"
+      <Button 
+        variant="ghost" 
+        onClick={() => navigate('/predict')}
+        className="mb-6"
       >
-        <Button 
-          variant="ghost" 
-          type="button"
-          className="text-primary hover:text-primary-dark"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" /> {t.backToPrediction}
-        </Button>
-      </Link>
+        <ArrowLeft className="w-4 h-4 mr-2" /> {t.backToPrediction}
+      </Button>
 
-      <div className="container mx-auto max-w-6xl">
-        <h1 className="text-4xl font-bold text-primary mb-8 text-center">
-          {t.cropEconomicsAnalysis}
-        </h1>
+      <div className="container mx-auto max-w-4xl">
+        <h1 className="text-4xl font-bold text-primary mb-8">{t.cropEconomicsAnalysis}</h1>
         
-        <div className="grid md:grid-cols-2 gap-6 mb-6">
-          <WeatherWidget />
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <Card className="p-6">
+            <h2 className="text-xl font-semibold mb-4">Weather Conditions at {cropLocation}</h2>
+            <div className="space-y-2">
+              <p>Temperature: {weatherData?.temperature}°C</p>
+              <p>Humidity: {weatherData?.humidity}%</p>
+              <p>Rainfall: {weatherData?.rainfall}mm</p>
+            </div>
+          </Card>
+
           <Card className="p-6">
             <img 
               src={economics.imageUrl} 

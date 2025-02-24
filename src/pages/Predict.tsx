@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft } from 'lucide-react';
-import MonthYearSelector from '@/components/prediction/MonthYearSelector';
 import { useToast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getTranslation } from "@/utils/translations";
@@ -22,57 +21,59 @@ const Predict = () => {
   
   const [result, setResult] = useState<string | null>(null);
   const [predictedCrop, setPredictedCrop] = useState<string | null>(null);
-  const [month, setMonth] = useState<string>('');
-  const [year, setYear] = useState<string>('');
   const [location, setLocation] = useState<string>('');
-  const [temperature, setTemperature] = useState<string>('');
-  const [humidity, setHumidity] = useState<string>('');
-  const [rainfall, setRainfall] = useState<string>('');
   const [soilType, setSoilType] = useState<string>('');
-  const [soilPh, setSoilPh] = useState<string>('');
-  const [nitrogen, setNitrogen] = useState<string>('');
-  const [phosphorus, setPhosphorus] = useState<string>('');
-  const [potassium, setPotassium] = useState<string>('');
+  const [weatherData, setWeatherData] = useState<any>(null);
+
+  const fetchWeatherData = async (location: string) => {
+    // Simulated weather API call
+    // In a real application, you would call an actual weather API here
+    const mockWeatherData = {
+      temperature: Math.floor(Math.random() * (35 - 15) + 15),
+      humidity: Math.floor(Math.random() * (80 - 40) + 40),
+      rainfall: Math.floor(Math.random() * (100 - 10) + 10)
+    };
+    setWeatherData(mockWeatherData);
+    return mockWeatherData;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted with values:', {
-      month, year, location, temperature, humidity, rainfall, soilType, soilPh
-    });
     
-    if (!month || !year || !location || !temperature || !soilType || !soilPh) {
+    if (!location || !soilType) {
       toast({
         title: "Missing Fields",
-        description: "Please fill in all required fields to get an accurate prediction.",
+        description: "Please enter both location and soil type.",
         variant: "destructive"
       });
       return;
     }
 
     try {
+      // Fetch weather data based on location
+      const weather = await fetchWeatherData(location);
+
       const predictionInput = {
         weather: {
-          temperature: Number(temperature),
-          rainfall: Number(rainfall),
-          humidity: Number(humidity),
-          month: Number(month),
+          ...weather,
+          month: new Date().getMonth() + 1,
           location: location
         },
         soil: {
           type: soilType as any,
-          ph: Number(soilPh),
-          nitrogen: Number(nitrogen),
-          phosphorus: Number(phosphorus),
-          potassium: Number(potassium)
+          ph: 7.0, // Default values
+          nitrogen: 140,
+          phosphorus: 50,
+          potassium: 200
         },
         region: location
       };
 
       const prediction = await PredictionService.predictCrops(predictionInput);
-      const resultText = `Based on the provided conditions, we recommend: ${prediction.recommendedCrops.join(', ')}. 
+      const resultText = `Based on the provided conditions in ${location} (Temperature: ${weather.temperature}°C), 
+        we recommend: ${prediction.recommendedCrops.join(', ')}. 
         Confidence: ${Math.round(prediction.confidence * 100)}%. 
-        Risk Level: ${prediction.riskLevel}. 
-        ${prediction.soilSuitability.recommendations?.join('. ')}`;
+        Risk Level: ${prediction.riskLevel}`;
 
       setResult(resultText);
       setPredictedCrop(prediction.recommendedCrops[0]);
@@ -107,11 +108,6 @@ const Predict = () => {
         
         <Card className="p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
-            <MonthYearSelector 
-              onMonthChange={setMonth}
-              onYearChange={setYear}
-            />
-
             <div className="grid md:grid-cols-2 gap-6">
               {/* Location Input */}
               <div className="space-y-2">
@@ -121,47 +117,14 @@ const Predict = () => {
                   placeholder="Enter your location"
                   className="bg-white border-2 border-primary/20 shadow-sm"
                   onChange={(e) => setLocation(e.target.value)}
+                  required
                 />
               </div>
 
-              {/* Weather Inputs */}
-              <div className="space-y-2">
-                <Label htmlFor="temperature">Temperature (°C)</Label>
-                <Input 
-                  type="number" 
-                  id="temperature" 
-                  placeholder="Enter temperature"
-                  className="bg-white border-2 border-primary/20 shadow-sm"
-                  onChange={(e) => setTemperature(e.target.value)}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="humidity">Humidity (%)</Label>
-                <Input 
-                  type="number" 
-                  id="humidity" 
-                  placeholder="Enter humidity"
-                  className="bg-white border-2 border-primary/20 shadow-sm"
-                  onChange={(e) => setHumidity(e.target.value)}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="rainfall">Rainfall (mm)</Label>
-                <Input 
-                  type="number" 
-                  id="rainfall" 
-                  placeholder="Enter rainfall"
-                  className="bg-white border-2 border-primary/20 shadow-sm"
-                  onChange={(e) => setRainfall(e.target.value)}
-                />
-              </div>
-
-              {/* Soil Inputs */}
+              {/* Soil Type Input */}
               <div className="space-y-2">
                 <Label htmlFor="soilType">Soil Type</Label>
-                <Select onValueChange={setSoilType}>
+                <Select onValueChange={setSoilType} required>
                   <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
                     <SelectValue placeholder="Select soil type" />
                   </SelectTrigger>
@@ -178,53 +141,6 @@ const Predict = () => {
                   </SelectContent>
                 </Select>
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="soilPh">Soil pH</Label>
-                <Input 
-                  type="number" 
-                  id="soilPh" 
-                  placeholder="Enter soil pH"
-                  min="0"
-                  max="14"
-                  step="0.1"
-                  className="bg-white border-2 border-primary/20 shadow-sm"
-                  onChange={(e) => setSoilPh(e.target.value)}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="nitrogen">Nitrogen (kg/ha)</Label>
-                <Input 
-                  type="number" 
-                  id="nitrogen" 
-                  placeholder="Enter nitrogen content"
-                  className="bg-white border-2 border-primary/20 shadow-sm"
-                  onChange={(e) => setNitrogen(e.target.value)}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="phosphorus">Phosphorus (kg/ha)</Label>
-                <Input 
-                  type="number" 
-                  id="phosphorus" 
-                  placeholder="Enter phosphorus content"
-                  className="bg-white border-2 border-primary/20 shadow-sm"
-                  onChange={(e) => setPhosphorus(e.target.value)}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="potassium">Potassium (kg/ha)</Label>
-                <Input 
-                  type="number" 
-                  id="potassium" 
-                  placeholder="Enter potassium content"
-                  className="bg-white border-2 border-primary/20 shadow-sm"
-                  onChange={(e) => setPotassium(e.target.value)}
-                />
-              </div>
             </div>
 
             <Button type="submit" className="w-full bg-primary hover:bg-primary-dark text-white">
@@ -232,7 +148,7 @@ const Predict = () => {
             </Button>
           </form>
 
-          {result && (
+          {result && weatherData && (
             <div className="mt-6 space-y-4">
               <div className="p-4 bg-green-50 border border-primary rounded-lg">
                 <h3 className="text-lg font-semibold text-primary mb-2">{t.predictionResult}</h3>
@@ -241,7 +157,7 @@ const Predict = () => {
               
               <Link 
                 to="/crop-economics" 
-                state={{ cropName: predictedCrop }}
+                state={{ cropName: predictedCrop, location, weatherData }}
                 className="block w-full"
               >
                 <Button 
