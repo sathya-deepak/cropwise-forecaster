@@ -26,19 +26,23 @@ const Predict = () => {
   const [weatherData, setWeatherData] = useState<any>(null);
 
   const fetchWeatherData = async (location: string) => {
-    // Simulated weather API call
-    // In a real application, you would call an actual weather API here
-    const mockWeatherData = {
-      temperature: Math.floor(Math.random() * (35 - 15) + 15),
-      humidity: Math.floor(Math.random() * (80 - 40) + 40),
-      rainfall: Math.floor(Math.random() * (100 - 10) + 10)
-    };
-    setWeatherData(mockWeatherData);
-    return mockWeatherData;
+    try {
+      // Simulated weather API call
+      const mockWeatherData = {
+        temperature: Math.floor(Math.random() * (35 - 15) + 15),
+        humidity: Math.floor(Math.random() * (80 - 40) + 40),
+        rainfall: Math.floor(Math.random() * (100 - 10) + 10)
+      };
+      setWeatherData(mockWeatherData);
+      return mockWeatherData;
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+      throw error;
+    }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent form from submitting traditionally
     
     if (!location || !soilType) {
       toast({
@@ -92,12 +96,28 @@ const Predict = () => {
     }
   };
 
+  const handleNavigateHome = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent default button behavior
+    navigate('/');
+  };
+
+  const handleCheckEconomics = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent default link behavior
+    navigate('/crop-economics', { 
+      state: { 
+        cropName: predictedCrop, 
+        location, 
+        weatherData 
+      } 
+    });
+  };
+
   return (
     <div className="min-h-screen bg-cream p-6">
       <LanguageSelector />
       <Button 
         variant="ghost" 
-        onClick={() => navigate('/')}
+        onClick={handleNavigateHome}
         className="mb-6 text-primary hover:text-primary-dark"
       >
         <ArrowLeft className="w-4 h-4 mr-2" /> {t.backToHome}
@@ -109,22 +129,21 @@ const Predict = () => {
         <Card className="p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
-              {/* Location Input */}
               <div className="space-y-2">
                 <Label htmlFor="location">Location</Label>
                 <Input 
                   id="location"
                   placeholder="Enter your location"
                   className="bg-white border-2 border-primary/20 shadow-sm"
+                  value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   required
                 />
               </div>
 
-              {/* Soil Type Input */}
               <div className="space-y-2">
                 <Label htmlFor="soilType">Soil Type</Label>
-                <Select onValueChange={setSoilType} required>
+                <Select value={soilType} onValueChange={setSoilType} required>
                   <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
                     <SelectValue placeholder="Select soil type" />
                   </SelectTrigger>
@@ -143,7 +162,10 @@ const Predict = () => {
               </div>
             </div>
 
-            <Button type="submit" className="w-full bg-primary hover:bg-primary-dark text-white">
+            <Button 
+              type="submit" 
+              className="w-full bg-primary hover:bg-primary-dark text-white"
+            >
               {t.getPrediction}
             </Button>
           </form>
@@ -155,18 +177,12 @@ const Predict = () => {
                 <p className="text-gray-700">{result}</p>
               </div>
               
-              <Link 
-                to="/crop-economics" 
-                state={{ cropName: predictedCrop, location, weatherData }}
-                className="block w-full"
+              <Button 
+                onClick={handleCheckEconomics}
+                className="w-full bg-secondary hover:bg-secondary-dark text-white"
               >
-                <Button 
-                  type="button"
-                  className="w-full bg-secondary hover:bg-secondary-dark text-white"
-                >
-                  Check Economic Analysis
-                </Button>
-              </Link>
+                Check Economic Analysis
+              </Button>
             </div>
           )}
         </Card>
