@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -14,6 +14,8 @@ import DiseaseGuide from '@/components/dashboard/DiseaseGuide';
 import CommunityForum from '@/components/dashboard/CommunityForum';
 import CropRotationPlanner from '@/components/dashboard/CropRotationPlanner';
 import LanguageSelector from '@/components/LanguageSelector';
+import { useLanguage } from "@/contexts/LanguageContext";
+import { getTranslation } from "@/utils/translations";
 
 interface CropEconomics {
   cropName: string;
@@ -28,12 +30,35 @@ interface CropEconomics {
 const CropEconomics = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { language } = useLanguage();
+  const t = getTranslation(language);
   
-  const { cropName = 'Unknown Crop' } = location.state || {};
+  // Get cropName from state, if not present redirect back to prediction
+  const { cropName } = location.state || {};
+  
+  useEffect(() => {
+    if (!cropName) {
+      console.log('No crop name found in state, redirecting to prediction page');
+      navigate('/predict');
+    }
+  }, [cropName, navigate]);
 
   console.log('Rendering CropEconomics for crop:', cropName);
 
   const getCropEconomics = (crop: string): CropEconomics => {
+    if (!crop) {
+      console.log('No crop provided to getCropEconomics');
+      return {
+        cropName: 'Unknown Crop',
+        setupCost: 0,
+        maintenanceCost: 0,
+        expectedYield: 0,
+        marketPrice: 0,
+        timeToHarvest: 0,
+        imageUrl: 'https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?w=800&auto=format&fit=crop'
+      };
+    }
+
     const normalizedCrop = crop.toLowerCase().trim();
     console.log('Normalized crop name:', normalizedCrop);
 
@@ -179,7 +204,10 @@ const CropEconomics = () => {
 
   return (
     <div className="min-h-screen bg-cream p-6">
-      <LanguageSelector />
+      <div className="absolute top-4 right-4">
+        <LanguageSelector />
+      </div>
+      
       <Link 
         to="/predict"
         className="inline-block mb-6"
@@ -189,12 +217,14 @@ const CropEconomics = () => {
           type="button"
           className="text-primary hover:text-primary-dark"
         >
-          <ArrowLeft className="w-4 h-4 mr-2" /> Back to Prediction
+          <ArrowLeft className="w-4 h-4 mr-2" /> {t.backToPrediction}
         </Button>
       </Link>
 
       <div className="container mx-auto max-w-6xl">
-        <h1 className="text-4xl font-bold text-primary mb-8 text-center">Crop Economics Analysis</h1>
+        <h1 className="text-4xl font-bold text-primary mb-8 text-center">
+          {t.cropEconomicsAnalysis}
+        </h1>
         
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           <WeatherWidget />
@@ -210,9 +240,9 @@ const CropEconomics = () => {
             />
             <h2 className="text-2xl font-semibold text-primary mb-4">{economics.cropName}</h2>
             <div className="space-y-2">
-              <p><span className="font-semibold">Time to Harvest:</span> {economics.timeToHarvest} months</p>
-              <p><span className="font-semibold">Expected Yield:</span> {economics.expectedYield} tons/acre</p>
-              <p><span className="font-semibold">Market Price:</span> ₹{economics.marketPrice.toLocaleString()}/ton</p>
+              <p><span className="font-semibold">{t.timeToHarvest}:</span> {economics.timeToHarvest} {t.months}</p>
+              <p><span className="font-semibold">{t.expectedYield}:</span> {economics.expectedYield} {t.tonsPerAcre}</p>
+              <p><span className="font-semibold">{t.marketPrice}:</span> ₹{economics.marketPrice.toLocaleString()}/{t.ton}</p>
             </div>
           </Card>
         </div>
