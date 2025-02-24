@@ -6,6 +6,7 @@ interface WeatherData {
   rainfall: number;
   humidity: number;
   month: number;
+  location: string;
 }
 
 interface SoilData {
@@ -16,6 +17,7 @@ interface SoilData {
   potassium: number;
   organicMatter?: number;
   drainage?: 'good' | 'moderate' | 'poor';
+  texture?: 'fine' | 'medium' | 'coarse';
 }
 
 export interface PredictionInput {
@@ -45,39 +47,87 @@ export class PredictionService {
 
   static async predictCrops(input: PredictionInput): Promise<PredictionResult> {
     try {
-      // Enhanced mock prediction logic with soil type consideration
-      const soilSuitabilityMap: Record<string, number> = {
-        'alluvial': 0.95,
-        'black': 0.9,
-        'clay': 0.85,
-        'loamy': 0.8,
-        'sandy': 0.6,
-        'red': 0.7,
-        'laterite': 0.65,
-        'saline': 0.4,
-        'peaty': 0.5
+      // Enhanced soil suitability mapping with more factors
+      const soilSuitabilityMap: Record<string, { score: number; crops: string[] }> = {
+        'alluvial': { 
+          score: 0.95,
+          crops: ['Rice', 'Wheat', 'Sugarcane', 'Cotton', 'Jute']
+        },
+        'black': { 
+          score: 0.9,
+          crops: ['Cotton', 'Sugarcane', 'Wheat', 'Pulses', 'Sunflower']
+        },
+        'clay': { 
+          score: 0.85,
+          crops: ['Rice', 'Wheat', 'Cotton', 'Sugarcane']
+        },
+        'loamy': { 
+          score: 0.8,
+          crops: ['Most Vegetables', 'Wheat', 'Cotton', 'Sugarcane', 'Pulses']
+        },
+        'sandy': { 
+          score: 0.6,
+          crops: ['Groundnut', 'Potato', 'Watermelon', 'Carrot']
+        },
+        'red': { 
+          score: 0.7,
+          crops: ['Groundnut', 'Millet', 'Pulses']
+        },
+        'laterite': { 
+          score: 0.65,
+          crops: ['Tea', 'Coffee', 'Rubber', 'Cashew']
+        },
+        'saline': { 
+          score: 0.4,
+          crops: ['Date Palm', 'Barley', 'Cotton']
+        },
+        'peaty': { 
+          score: 0.5,
+          crops: ['Rice', 'Vegetables', 'Grass']
+        }
       };
 
-      const soilSuitability = soilSuitabilityMap[input.soil.type] || 0.5;
+      const soilData = soilSuitabilityMap[input.soil.type];
+      const soilScore = soilData?.score || 0.5;
       const recommendations: string[] = [];
 
+      // Soil pH recommendations
       if (input.soil.ph < 6.5) {
         recommendations.push('Consider lime application to increase soil pH');
+      } else if (input.soil.ph > 7.5) {
+        recommendations.push('Consider sulfur application to decrease soil pH');
       }
+
+      // Nutrient recommendations
       if (input.soil.nitrogen < 140) {
         recommendations.push('Increase nitrogen fertilization');
       }
+      if (input.soil.phosphorus < 10) {
+        recommendations.push('Add phosphorus-rich fertilizers');
+      }
+      if (input.soil.potassium < 200) {
+        recommendations.push('Supplement with potassium fertilizers');
+      }
+
+      // Weather-based adjustments
+      let weatherSuitability = 0.8;
+      if (input.weather.temperature < 15 || input.weather.temperature > 35) {
+        weatherSuitability *= 0.7;
+      }
+      if (input.weather.humidity < 40 || input.weather.humidity > 80) {
+        weatherSuitability *= 0.8;
+      }
 
       const mockPrediction: PredictionResult = {
-        recommendedCrops: ['Sugarcane', 'Rice', 'Wheat'],
-        confidence: 0.85 * soilSuitability,
+        recommendedCrops: soilData?.crops || ['Generic Crops'],
+        confidence: 0.85 * soilScore * weatherSuitability,
         marketPriceRange: {
           min: 3200,
           max: 3800
         },
-        riskLevel: soilSuitability > 0.7 ? 'low' : soilSuitability > 0.5 ? 'medium' : 'high',
+        riskLevel: soilScore > 0.7 ? 'low' : soilScore > 0.5 ? 'medium' : 'high',
         soilSuitability: {
-          score: soilSuitability,
+          score: soilScore,
           recommendations
         }
       };

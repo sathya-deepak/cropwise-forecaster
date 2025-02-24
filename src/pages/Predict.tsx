@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getTranslation } from "@/utils/translations";
 import LanguageSelector from '@/components/LanguageSelector';
+import { PredictionService } from '@/services/PredictionService';
 
 const Predict = () => {
   const navigate = useNavigate();
@@ -22,88 +24,58 @@ const Predict = () => {
   const [predictedCrop, setPredictedCrop] = useState<string | null>(null);
   const [month, setMonth] = useState<string>('');
   const [year, setYear] = useState<string>('');
-  const [weather, setWeather] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
   const [temperature, setTemperature] = useState<string>('');
-  const [soil, setSoil] = useState<string>('');
-  const [field, setField] = useState<string>('');
-
-  const getCropRecommendation = () => {
-    console.log('Generating quick prediction');
-    const tempNum = Number(temperature);
-    let primaryCrop = '';
-    let secondaryCrops = [];
-    let expectedYield = '';
-
-    const soilBasedCrops: Record<string, { crops: string[], yield: string }> = {
-      'clay': { 
-        crops: ['Wheat', 'Rice', 'Sugarcane', 'Cotton', 'Jute', 'Tobacco'],
-        yield: '3.5-4.2 tons/acre'
-      },
-      'sandy': {
-        crops: ['Groundnut', 'Watermelon', 'Coconut', 'Cashew', 'Pearl Millet', 'Sweet Potato'],
-        yield: '2.8-3.5 tons/acre'
-      },
-      'loamy': {
-        crops: ['Maize', 'Sugarcane', 'Cotton', 'Banana', 'Mango', 'Coffee'],
-        yield: '4.0-4.8 tons/acre'
-      }
-    };
-
-    if (soil && soilBasedCrops[soil]) {
-      primaryCrop = soilBasedCrops[soil].crops[0];
-      secondaryCrops = soilBasedCrops[soil].crops.slice(1);
-      expectedYield = soilBasedCrops[soil].yield;
-    }
-
-    if (tempNum < 10) {
-      primaryCrop = 'Winter Wheat';
-      secondaryCrops = ['Barley', 'Oats', 'Rye', 'Mustard'];
-    } else if (tempNum > 30) {
-      primaryCrop = 'Sugarcane';
-      secondaryCrops = ['Cotton', 'Pearl Millet', 'Sorghum', 'Sesame'];
-    } else if (tempNum >= 20 && tempNum <= 30) {
-      if (!secondaryCrops.includes('Rice')) {
-        secondaryCrops.push('Rice', 'Maize', 'Soybean');
-      }
-    }
-
-    if (weather === 'rainy' || weather === 'humid') {
-      if (!secondaryCrops.includes('Rice')) {
-        secondaryCrops.unshift('Rice', 'Jute', 'Tea');
-      }
-    } else if (weather === 'sunny' || weather === 'partially_cloudy') {
-      if (!secondaryCrops.includes('Cotton')) {
-        secondaryCrops.push('Cotton', 'Sunflower', 'Castor');
-      }
-    }
-
-    console.log('Generated prediction:', { primaryCrop, secondaryCrops, expectedYield });
-    
-    return `Based on the provided conditions, we recommend planting ${primaryCrop} as your primary crop. Expected yield: ${expectedYield}. Secondary recommendations: ${secondaryCrops.join(', ')}.`;
-  };
+  const [humidity, setHumidity] = useState<string>('');
+  const [rainfall, setRainfall] = useState<string>('');
+  const [soilType, setSoilType] = useState<string>('');
+  const [soilPh, setSoilPh] = useState<string>('');
+  const [nitrogen, setNitrogen] = useState<string>('');
+  const [phosphorus, setPhosphorus] = useState<string>('');
+  const [potassium, setPotassium] = useState<string>('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Quick prediction form submitted with values:', {
-      month, year, weather, temperature, soil, field
+    console.log('Form submitted with values:', {
+      month, year, location, temperature, humidity, rainfall, soilType, soilPh
     });
     
-    if (!month || !year || !weather || !temperature || !soil || !field) {
+    if (!month || !year || !location || !temperature || !soilType || !soilPh) {
       toast({
         title: "Missing Fields",
-        description: "Please fill in all fields to get an accurate prediction.",
+        description: "Please fill in all required fields to get an accurate prediction.",
         variant: "destructive"
       });
       return;
     }
 
     try {
-      const prediction = getCropRecommendation();
-      console.log('Setting prediction result:', prediction);
-      setResult(prediction);
-      
-      const primaryCrop = prediction.split('we recommend planting ')[1].split(' as')[0];
-      setPredictedCrop(primaryCrop);
+      const predictionInput = {
+        weather: {
+          temperature: Number(temperature),
+          rainfall: Number(rainfall),
+          humidity: Number(humidity),
+          month: Number(month),
+          location: location
+        },
+        soil: {
+          type: soilType as any,
+          ph: Number(soilPh),
+          nitrogen: Number(nitrogen),
+          phosphorus: Number(phosphorus),
+          potassium: Number(potassium)
+        },
+        region: location
+      };
+
+      const prediction = await PredictionService.predictCrops(predictionInput);
+      const resultText = `Based on the provided conditions, we recommend: ${prediction.recommendedCrops.join(', ')}. 
+        Confidence: ${Math.round(prediction.confidence * 100)}%. 
+        Risk Level: ${prediction.riskLevel}. 
+        ${prediction.soilSuitability.recommendations?.join('. ')}`;
+
+      setResult(resultText);
+      setPredictedCrop(prediction.recommendedCrops[0]);
 
       toast({
         title: "Prediction Generated",
@@ -141,67 +113,117 @@ const Predict = () => {
             />
 
             <div className="grid md:grid-cols-2 gap-6">
+              {/* Location Input */}
               <div className="space-y-2">
-                <Label htmlFor="weather">{t.weatherCondition}</Label>
-                <Select onValueChange={setWeather}>
-                  <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
-                    <SelectValue placeholder={t.weatherCondition} />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white border-2 border-primary/20">
-                    <SelectItem value="sunny">Sunny (High light intensity)</SelectItem>
-                    <SelectItem value="rainy">Rainy (High moisture)</SelectItem>
-                    <SelectItem value="cloudy">Cloudy (Limited sunlight)</SelectItem>
-                    <SelectItem value="partially_cloudy">Partially Cloudy (Moderate sunlight)</SelectItem>
-                    <SelectItem value="stormy">Stormy (High wind/rain)</SelectItem>
-                    <SelectItem value="windy">Windy (Air circulation)</SelectItem>
-                    <SelectItem value="humid">Humid (High moisture in air)</SelectItem>
-                    <SelectItem value="foggy">Foggy (Limited visibility)</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="location">Location</Label>
+                <Input 
+                  id="location"
+                  placeholder="Enter your location"
+                  className="bg-white border-2 border-primary/20 shadow-sm"
+                  onChange={(e) => setLocation(e.target.value)}
+                />
               </div>
 
+              {/* Weather Inputs */}
               <div className="space-y-2">
-                <Label htmlFor="temperature">{t.temperature}</Label>
+                <Label htmlFor="temperature">Temperature (°C)</Label>
                 <Input 
                   type="number" 
                   id="temperature" 
-                  placeholder={t.temperature}
-                  min="-20" 
-                  max="50"
+                  placeholder="Enter temperature"
                   className="bg-white border-2 border-primary/20 shadow-sm"
                   onChange={(e) => setTemperature(e.target.value)}
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="soil">{t.soilType}</Label>
-                <Select onValueChange={setSoil}>
+                <Label htmlFor="humidity">Humidity (%)</Label>
+                <Input 
+                  type="number" 
+                  id="humidity" 
+                  placeholder="Enter humidity"
+                  className="bg-white border-2 border-primary/20 shadow-sm"
+                  onChange={(e) => setHumidity(e.target.value)}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="rainfall">Rainfall (mm)</Label>
+                <Input 
+                  type="number" 
+                  id="rainfall" 
+                  placeholder="Enter rainfall"
+                  className="bg-white border-2 border-primary/20 shadow-sm"
+                  onChange={(e) => setRainfall(e.target.value)}
+                />
+              </div>
+
+              {/* Soil Inputs */}
+              <div className="space-y-2">
+                <Label htmlFor="soilType">Soil Type</Label>
+                <Select onValueChange={setSoilType}>
                   <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
-                    <SelectValue placeholder={t.soilType} />
+                    <SelectValue placeholder="Select soil type" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white border-2 border-primary/20">
-                    <SelectItem value="clay">Clay Soil (High nutrients, poor drainage)</SelectItem>
-                    <SelectItem value="sandy">Sandy Soil (Good drainage, low nutrients)</SelectItem>
-                    <SelectItem value="loamy">Loamy Soil (Balanced nutrients and drainage)</SelectItem>
+                  <SelectContent>
+                    <SelectItem value="alluvial">Alluvial Soil</SelectItem>
+                    <SelectItem value="black">Black Soil</SelectItem>
+                    <SelectItem value="red">Red Soil</SelectItem>
+                    <SelectItem value="laterite">Laterite Soil</SelectItem>
+                    <SelectItem value="sandy">Sandy Soil</SelectItem>
+                    <SelectItem value="clay">Clay Soil</SelectItem>
+                    <SelectItem value="loamy">Loamy Soil</SelectItem>
+                    <SelectItem value="saline">Saline Soil</SelectItem>
+                    <SelectItem value="peaty">Peaty Soil</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="field">{t.fieldCondition}</Label>
-                <Select onValueChange={setField}>
-                  <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
-                    <SelectValue placeholder={t.fieldCondition} />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white border-2 border-primary/20">
-                    <SelectItem value="excellent">Excellent - Well maintained</SelectItem>
-                    <SelectItem value="good">Good - Minor issues</SelectItem>
-                    <SelectItem value="fair">Fair - Some concerns</SelectItem>
-                    <SelectItem value="poor">Poor - Needs attention</SelectItem>
-                    <SelectItem value="waterlogged">Waterlogged (Excess water)</SelectItem>
-                    <SelectItem value="terraced">Terraced (Stepped landscape)</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="soilPh">Soil pH</Label>
+                <Input 
+                  type="number" 
+                  id="soilPh" 
+                  placeholder="Enter soil pH"
+                  min="0"
+                  max="14"
+                  step="0.1"
+                  className="bg-white border-2 border-primary/20 shadow-sm"
+                  onChange={(e) => setSoilPh(e.target.value)}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="nitrogen">Nitrogen (kg/ha)</Label>
+                <Input 
+                  type="number" 
+                  id="nitrogen" 
+                  placeholder="Enter nitrogen content"
+                  className="bg-white border-2 border-primary/20 shadow-sm"
+                  onChange={(e) => setNitrogen(e.target.value)}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="phosphorus">Phosphorus (kg/ha)</Label>
+                <Input 
+                  type="number" 
+                  id="phosphorus" 
+                  placeholder="Enter phosphorus content"
+                  className="bg-white border-2 border-primary/20 shadow-sm"
+                  onChange={(e) => setPhosphorus(e.target.value)}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="potassium">Potassium (kg/ha)</Label>
+                <Input 
+                  type="number" 
+                  id="potassium" 
+                  placeholder="Enter potassium content"
+                  className="bg-white border-2 border-primary/20 shadow-sm"
+                  onChange={(e) => setPotassium(e.target.value)}
+                />
               </div>
             </div>
 
