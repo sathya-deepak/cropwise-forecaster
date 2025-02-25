@@ -13,6 +13,9 @@ import LanguageSelector from '@/components/LanguageSelector';
 import { PredictionService } from '@/services/PredictionService';
 import ExpertConsultation from '@/components/community/ExpertConsultation';
 import ROICalculator from '@/components/financial/ROICalculator';
+import MarketTrends from '@/components/dashboard/MarketTrends';
+import WeatherWidget from '@/components/dashboard/WeatherWidget';
+import CommunityForum from '@/components/dashboard/CommunityForum';
 
 const Predict = () => {
   const navigate = useNavigate();
@@ -189,8 +192,18 @@ const Predict = () => {
             )}
           </Card>
 
-          <ROICalculator />
+          <div className="space-y-6">
+            <ROICalculator />
+            <WeatherWidget />
+          </div>
         </div>
+
+        {predictedCrop && (
+          <div className="grid lg:grid-cols-2 gap-6 mt-8">
+            <MarketTrends cropName={predictedCrop} />
+            <CommunityForum cropName={predictedCrop} />
+          </div>
+        )}
 
         <div className="mt-8">
           <ExpertConsultation />
