@@ -1,14 +1,20 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft } from 'lucide-react';
 import ProfitChart from '@/components/dashboard/ProfitChart';
 import MarketTrends from '@/components/dashboard/MarketTrends';
-import LanguageSelector from '@/components/LanguageSelector';
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getTranslation } from "@/utils/translations";
+import { useToast } from "@/components/ui/use-toast";
+
+interface LocationState {
+  cropName: string;
+  location: string;
+  weatherData: any;
+}
 
 interface CropEconomics {
   cropName: string;
@@ -23,44 +29,85 @@ interface CropEconomics {
 const CropEconomics = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { cropName, location: cropLocation, weatherData } = location.state || {};
-  
+  const { toast } = useToast();
   const { language } = useLanguage();
   const t = getTranslation(language);
+  const [cropData, setCropData] = useState<LocationState | null>(null);
 
   useEffect(() => {
-    if (!cropName) {
-      console.log('No crop name found in state, redirecting to prediction page');
+    const state = location.state as LocationState;
+    console.log('Received state:', state); // Debug log
+
+    if (!state || !state.cropName) {
+      console.log('No crop data found, redirecting...');
+      toast({
+        title: "Error",
+        description: "No crop data found. Redirecting to prediction page.",
+        variant: "destructive"
+      });
       navigate('/predict');
+      return;
     }
-  }, [cropName, navigate]);
+
+    setCropData(state);
+  }, [location.state, navigate]);
 
   const getCropEconomics = (crop: string): CropEconomics => {
-    if (!crop) {
+    console.log('Getting economics for crop:', crop); // Debug log
+
+    // Define crop-specific data
+    const cropData: Record<string, CropEconomics> = {
+      'Rice': {
+        cropName: 'Rice',
+        setupCost: 42000,
+        maintenanceCost: 22000,
+        expectedYield: 6.5,
+        marketPrice: 20000,
+        timeToHarvest: 4,
+        imageUrl: 'https://images.unsplash.com/photo-1569457467445-f5e8bb5f8ba4?w=800&auto=format&fit=crop'
+      },
+      'Wheat': {
+        cropName: 'Wheat',
+        setupCost: 38000,
+        maintenanceCost: 18000,
+        expectedYield: 5.8,
+        marketPrice: 22000,
+        timeToHarvest: 5,
+        imageUrl: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=800&auto=format&fit=crop'
+      },
+      'Cotton': {
+        cropName: 'Cotton',
+        setupCost: 45000,
+        maintenanceCost: 25000,
+        expectedYield: 4.2,
+        marketPrice: 65000,
+        timeToHarvest: 6,
+        imageUrl: 'https://images.unsplash.com/photo-1595427925447-e39949a51e40?w=800&auto=format&fit=crop'
+      },
+      // Add more crops as needed
+    };
+
+    if (!crop || !cropData[crop]) {
+      console.log('Using default crop data'); // Debug log
       return {
-        cropName: 'Unknown Crop',
-        setupCost: 0,
-        maintenanceCost: 0,
-        expectedYield: 0,
-        marketPrice: 0,
-        timeToHarvest: 0,
-        imageUrl: 'https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?w=800&auto=format&fit=crop'
+        cropName: crop || 'Unknown Crop',
+        setupCost: 40000,
+        maintenanceCost: 20000,
+        expectedYield: 5.0,
+        marketPrice: 25000,
+        timeToHarvest: 4,
+        imageUrl: 'https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=800&auto=format&fit=crop'
       };
     }
 
-    // Default values for demonstration
-    return {
-      cropName: crop,
-      setupCost: 42000,
-      maintenanceCost: 22000,
-      expectedYield: 6.5,
-      marketPrice: 20000,
-      timeToHarvest: 4,
-      imageUrl: 'https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?w=800&auto=format&fit=crop'
-    };
+    return cropData[crop];
   };
 
-  const economics = getCropEconomics(cropName);
+  if (!cropData) {
+    return null; // Or a loading spinner
+  }
+
+  const economics = getCropEconomics(cropData.cropName);
   const totalCost = economics.setupCost + economics.maintenanceCost;
   const expectedRevenue = economics.expectedYield * economics.marketPrice;
   const expectedProfit = expectedRevenue - totalCost;
@@ -86,12 +133,13 @@ const CropEconomics = () => {
               className="w-full h-48 object-cover rounded-lg mb-4"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                target.src = 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80';
+                target.src = 'https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=800&auto=format&fit=crop';
               }}
             />
             <h2 className="text-2xl font-semibold text-primary mb-4">Venture Overview</h2>
             <div className="space-y-2">
               <p><span className="font-semibold">Product:</span> {economics.cropName}</p>
+              <p><span className="font-semibold">Location:</span> {cropData.location}</p>
               <p><span className="font-semibold">Time to Market:</span> {economics.timeToHarvest} months</p>
               <p><span className="font-semibold">Production Capacity:</span> {economics.expectedYield} tons/acre</p>
               <p><span className="font-semibold">Market Price:</span> ₹{economics.marketPrice.toLocaleString()}/ton</p>
