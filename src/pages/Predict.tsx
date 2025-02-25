@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -31,7 +32,6 @@ const Predict = () => {
 
   const fetchWeatherData = async (location: string) => {
     try {
-      // Simulated weather API call
       const mockWeatherData = {
         temperature: Math.floor(Math.random() * (35 - 15) + 15),
         humidity: Math.floor(Math.random() * (80 - 40) + 40),
@@ -58,7 +58,6 @@ const Predict = () => {
     }
 
     try {
-      // Fetch weather data based on location
       const weather = await fetchWeatherData(location);
 
       const predictionInput = {
@@ -69,7 +68,7 @@ const Predict = () => {
         },
         soil: {
           type: soilType as any,
-          ph: 7.0, // Default values
+          ph: 7.0,
           nitrogen: 140,
           phosphorus: 50,
           potassium: 200
@@ -78,13 +77,15 @@ const Predict = () => {
       };
 
       const prediction = await PredictionService.predictCrops(predictionInput);
+      const recommendedCrop = prediction.recommendedCrops[0];
+      setPredictedCrop(recommendedCrop);
+      
       const resultText = `Based on the provided conditions in ${location} (Temperature: ${weather.temperature}°C), 
         we recommend: ${prediction.recommendedCrops.join(', ')}. 
         Confidence: ${Math.round(prediction.confidence * 100)}%. 
         Risk Level: ${prediction.riskLevel}`;
 
       setResult(resultText);
-      setPredictedCrop(prediction.recommendedCrops[0]);
 
       toast({
         title: "Prediction Generated",
@@ -101,17 +102,26 @@ const Predict = () => {
   };
 
   const handleNavigateHome = (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent default button behavior
+    e.preventDefault();
     navigate('/');
   };
 
   const handleCheckEconomics = (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent default link behavior
+    e.preventDefault();
+    if (!predictedCrop) {
+      toast({
+        title: "No Prediction",
+        description: "Please generate a crop prediction first.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
     navigate('/crop-economics', { 
       state: { 
         cropName: predictedCrop, 
-        location, 
-        weatherData 
+        location: location, 
+        weatherData: weatherData 
       } 
     });
   };
