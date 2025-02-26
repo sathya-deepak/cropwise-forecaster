@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -36,7 +35,7 @@ const CropEconomics = () => {
 
   useEffect(() => {
     const state = location.state as LocationState;
-    console.log('Received state:', state); // Debug log
+    console.log('Received state:', state);
 
     if (!state || !state.cropName) {
       console.log('No crop data found, redirecting...');
@@ -53,11 +52,11 @@ const CropEconomics = () => {
   }, [location.state, navigate]);
 
   const getCropEconomics = (crop: string): CropEconomics => {
-    console.log('Getting economics for crop:', crop); // Debug log
+    console.log('Getting economics for crop:', crop);
 
-    // Define crop-specific data
+    // Define crop-specific data with correct images
     const cropData: Record<string, CropEconomics> = {
-      'Rice': {
+      'rice': {
         cropName: 'Rice',
         setupCost: 42000,
         maintenanceCost: 22000,
@@ -66,7 +65,7 @@ const CropEconomics = () => {
         timeToHarvest: 4,
         imageUrl: 'https://images.unsplash.com/photo-1569457467445-f5e8bb5f8ba4?w=800&auto=format&fit=crop'
       },
-      'Wheat': {
+      'wheat': {
         cropName: 'Wheat',
         setupCost: 38000,
         maintenanceCost: 18000,
@@ -75,7 +74,7 @@ const CropEconomics = () => {
         timeToHarvest: 5,
         imageUrl: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=800&auto=format&fit=crop'
       },
-      'Cotton': {
+      'cotton': {
         cropName: 'Cotton',
         setupCost: 45000,
         maintenanceCost: 25000,
@@ -84,13 +83,33 @@ const CropEconomics = () => {
         timeToHarvest: 6,
         imageUrl: 'https://images.unsplash.com/photo-1595427925447-e39949a51e40?w=800&auto=format&fit=crop'
       },
-      // Add more crops as needed
+      'vegetables': {
+        cropName: 'Vegetables',
+        setupCost: 35000,
+        maintenanceCost: 20000,
+        expectedYield: 8.0,
+        marketPrice: 30000,
+        timeToHarvest: 3,
+        imageUrl: 'https://images.unsplash.com/photo-1466201276674-c06f9bf24323?w=800&auto=format&fit=crop'
+      },
+      'maize': {
+        cropName: 'Maize',
+        setupCost: 36000,
+        maintenanceCost: 19000,
+        expectedYield: 7.2,
+        marketPrice: 18000,
+        timeToHarvest: 4,
+        imageUrl: 'https://images.unsplash.com/photo-1601593768799-76e101c3f26d?w=800&auto=format&fit=crop'
+      }
     };
 
-    if (!crop || !cropData[crop]) {
-      console.log('Using default crop data'); // Debug log
+    // Normalize crop name to lowercase for comparison
+    const normalizedCrop = crop.toLowerCase();
+    
+    if (!crop || !cropData[normalizedCrop]) {
+      console.log('No specific data found for crop:', crop);
       return {
-        cropName: crop || 'Unknown Crop',
+        cropName: crop,
         setupCost: 40000,
         maintenanceCost: 20000,
         expectedYield: 5.0,
@@ -100,11 +119,11 @@ const CropEconomics = () => {
       };
     }
 
-    return cropData[crop];
+    return cropData[normalizedCrop];
   };
 
   if (!cropData) {
-    return null; // Or a loading spinner
+    return null;
   }
 
   const economics = getCropEconomics(cropData.cropName);
@@ -123,7 +142,7 @@ const CropEconomics = () => {
       </Button>
 
       <div className="container mx-auto max-w-4xl">
-        <h1 className="text-4xl font-bold text-primary mb-8">Business Analysis Dashboard</h1>
+        <h1 className="text-4xl font-bold text-primary mb-8">Crop Economic Analysis</h1>
         
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           <Card className="p-6">
@@ -136,12 +155,12 @@ const CropEconomics = () => {
                 target.src = 'https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=800&auto=format&fit=crop';
               }}
             />
-            <h2 className="text-2xl font-semibold text-primary mb-4">Venture Overview</h2>
+            <h2 className="text-2xl font-semibold text-primary mb-4">Crop Overview</h2>
             <div className="space-y-2">
-              <p><span className="font-semibold">Product:</span> {economics.cropName}</p>
+              <p><span className="font-semibold">Crop:</span> {economics.cropName}</p>
               <p><span className="font-semibold">Location:</span> {cropData.location}</p>
-              <p><span className="font-semibold">Time to Market:</span> {economics.timeToHarvest} months</p>
-              <p><span className="font-semibold">Production Capacity:</span> {economics.expectedYield} tons/acre</p>
+              <p><span className="font-semibold">Growing Period:</span> {economics.timeToHarvest} months</p>
+              <p><span className="font-semibold">Expected Yield:</span> {economics.expectedYield} tons/acre</p>
               <p><span className="font-semibold">Market Price:</span> ₹{economics.marketPrice.toLocaleString()}/ton</p>
             </div>
           </Card>
