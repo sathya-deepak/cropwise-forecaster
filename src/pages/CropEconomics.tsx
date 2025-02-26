@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -54,7 +55,6 @@ const CropEconomics = () => {
   const getCropEconomics = (crop: string): CropEconomics => {
     console.log('Getting economics for crop:', crop);
 
-    // Define crop-specific data with high-quality, specific images
     const cropData: Record<string, CropEconomics> = {
       'groundnut': {
         cropName: 'Groundnut',
@@ -63,7 +63,7 @@ const CropEconomics = () => {
         expectedYield: 2.5,
         marketPrice: 45000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1587049633312-d628ae50a8ae?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse3.mm.bing.net/th?id=OIP.ARpsHdxHQLPWMB2YaGWgFgHaE7&pid=Api&P=0&h=180'
       },
       'rice': {
         cropName: 'Rice',
@@ -72,7 +72,7 @@ const CropEconomics = () => {
         expectedYield: 6.5,
         marketPrice: 20000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1568611067437-1c941bb6d6f0?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse1.mm.bing.net/th?id=OIP.hKPPPNaoUMBjvEq3T5kGbgHaE8&pid=Api&P=0&h=180'
       },
       'wheat': {
         cropName: 'Wheat',
@@ -81,7 +81,7 @@ const CropEconomics = () => {
         expectedYield: 5.8,
         marketPrice: 22000,
         timeToHarvest: 5,
-        imageUrl: 'https://images.unsplash.com/photo-1631651364812-6ca22e36287e?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse1.mm.bing.net/th?id=OIP.jEtws9_luAKsuyrFXVRNrwHaEv&pid=Api&P=0&h=180'
       },
       'cotton': {
         cropName: 'Cotton',
@@ -90,7 +90,7 @@ const CropEconomics = () => {
         expectedYield: 4.2,
         marketPrice: 65000,
         timeToHarvest: 6,
-        imageUrl: 'https://images.unsplash.com/photo-1599666433232-2b222eb02b8c?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse1.mm.bing.net/th?id=OIP.KDnjxIFMWIFc69LfDalT7AHaE8&pid=Api&P=0&h=180'
       },
       'maize': {
         cropName: 'Maize',
@@ -99,7 +99,7 @@ const CropEconomics = () => {
         expectedYield: 7.2,
         marketPrice: 18000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1628678973457-2f2d9ba106c0?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse4.mm.bing.net/th?id=OIP.EaGCgj3Xiy6MWNzb_UX34QHaEK&pid=Api&P=0&h=180'
       },
       'sugarcane': {
         cropName: 'Sugarcane',
@@ -108,7 +108,7 @@ const CropEconomics = () => {
         expectedYield: 80.0,
         marketPrice: 3000,
         timeToHarvest: 12,
-        imageUrl: 'https://images.unsplash.com/photo-1612258140767-aa535c35c272?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse3.mm.bing.net/th?id=OIP.5Ym4VnKfwQk47YonZUf-VQHaE7&pid=Api&P=0&h=180'
       },
       'tomato': {
         cropName: 'Tomato',
@@ -117,7 +117,7 @@ const CropEconomics = () => {
         expectedYield: 25.0,
         marketPrice: 15000,
         timeToHarvest: 3,
-        imageUrl: 'https://images.unsplash.com/photo-1592841200221-a6898f307baa?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse2.mm.bing.net/th?id=OIP.THi3GSHBzt-UMTLGUbFTbwHaE7&pid=Api&P=0&h=180'
       },
       'potato': {
         cropName: 'Potato',
@@ -126,7 +126,7 @@ const CropEconomics = () => {
         expectedYield: 22.0,
         marketPrice: 12000,
         timeToHarvest: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=800&auto=format&fit=crop'
+        imageUrl: 'https://tse1.mm.bing.net/th?id=OIP.SFPOY4V0HvFZPbZA58Sf1AHaHU&pid=Api&P=0&h=180'
       }
     };
 
