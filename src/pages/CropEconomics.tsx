@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -6,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { ArrowLeft } from 'lucide-react';
 import ProfitChart from '@/components/dashboard/ProfitChart';
 import MarketTrends from '@/components/dashboard/MarketTrends';
+import WeatherRiskAssessment from '@/components/analysis/WeatherRiskAssessment';
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getTranslation } from "@/utils/translations";
 import { useToast } from "@/components/ui/use-toast";
@@ -130,12 +130,10 @@ const CropEconomics = () => {
       }
     };
 
-    // Normalize crop name to lowercase and remove any extra spaces
     const normalizedCrop = crop.toLowerCase().trim();
     
     if (!crop || !cropData[normalizedCrop]) {
       console.log('No specific data found for crop:', crop);
-      // Default crop image for unknown crops
       return {
         cropName: crop,
         setupCost: 40000,
@@ -158,6 +156,12 @@ const CropEconomics = () => {
   const totalCost = economics.setupCost + economics.maintenanceCost;
   const expectedRevenue = economics.expectedYield * economics.marketPrice;
   const expectedProfit = expectedRevenue - totalCost;
+
+  const mockWeatherData = {
+    temperature: 28,
+    rainfall: 75,
+    humidity: 65
+  };
 
   return (
     <div className="min-h-screen bg-cream p-6">
@@ -216,6 +220,15 @@ const CropEconomics = () => {
               </div>
             </div>
           </Card>
+        </div>
+
+        <div className="mb-6">
+          <WeatherRiskAssessment
+            cropName={economics.cropName}
+            temperature={mockWeatherData.temperature}
+            rainfall={mockWeatherData.rainfall}
+            humidity={mockWeatherData.humidity}
+          />
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 mb-6">
