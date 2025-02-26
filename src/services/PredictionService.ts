@@ -1,4 +1,3 @@
-
 import { useToast } from "@/components/ui/use-toast";
 
 interface WeatherData {
@@ -47,43 +46,42 @@ export class PredictionService {
 
   static async predictCrops(input: PredictionInput): Promise<PredictionResult> {
     try {
-      // Enhanced soil suitability mapping with more factors
       const soilSuitabilityMap: Record<string, { score: number; crops: string[] }> = {
         'alluvial': { 
           score: 0.95,
-          crops: ['Rice', 'Wheat', 'Sugarcane', 'Cotton', 'Jute']
+          crops: ['Rice', 'Wheat', 'Sugarcane', 'Cotton', 'Jute', 'Maize', 'Mustard', 'Chickpea', 'Peanut']
         },
         'black': { 
           score: 0.9,
-          crops: ['Cotton', 'Sugarcane', 'Wheat', 'Pulses', 'Sunflower']
+          crops: ['Cotton', 'Sugarcane', 'Wheat', 'Pulses', 'Sunflower', 'Soybeans', 'Chickpea', 'Onion']
         },
         'clay': { 
           score: 0.85,
-          crops: ['Rice', 'Wheat', 'Cotton', 'Sugarcane']
+          crops: ['Rice', 'Wheat', 'Cotton', 'Sugarcane', 'Black Gram', 'Green Gram', 'Turmeric']
         },
         'loamy': { 
           score: 0.8,
-          crops: ['Most Vegetables', 'Wheat', 'Cotton', 'Sugarcane', 'Pulses']
+          crops: ['Most Vegetables', 'Wheat', 'Cotton', 'Sugarcane', 'Pulses', 'Mustard', 'Soybeans', 'Onion', 'Turmeric']
         },
         'sandy': { 
           score: 0.6,
-          crops: ['Groundnut', 'Potato', 'Watermelon', 'Carrot']
+          crops: ['Groundnut', 'Potato', 'Watermelon', 'Carrot', 'Pearl Millet', 'Sesame', 'Peanut']
         },
         'red': { 
           score: 0.7,
-          crops: ['Groundnut', 'Millet', 'Pulses']
+          crops: ['Groundnut', 'Millet', 'Pulses', 'Pearl Millet', 'Green Gram', 'Black Gram']
         },
         'laterite': { 
           score: 0.65,
-          crops: ['Tea', 'Coffee', 'Rubber', 'Cashew']
+          crops: ['Tea', 'Coffee', 'Rubber', 'Cashew', 'Turmeric']
         },
         'saline': { 
           score: 0.4,
-          crops: ['Date Palm', 'Barley', 'Cotton']
+          crops: ['Date Palm', 'Barley', 'Cotton', 'Sunflower']
         },
         'peaty': { 
           score: 0.5,
-          crops: ['Rice', 'Vegetables', 'Grass']
+          crops: ['Rice', 'Vegetables', 'Grass', 'Turmeric']
         }
       };
 
@@ -91,14 +89,12 @@ export class PredictionService {
       const soilScore = soilData?.score || 0.5;
       const recommendations: string[] = [];
 
-      // Soil pH recommendations
       if (input.soil.ph < 6.5) {
         recommendations.push('Consider lime application to increase soil pH');
       } else if (input.soil.ph > 7.5) {
         recommendations.push('Consider sulfur application to decrease soil pH');
       }
 
-      // Nutrient recommendations
       if (input.soil.nitrogen < 140) {
         recommendations.push('Increase nitrogen fertilization');
       }
@@ -109,7 +105,6 @@ export class PredictionService {
         recommendations.push('Supplement with potassium fertilizers');
       }
 
-      // Weather-based adjustments
       let weatherSuitability = 0.8;
       if (input.weather.temperature < 15 || input.weather.temperature > 35) {
         weatherSuitability *= 0.7;
@@ -163,7 +158,16 @@ export class PredictionService {
       'sugarcane': 3500,
       'soybean': 38000,
       'mustard': 42000,
-      'barley': 28000
+      'barley': 28000,
+      'pearl millet': 18000,
+      'chickpea': 52000,
+      'turmeric': 75000,
+      'onion': 15000,
+      'peanut': 48000,
+      'green gram': 65000,
+      'black gram': 62000,
+      'sesame': 85000,
+      'sunflower': 45000
     };
     
     return basePrices[crop.toLowerCase()] || 30000;
@@ -171,15 +175,15 @@ export class PredictionService {
 
   static getSoilTypeRecommendations(soilType: string): string[] {
     const recommendations: Record<string, string[]> = {
-      'alluvial': ['Sugarcane', 'Rice', 'Wheat', 'Cotton'],
-      'black': ['Cotton', 'Sugarcane', 'Wheat'],
-      'red': ['Groundnut', 'Tobacco', 'Vegetables'],
-      'laterite': ['Cashew', 'Rubber', 'Tea'],
-      'sandy': ['Groundnut', 'Potato', 'Vegetables'],
-      'clay': ['Rice', 'Sugarcane', 'Jute'],
-      'loamy': ['Most crops', 'Vegetables', 'Fruits'],
-      'saline': ['Salt-tolerant crops', 'Date palm'],
-      'peaty': ['Vegetables', 'Rice']
+      'alluvial': ['Sugarcane', 'Rice', 'Wheat', 'Cotton', 'Maize', 'Mustard'],
+      'black': ['Cotton', 'Sugarcane', 'Wheat', 'Chickpea', 'Sunflower', 'Soybeans'],
+      'red': ['Groundnut', 'Pearl Millet', 'Green Gram', 'Black Gram'],
+      'laterite': ['Cashew', 'Rubber', 'Tea', 'Turmeric'],
+      'sandy': ['Groundnut', 'Pearl Millet', 'Potato', 'Sesame'],
+      'clay': ['Rice', 'Sugarcane', 'Cotton', 'Black Gram', 'Turmeric'],
+      'loamy': ['Most crops', 'Vegetables', 'Wheat', 'Soybeans', 'Onion'],
+      'saline': ['Barley', 'Date palm', 'Cotton', 'Sunflower'],
+      'peaty': ['Rice', 'Vegetables', 'Turmeric']
     };
 
     return recommendations[soilType.toLowerCase()] || ['Consider soil testing for specific recommendations'];
