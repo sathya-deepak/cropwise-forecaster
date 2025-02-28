@@ -1,3 +1,4 @@
+
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import LanguageSelector from '@/components/LanguageSelector';
@@ -31,6 +32,12 @@ const Index = () => {
                 className="bg-secondary hover:bg-secondary-dark text-white w-48"
               >
                 {t.detailedAnalysis}
+              </Button>
+              <Button 
+                onClick={() => navigate('/agri-business')}
+                className="bg-purple-600 hover:bg-purple-700 text-white w-48"
+              >
+                Innovation & Entrepreneurship
               </Button>
             </div>
             
