@@ -20,7 +20,7 @@ const MarketTrends = ({ cropName }: { cropName: string }) => {
 
   return (
     <Card className="p-4">
-      <h3 className="text-lg font-semibold mb-4">Market Price Trends</h3>
+      <h3 className="text-lg font-semibold mb-4">Market Price Trends for {cropName}</h3>
       <div className="h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
