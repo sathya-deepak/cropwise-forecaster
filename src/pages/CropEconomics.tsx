@@ -7,6 +7,7 @@ import { ArrowLeft } from 'lucide-react';
 import ProfitChart from '@/components/dashboard/ProfitChart';
 import MarketTrends from '@/components/dashboard/MarketTrends';
 import WeatherRiskAssessment from '@/components/analysis/WeatherRiskAssessment';
+import YieldPrediction from '@/components/analysis/YieldPrediction';
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getTranslation } from "@/utils/translations";
 import { useToast } from "@/components/ui/use-toast";
@@ -330,6 +331,14 @@ const CropEconomics = () => {
               </div>
             </div>
           </Card>
+        </div>
+
+        <div className="mb-6">
+          <YieldPrediction
+            cropName={economics.cropName}
+            weatherFactors={mockWeatherData}
+            expectedYield={economics.expectedYield}
+          />
         </div>
 
         <div className="mb-6">
