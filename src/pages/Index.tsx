@@ -33,12 +33,6 @@ const Index = () => {
               >
                 {t.detailedAnalysis}
               </Button>
-              <Button 
-                onClick={() => navigate('/agri-business')}
-                className="bg-purple-600 hover:bg-purple-700 text-white w-48"
-              >
-                Innovation & Entrepreneurship
-              </Button>
             </div>
             
             <div className="mt-4 flex justify-center">
