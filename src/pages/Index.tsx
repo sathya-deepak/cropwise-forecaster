@@ -4,13 +4,60 @@ import { Button } from "@/components/ui/button";
 import LanguageSelector from '@/components/LanguageSelector';
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getTranslation } from "@/utils/translations";
+import { useEffect, useState } from 'react';
 
 const Index = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
   const t = getTranslation(language);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   console.log('Rendering Index with language:', language);
+
+  // Crop images array with valid URLs
+  const cropImages = [
+    {
+      url: "https://images.unsplash.com/photo-1474440692490-2e83ae13ba29?auto=format&fit=crop&w=500&h=500&q=80",
+      name: "Wheat"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1530649298728-95bde48943e4?auto=format&fit=crop&w=500&h=500&q=80",
+      name: "Rice"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1597916829826-02e5bb4a54e0?auto=format&fit=crop&w=500&h=500&q=80",
+      name: "Cotton"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1471194402529-8e0f5a675de6?auto=format&fit=crop&w=500&h=500&q=80",
+      name: "Corn"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1504826023243-27caa3e4f9ab?auto=format&fit=crop&w=500&h=500&q=80",
+      name: "Sunflower"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1568568544477-c47549d3228e?auto=format&fit=crop&w=500&h=500&q=80",
+      name: "Chili Peppers"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1502741126161-b048400d085d?auto=format&fit=crop&w=500&h=500&q=80",
+      name: "Soybean"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1596450514735-111a2e7097cd?auto=format&fit=crop&w=500&h=500&q=80",
+      name: "Sugarcane"
+    }
+  ];
+
+  // Auto rotate images every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveImageIndex((prevIndex) => (prevIndex + 1) % cropImages.length);
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, [cropImages.length]);
 
   return (
     <div className="min-h-screen bg-cream relative">
@@ -80,70 +127,59 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Crops Collage Section */}
+        {/* Crops Carousel Section */}
         <div className="mt-16 mb-10 animate-fade-in" style={{ animationDelay: "0.6s" }}>
           <h2 className="text-3xl font-bold text-primary text-center mb-8 relative">
             <span className="inline-block relative after:content-[''] after:absolute after:w-24 after:h-1 after:bg-accent after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:mt-2 pb-3">
               Crop Varieties
             </span>
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <div className="aspect-square rounded-lg overflow-hidden transform transition-all duration-500 hover:z-10 hover:scale-105">
+          
+          <div className="relative overflow-hidden rounded-lg shadow-xl max-w-2xl mx-auto">
+            {/* Current featured crop image and name */}
+            <div className="relative aspect-video">
               <img 
-                src="https://images.unsplash.com/photo-1474440692490-2e83ae13ba29?auto=format&fit=crop&w=500&h=500&q=80" 
-                alt="Wheat field" 
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                src={cropImages[activeImageIndex].url} 
+                alt={cropImages[activeImageIndex].name} 
+                className="w-full h-full object-cover transition-all duration-1000 ease-in-out"
               />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                <h3 className="text-white text-2xl font-bold animate-fade-in">{cropImages[activeImageIndex].name}</h3>
+              </div>
             </div>
-            <div className="aspect-square rounded-lg overflow-hidden transform transition-all duration-500 hover:z-10 hover:scale-105">
-              <img 
-                src="https://images.unsplash.com/photo-1530649298728-95bde48943e4?auto=format&fit=crop&w=500&h=500&q=80" 
-                alt="Rice paddy" 
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-              />
+            
+            {/* Navigation dots */}
+            <div className="flex justify-center gap-2 mt-4 pb-4">
+              {cropImages.map((_, index) => (
+                <button 
+                  key={index}
+                  onClick={() => setActiveImageIndex(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === activeImageIndex ? 'bg-primary scale-125' : 'bg-gray-300'
+                  }`}
+                  aria-label={`View ${cropImages[index].name}`}
+                />
+              ))}
             </div>
-            <div className="aspect-square rounded-lg overflow-hidden transform transition-all duration-500 hover:z-10 hover:scale-105">
-              <img 
-                src="https://images.unsplash.com/photo-1597916829826-02e5bb4a54e0?auto=format&fit=crop&w=500&h=500&q=80" 
-                alt="Cotton plants" 
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-              />
-            </div>
-            <div className="aspect-square rounded-lg overflow-hidden transform transition-all duration-500 hover:z-10 hover:scale-105">
-              <img 
-                src="https://images.unsplash.com/photo-1471194402529-8e0f5a675de6?auto=format&fit=crop&w=500&h=500&q=80" 
-                alt="Corn field" 
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-              />
-            </div>
-            <div className="aspect-square rounded-lg overflow-hidden transform transition-all duration-500 hover:z-10 hover:scale-105">
-              <img 
-                src="https://images.unsplash.com/photo-1504826023243-27caa3e4f9ab?auto=format&fit=crop&w=500&h=500&q=80" 
-                alt="Sunflower field" 
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-              />
-            </div>
-            <div className="aspect-square rounded-lg overflow-hidden transform transition-all duration-500 hover:z-10 hover:scale-105">
-              <img 
-                src="https://images.unsplash.com/photo-1568568544477-c47549d3228e?auto=format&fit=crop&w=500&h=500&q=80" 
-                alt="Chili peppers" 
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-              />
-            </div>
-            <div className="aspect-square rounded-lg overflow-hidden transform transition-all duration-500 hover:z-10 hover:scale-105">
-              <img 
-                src="https://images.unsplash.com/photo-1502741126161-b048400d085d?auto=format&fit=crop&w=500&h=500&q=80" 
-                alt="Soybean field" 
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-              />
-            </div>
-            <div className="aspect-square rounded-lg overflow-hidden transform transition-all duration-500 hover:z-10 hover:scale-105">
-              <img 
-                src="https://images.unsplash.com/photo-1596450514735-111a2e7097cd?auto=format&fit=crop&w=500&h=500&q=80" 
-                alt="Sugarcane field" 
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-              />
-            </div>
+          </div>
+          
+          {/* Grid of smaller crop images below */}
+          <div className="grid grid-cols-4 gap-3 mt-8">
+            {cropImages.map((crop, index) => (
+              <div 
+                key={index}
+                className={`aspect-square rounded-lg overflow-hidden transform transition-all duration-500 hover:z-10 hover:scale-105 cursor-pointer ${
+                  index === activeImageIndex ? 'ring-4 ring-primary' : ''
+                }`}
+                onClick={() => setActiveImageIndex(index)}
+              >
+                <img 
+                  src={crop.url} 
+                  alt={crop.name} 
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>
