@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -12,7 +11,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { getTranslation } from "@/utils/translations";
 import LanguageSelector from '@/components/LanguageSelector';
 import { PredictionService } from '@/services/PredictionService';
-import ExpertConsultation from '@/components/community/ExpertConsultation';
 import ROICalculator from '@/components/financial/ROICalculator';
 import MarketTrends from '@/components/dashboard/MarketTrends';
 import WeatherWidget from '@/components/dashboard/WeatherWidget';
@@ -214,10 +212,6 @@ const Predict = () => {
             <CommunityForum cropName={predictedCrop} />
           </div>
         )}
-
-        <div className="mt-8">
-          <ExpertConsultation />
-        </div>
       </div>
     </div>
   );

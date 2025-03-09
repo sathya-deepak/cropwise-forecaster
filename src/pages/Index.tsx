@@ -55,6 +55,69 @@ const Index = () => {
             <p className="text-gray-600">{t.easyToUseDesc}</p>
           </div>
         </div>
+
+        {/* Crops Collage Section */}
+        <div className="mt-16 mb-10">
+          <h2 className="text-3xl font-bold text-primary text-center mb-8">Crop Varieties</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="aspect-square rounded-lg overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1474440692490-2e83ae13ba29?auto=format&fit=crop&w=500&h=500&q=80" 
+                alt="Wheat field" 
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="aspect-square rounded-lg overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1530649298728-95bde48943e4?auto=format&fit=crop&w=500&h=500&q=80" 
+                alt="Rice paddy" 
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="aspect-square rounded-lg overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1597916829826-02e5bb4a54e0?auto=format&fit=crop&w=500&h=500&q=80" 
+                alt="Cotton plants" 
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="aspect-square rounded-lg overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1471194402529-8e0f5a675de6?auto=format&fit=crop&w=500&h=500&q=80" 
+                alt="Corn field" 
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="aspect-square rounded-lg overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1504826023243-27caa3e4f9ab?auto=format&fit=crop&w=500&h=500&q=80" 
+                alt="Sunflower field" 
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="aspect-square rounded-lg overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1568568544477-c47549d3228e?auto=format&fit=crop&w=500&h=500&q=80" 
+                alt="Chili peppers" 
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="aspect-square rounded-lg overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1502741126161-b048400d085d?auto=format&fit=crop&w=500&h=500&q=80" 
+                alt="Soybean field" 
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="aspect-square rounded-lg overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1596450514735-111a2e7097cd?auto=format&fit=crop&w=500&h=500&q=80" 
+                alt="Sugarcane field" 
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
