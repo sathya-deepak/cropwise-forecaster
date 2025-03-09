@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -34,14 +35,17 @@ const DetailedPredict = () => {
   }> | null>(null);
   const [month, setMonth] = useState<string>('');
   const [year, setYear] = useState<string>('');
-  const [weather, setWeather] = useState<string>('');
-  const [temperature, setTemperature] = useState<string>('');
+  const [district, setDistrict] = useState<string>('');
+  const [state, setState] = useState<string>('');
   const [soil, setSoil] = useState<string>('');
   const [field, setField] = useState<string>('');
+  const [nitrogen, setNitrogen] = useState<string>('');
+  const [phosphorus, setPhosphorus] = useState<string>('');
+  const [potassium, setPotassium] = useState<string>('');
 
   const getDetailedPredictions = () => {
     console.log('Generating detailed predictions with inputs:', {
-      month, year, weather, temperature, soil, field
+      month, year, district, state, soil, field, nitrogen, phosphorus, potassium
     });
 
     const soilBasedCrops: Record<string, Array<{ crop: string; baseScore: number; yield: string }>> = {
@@ -71,52 +75,87 @@ const DetailedPredict = () => {
       ]
     };
 
-    let predictions = [];
-    const tempNum = Number(temperature);
+    // State-based adjustments (simplified for demo)
+    const stateBonuses: Record<string, Record<string, number>> = {
+      'punjab': { 'Wheat': 10, 'Rice': 8 },
+      'kerala': { 'Rice': 12, 'Coconut': 15 },
+      'gujarat': { 'Cotton': 12, 'Groundnut': 10 },
+      'karnataka': { 'Coffee': 15, 'Sugarcane': 8 },
+      'maharashtra': { 'Sugarcane': 12, 'Cotton': 10 }
+    };
 
+    let predictions = [];
+    
     if (soil && soilBasedCrops[soil]) {
       predictions = soilBasedCrops[soil].map(crop => {
         let finalScore = crop.baseScore;
         let conditions = [];
 
-        // Temperature adjustments
-        if (tempNum < 10) {
-          if (['Apples', 'Pears'].includes(crop.crop)) {
-            finalScore += 10;
-            conditions.push('Ideal cold weather for fruit development');
-          } else {
-            finalScore -= 20;
-            conditions.push('Cold temperature reduces yield');
-          }
-        } else if (tempNum > 30) {
-          if (['Mango', 'Papaya', 'Dragon Fruit'].includes(crop.crop)) {
-            finalScore += 15;
-            conditions.push('Optimal tropical temperature');
-          } else {
-            finalScore -= 15;
-            conditions.push('High temperature affects growth');
-          }
-        } else {
-          finalScore += 5;
-          conditions.push('Optimal temperature range');
+        // State adjustments
+        if (state && stateBonuses[state.toLowerCase()] && stateBonuses[state.toLowerCase()][crop.crop]) {
+          const bonus = stateBonuses[state.toLowerCase()][crop.crop];
+          finalScore += bonus;
+          conditions.push(`Ideal growing region in ${state} (+${bonus})`);
         }
 
-        // Weather adjustments
-        if (weather === 'rainy' && ['Rice', 'Taro'].includes(crop.crop)) {
-          finalScore += 15;
-          conditions.push('Ideal rainy conditions');
-        } else if (weather === 'sunny' && ['Grapes', 'Olives', 'Dates'].includes(crop.crop)) {
-          finalScore += 12;
-          conditions.push('Perfect sunny conditions');
+        // Season adjustments based on month
+        const monthNum = parseInt(month);
+        if (monthNum >= 6 && monthNum <= 9) { // Monsoon season
+          if (['Rice', 'Maize', 'Soybean'].includes(crop.crop)) {
+            finalScore += 10;
+            conditions.push('Perfect monsoon crop (+10)');
+          }
+        } else if (monthNum >= 11 || monthNum <= 2) { // Winter
+          if (['Wheat', 'Mustard', 'Peas'].includes(crop.crop)) {
+            finalScore += 10;
+            conditions.push('Ideal winter crop (+10)');
+          }
+        } else { // Summer
+          if (['Cotton', 'Sugarcane', 'Sunflower'].includes(crop.crop)) {
+            finalScore += 8;
+            conditions.push('Good summer crop (+8)');
+          }
+        }
+
+        // Nutrient adjustments
+        const nitrogenLevel = parseInt(nitrogen) || 0;
+        const phosphorusLevel = parseInt(phosphorus) || 0; 
+        const potassiumLevel = parseInt(potassium) || 0;
+
+        // Nitrogen-loving crops
+        if (nitrogenLevel > 140 && ['Maize', 'Rice', 'Wheat'].includes(crop.crop)) {
+          finalScore += 8;
+          conditions.push('High nitrogen benefits this crop (+8)');
+        } else if (nitrogenLevel < 80 && ['Groundnut', 'Soybean', 'Chickpea'].includes(crop.crop)) {
+          finalScore += 5;
+          conditions.push('Nitrogen-fixing crop suitable for low nitrogen soil (+5)');
+        }
+
+        // Phosphorus-loving crops
+        if (phosphorusLevel > 30 && ['Sunflower', 'Mustard', 'Cotton'].includes(crop.crop)) {
+          finalScore += 6;
+          conditions.push('High phosphorus benefits this crop (+6)');
+        }
+
+        // Potassium-loving crops
+        if (potassiumLevel > 150 && ['Sugarcane', 'Potato', 'Tomato'].includes(crop.crop)) {
+          finalScore += 7;
+          conditions.push('High potassium benefits this crop (+7)');
         }
 
         // Field condition adjustments
         if (field === 'waterlogged' && crop.crop === 'Rice') {
           finalScore += 15;
-          conditions.push('Perfect for paddy cultivation');
+          conditions.push('Perfect for paddy cultivation (+15)');
         } else if (field === 'terraced' && ['Grapes', 'Tea'].includes(crop.crop)) {
           finalScore += 12;
-          conditions.push('Suitable for terrace farming');
+          conditions.push('Suitable for terrace farming (+12)');
+        } else if (field === 'excellent') {
+          finalScore += 5;
+          conditions.push('Well-maintained field benefits all crops (+5)');
+        } else if (field === 'poor') {
+          finalScore -= 10;
+          conditions.push('Poor field condition reduces yields (-10)');
         }
 
         finalScore = Math.max(0, Math.min(100, finalScore));
@@ -139,13 +178,13 @@ const DetailedPredict = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form submitted with values:', {
-      month, year, weather, temperature, soil, field
+      month, year, district, state, soil, field, nitrogen, phosphorus, potassium
     });
     
-    if (!month || !year || !weather || !temperature || !soil || !field) {
+    if (!month || !year || !soil || !field) {
       toast({
         title: "Missing Fields",
-        description: "Please fill in all fields to get an accurate prediction.",
+        description: "Please fill in all required fields to get an accurate prediction.",
         variant: "destructive"
       });
       return;
@@ -199,35 +238,34 @@ const DetailedPredict = () => {
 
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="weather">{t.weatherCondition}</Label>
-                <Select onValueChange={setWeather}>
-                  <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
-                    <SelectValue placeholder={t.weatherCondition} />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white border-2 border-primary/20">
-                    <SelectItem value="sunny">Sunny (High light intensity)</SelectItem>
-                    <SelectItem value="rainy">Rainy (High moisture)</SelectItem>
-                    <SelectItem value="cloudy">Cloudy (Limited sunlight)</SelectItem>
-                    <SelectItem value="partially_cloudy">Partially Cloudy (Moderate sunlight)</SelectItem>
-                    <SelectItem value="stormy">Stormy (High wind/rain)</SelectItem>
-                    <SelectItem value="windy">Windy (Air circulation)</SelectItem>
-                    <SelectItem value="humid">Humid (High moisture in air)</SelectItem>
-                    <SelectItem value="foggy">Foggy (Limited visibility)</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="district">District</Label>
+                <Input 
+                  id="district" 
+                  placeholder="Enter district"
+                  className="bg-white border-2 border-primary/20 shadow-sm"
+                  onChange={(e) => setDistrict(e.target.value)}
+                />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="temperature">{t.temperature}</Label>
-                <Input 
-                  type="number" 
-                  id="temperature" 
-                  placeholder={t.temperature}
-                  min="-20" 
-                  max="50"
-                  className="bg-white border-2 border-primary/20 shadow-sm"
-                  onChange={(e) => setTemperature(e.target.value)}
-                />
+                <Label htmlFor="state">State</Label>
+                <Select onValueChange={setState}>
+                  <SelectTrigger className="bg-white border-2 border-primary/20 shadow-sm">
+                    <SelectValue placeholder="Select state" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white border-2 border-primary/20">
+                    <SelectItem value="punjab">Punjab</SelectItem>
+                    <SelectItem value="haryana">Haryana</SelectItem>
+                    <SelectItem value="gujarat">Gujarat</SelectItem>
+                    <SelectItem value="maharashtra">Maharashtra</SelectItem>
+                    <SelectItem value="karnataka">Karnataka</SelectItem>
+                    <SelectItem value="kerala">Kerala</SelectItem>
+                    <SelectItem value="tamilNadu">Tamil Nadu</SelectItem>
+                    <SelectItem value="andhraPradesh">Andhra Pradesh</SelectItem>
+                    <SelectItem value="westBengal">West Bengal</SelectItem>
+                    <SelectItem value="uttarPradesh">Uttar Pradesh</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="space-y-2">
@@ -259,6 +297,47 @@ const DetailedPredict = () => {
                     <SelectItem value="terraced">Terraced (Stepped landscape)</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="nitrogen">Nitrogen (N) Level (ppm)</Label>
+                <Input 
+                  type="number" 
+                  id="nitrogen" 
+                  placeholder="e.g., 140"
+                  min="0" 
+                  max="500"
+                  className="bg-white border-2 border-primary/20 shadow-sm"
+                  onChange={(e) => setNitrogen(e.target.value)}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="phosphorus">Phosphorus (P) Level (ppm)</Label>
+                <Input 
+                  type="number" 
+                  id="phosphorus" 
+                  placeholder="e.g., 30"
+                  min="0" 
+                  max="300"
+                  className="bg-white border-2 border-primary/20 shadow-sm"
+                  onChange={(e) => setPhosphorus(e.target.value)}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="potassium">Potassium (K) Level (ppm)</Label>
+                <Input 
+                  type="number" 
+                  id="potassium" 
+                  placeholder="e.g., 200"
+                  min="0" 
+                  max="800"
+                  className="bg-white border-2 border-primary/20 shadow-sm"
+                  onChange={(e) => setPotassium(e.target.value)}
+                />
               </div>
             </div>
 
