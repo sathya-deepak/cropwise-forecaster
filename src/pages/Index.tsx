@@ -1,4 +1,3 @@
-
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import LanguageSelector from '@/components/LanguageSelector';
@@ -14,14 +13,14 @@ const Index = () => {
 
   console.log('Rendering Index with language:', language);
 
-  // Crop images array with valid URLs
+  // Updated crop images array with new URLs
   const cropImages = [
     {
       url: "https://images.unsplash.com/photo-1474440692490-2e83ae13ba29?auto=format&fit=crop&w=500&h=500&q=80",
       name: "Wheat"
     },
     {
-      url: "https://images.unsplash.com/photo-1530649298728-95bde48943e4?auto=format&fit=crop&w=500&h=500&q=80",
+      url: "https://tse1.mm.bing.net/th?id=OIP.hKPPPNaoUMBjvEq3T5kGbgHaE8&pid=Api&P=0&h=180",
       name: "Rice"
     },
     {
@@ -33,11 +32,11 @@ const Index = () => {
       name: "Corn"
     },
     {
-      url: "https://images.unsplash.com/photo-1504826023243-27caa3e4f9ab?auto=format&fit=crop&w=500&h=500&q=80",
+      url: "https://tse2.mm.bing.net/th?id=OIP.PaaGm8sVhR5aoOpRPigdiQHaE8&pid=Api&P=0&h=180",
       name: "Sunflower"
     },
     {
-      url: "https://images.unsplash.com/photo-1568568544477-c47549d3228e?auto=format&fit=crop&w=500&h=500&q=80",
+      url: "https://tse3.mm.bing.net/th?id=OIP.5v2ou4kE901UNWf17sWGegHaE8&pid=Api&P=0&h=180",
       name: "Chili Peppers"
     },
     {
@@ -45,7 +44,7 @@ const Index = () => {
       name: "Soybean"
     },
     {
-      url: "https://images.unsplash.com/photo-1596450514735-111a2e7097cd?auto=format&fit=crop&w=500&h=500&q=80",
+      url: "https://tse4.mm.bing.net/th?id=OIP.VidKWAAK8iMJHJuN3jeTQwHaE8&pid=Api&P=0&h=180",
       name: "Sugarcane"
     }
   ];
