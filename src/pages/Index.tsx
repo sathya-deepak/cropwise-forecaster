@@ -1,3 +1,4 @@
+
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import LanguageSelector from '@/components/LanguageSelector';
@@ -16,36 +17,36 @@ const Index = () => {
   // Updated crop images array with new URLs
   const cropImages = [
     {
-      url: "https://images.unsplash.com/photo-1474440692490-2e83ae13ba29?auto=format&fit=crop&w=500&h=500&q=80",
-      name: "Wheat"
+      url: "https://images.unsplash.com/photo-1536657464498-9a99be6db403?auto=format&fit=crop&w=500&h=500&q=80",
+      name: "Barley"
     },
     {
       url: "https://tse1.mm.bing.net/th?id=OIP.hKPPPNaoUMBjvEq3T5kGbgHaE8&pid=Api&P=0&h=180",
       name: "Rice"
     },
     {
-      url: "https://images.unsplash.com/photo-1597916829826-02e5bb4a54e0?auto=format&fit=crop&w=500&h=500&q=80",
-      name: "Cotton"
+      url: "https://images.unsplash.com/photo-1621069589433-2b90ea89a913?auto=format&fit=crop&w=500&h=500&q=80",
+      name: "Millet"
     },
     {
-      url: "https://images.unsplash.com/photo-1471194402529-8e0f5a675de6?auto=format&fit=crop&w=500&h=500&q=80",
-      name: "Corn"
+      url: "https://images.unsplash.com/photo-1595980982901-1295a47677a6?auto=format&fit=crop&w=500&h=500&q=80",
+      name: "Potato"
     },
     {
-      url: "https://tse2.mm.bing.net/th?id=OIP.PaaGm8sVhR5aoOpRPigdiQHaE8&pid=Api&P=0&h=180",
-      name: "Sunflower"
+      url: "https://images.unsplash.com/photo-1598222800856-b71e650a0376?auto=format&fit=crop&w=500&h=500&q=80",
+      name: "Tomato"
     },
     {
-      url: "https://tse3.mm.bing.net/th?id=OIP.5v2ou4kE901UNWf17sWGegHaE8&pid=Api&P=0&h=180",
-      name: "Chili Peppers"
+      url: "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=500&h=500&q=80",
+      name: "Onion"
     },
     {
-      url: "https://images.unsplash.com/photo-1502741126161-b048400d085d?auto=format&fit=crop&w=500&h=500&q=80",
-      name: "Soybean"
+      url: "https://images.unsplash.com/photo-1589927986089-35812388d1f4?auto=format&fit=crop&w=500&h=500&q=80",
+      name: "Peanut"
     },
     {
-      url: "https://tse4.mm.bing.net/th?id=OIP.VidKWAAK8iMJHJuN3jeTQwHaE8&pid=Api&P=0&h=180",
-      name: "Sugarcane"
+      url: "https://images.unsplash.com/photo-1611735341450-74d61e660ad2?auto=format&fit=crop&w=500&h=500&q=80",
+      name: "Sorghum"
     }
   ];
 
