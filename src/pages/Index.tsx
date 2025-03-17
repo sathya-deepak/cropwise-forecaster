@@ -17,36 +17,52 @@ const Index = () => {
   // Updated crop images array with new URLs
   const cropImages = [
     {
-      url: "https://images.unsplash.com/photo-1536657464498-9a99be6db403?auto=format&fit=crop&w=500&h=500&q=80",
-      name: "Barley"
-    },
-    {
       url: "https://tse1.mm.bing.net/th?id=OIP.hKPPPNaoUMBjvEq3T5kGbgHaE8&pid=Api&P=0&h=180",
       name: "Rice"
     },
     {
-      url: "https://images.unsplash.com/photo-1621069589433-2b90ea89a913?auto=format&fit=crop&w=500&h=500&q=80",
-      name: "Millet"
+      url: "https://tse4.mm.bing.net/th?id=OIP.6HC3fVXAo0VgIiWfvpnungHaFj&pid=Api&P=0&h=180",
+      name: "Mustard"
     },
     {
-      url: "https://images.unsplash.com/photo-1595980982901-1295a47677a6?auto=format&fit=crop&w=500&h=500&q=80",
-      name: "Potato"
+      url: "https://tse1.mm.bing.net/th?id=OIP.x1aIS19eK3Es6nt52uQdjAHaFj&pid=Api&P=0&h=180",
+      name: "Soyabeans"
     },
     {
-      url: "https://images.unsplash.com/photo-1598222800856-b71e650a0376?auto=format&fit=crop&w=500&h=500&q=80",
-      name: "Tomato"
+      url: "https://tse3.mm.bing.net/th?id=OIP.j4L611NG8QKlpIAjIIxaZwHaD6&pid=Api&P=0&h=180",
+      name: "Pearl Millet"
     },
     {
-      url: "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=500&h=500&q=80",
+      url: "https://tse1.mm.bing.net/th?id=OIP.li-AllzXlKACze26_RVaqgHaE7&pid=Api&P=0&h=180",
+      name: "Chickpea"
+    },
+    {
+      url: "https://tse2.mm.bing.net/th?id=OIP.gFmERxiJEoUERvOvF6vxAwHaHQ&pid=Api&P=0&h=180",
+      name: "Turmeric"
+    },
+    {
+      url: "https://tse1.mm.bing.net/th?id=OIP.NeXniAJXWcfOLFBgv2NAUQHaFC&pid=Api&P=0&h=180",
       name: "Onion"
     },
     {
-      url: "https://images.unsplash.com/photo-1589927986089-35812388d1f4?auto=format&fit=crop&w=500&h=500&q=80",
+      url: "https://tse1.mm.bing.net/th?id=OIP.TzCjJgUvvNbE4aLQII684wHaFj&pid=Api&P=0&h=180",
       name: "Peanut"
     },
     {
-      url: "https://images.unsplash.com/photo-1611735341450-74d61e660ad2?auto=format&fit=crop&w=500&h=500&q=80",
-      name: "Sorghum"
+      url: "https://tse1.mm.bing.net/th?id=OIP.3HIFwX9Cw-TxS0ZKpFqEDgHaE8&pid=Api&P=0&h=180",
+      name: "Barley"
+    },
+    {
+      url: "https://tse2.mm.bing.net/th?id=OIP.J3n-6gfFNijFPDZM0ZdL4gHaFr&pid=Api&P=0&h=180",
+      name: "Green Gram"
+    },
+    {
+      url: "https://tse2.mm.bing.net/th?id=OIP.FlrRFkr6R8h3h61-iu-1CgHaFr&pid=Api&P=0&h=180",
+      name: "Black Gram"
+    },
+    {
+      url: "https://tse4.mm.bing.net/th?id=OIP.wJyCVafSAZ6UbuKnqH_djgHaFb&pid=Api&P=0&h=180",
+      name: "Sunflower"
     }
   ];
 
